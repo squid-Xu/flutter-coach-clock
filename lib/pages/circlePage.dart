@@ -9,17 +9,15 @@ class _CirclePageState extends State<CirclePage> {
 
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
-      home: new Scaffold(
-        appBar: new AppBar(
-          title: new Text('轮滑圈'),
-          actions: <Widget>[
-            new Container()
-          ],
-        ),
-        body: new Center(
-          child: null,
-        ),
+    return new Scaffold(
+      appBar: new AppBar(
+        title: new Text('轮滑圈'),
+        actions: <Widget>[
+          new Container()
+        ],
+      ),
+      body: new Center(
+        child: null,
       ),
     );
   }

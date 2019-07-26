@@ -20,7 +20,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(backgroundColor: Color(0xFF29CCCC),
+          highlightColor: Color.fromRGBO(255, 255, 255, 0.5),
+          splashColor: Colors.white70),
       home: new TabNavigator(),
     );
   }

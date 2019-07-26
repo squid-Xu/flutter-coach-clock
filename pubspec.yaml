@@ -56,6 +56,15 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
+  assets:
+    - images/1.jpg
+    - images/2.jpg
+    - images/3.jpg
+    - images/4.jpg
+    - images/index.png
+    - images/students.png
+    - images/circle.png
+    - images/mine.png
   fonts:
     - family: iconfont
       fonts:

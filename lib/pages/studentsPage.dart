@@ -9,17 +9,15 @@ class _StudentsPageState extends State<StudentsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
-      home: new Scaffold(
-        appBar: new AppBar(
-          title: new Text('学员'),
-          actions: <Widget>[
-            new Container()
-          ],
-        ),
-        body: new Center(
-          child: null,
-        ),
+    return new Scaffold(
+      appBar: new AppBar(
+        title: new Text('学员'),
+        actions: <Widget>[
+          new Container()
+        ],
+      ),
+      body: new Center(
+        child: null,
       ),
     );
   }
