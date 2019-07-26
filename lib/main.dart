@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'login/login.dart';
 import 'navigator/tabNavigator.dart';
 
 void main() {
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(backgroundColor: Color(0xFF29CCCC),
           highlightColor: Color.fromRGBO(255, 255, 255, 0.5),
           splashColor: Colors.white70),
-      home: new TabNavigator(),
+      home: new Login(),
     );
   }
 }

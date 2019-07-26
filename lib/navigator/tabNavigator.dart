@@ -22,7 +22,6 @@ class _TabNavitagorState extends State<TabNavigator> {
     return Scaffold(
       body: PageView(
         onPageChanged: (index) {
-          print(index);
           setState(() {
             _currentInndex = index;
           });
