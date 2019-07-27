@@ -1,3 +1,4 @@
+import 'package:coach/login/toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:async';
@@ -9,14 +10,57 @@ class Forget extends StatefulWidget {
 }
 
 class _ForgetPageState extends State<Forget> {
-  TextEditingController _userEtController = TextEditingController();
-  TextEditingController _passwordEtController = TextEditingController();
+  bool _phoneState, _codeState, _pwdEntState, _pwdState = false; //验证码真假
+  String _checkStr; //验证码提示
+  TextEditingController _PhoneController = TextEditingController(); //手机号
+  TextEditingController _CodeEtController = TextEditingController(); //验证码
+  TextEditingController _PasswordEtController = TextEditingController(); //密码
+  TextEditingController _PasswordEnterEtController =
+      TextEditingController(); //确认密码
   final _formKey = GlobalKey<FormState>();
   bool _isObscure = true;
   Color _eyeColor = Color(0xFFF2F2F2);
   String _verifyStr = '获取验证码';
   int _seconds = 0;
   Timer _timer;
+//  验证手机号
+  void _checkPhone() {
+    if (_PhoneController.text.isNotEmpty &&
+        _PhoneController.text.trim().length == 11) {
+      _phoneState = true;
+    } else {
+      _phoneState = false;
+    }
+  }
+
+//  验证验证码位数
+  void _checkCode() {
+    if (_CodeEtController.text.isNotEmpty &&
+        _CodeEtController.text.trim().length == 6) {
+      _codeState = true;
+    } else {
+      _codeState = false;
+    }
+  }
+
+//验证密码
+  void _checkPwd() {
+    if (_PasswordEtController.text.isNotEmpty) {
+      _pwdState = true;
+    } else {
+      _pwdState = false;
+    }
+  }
+
+  //验证确认密码
+  void _checkEntPwd() {
+    if (_PasswordEnterEtController.text.isNotEmpty &&
+        (_PasswordEnterEtController.text == _PasswordEtController.text)) {
+      _pwdEntState = true;
+    } else {
+      _pwdEntState = false;
+    }
+  }
 
   @override
   // 验证码发送倒计时
@@ -65,10 +109,10 @@ class _ForgetPageState extends State<Forget> {
                     buildPassword(),
                     SizedBox(height: 30.0),
                     buildEnterPassword(),
-//                    buildForgetPasswordText(context),
-                    SizedBox(height: 50.0),
+                    buildForgetPasswordText(context),
+                    SizedBox(height: 20.0),
                     buildLoginButton(context),
-                    SizedBox(height: 30.0),
+//                    SizedBox(height: 30.0),
 //                    buildRegisterText(context),
                   ],
                 ))));
@@ -117,14 +161,28 @@ class _ForgetPageState extends State<Forget> {
           ),
           color: Color(0xFF29CCCC),
           onPressed: () {
-            print(_userEtController.text);
-            print(_passwordEtController.text);
-//            if (_formKey.currentState.validate()) {
-//              ///只有输入的内容符合要求通过才会到达此处
-//              _formKey.currentState.save();
-//              //TODO 执行登录方法
-//              print('email:$_email , assword:$_password');
-//            }
+            _checkPhone();
+            _checkPwd();
+            _checkCode();
+            _checkEntPwd();
+            if (_phoneState && _codeState && _pwdState && _pwdEntState) {
+              print("手机号" + _PhoneController.text);
+              print("验证码" + _CodeEtController.text);
+              print("密码" + _PasswordEtController.text);
+              Navigator.pop(context);
+            } else {
+              if (!_phoneState) {
+                _checkStr = '请输入正确手机号！';
+              } else if (!_codeState) {
+                _checkStr = '验证码不正确！';
+              } else if (!_pwdState) {
+                _checkStr = '密码不能为空！';
+              } else if (!_pwdEntState) {
+                _checkStr = '两次输入密码不一致！';
+              }
+              print(_checkStr);
+              Toast.TostshowDialog(context, _checkStr);
+            }
           },
           shape: StadiumBorder(side: BorderSide.none),
         ),
@@ -135,13 +193,13 @@ class _ForgetPageState extends State<Forget> {
 //  忘记密码
   Padding buildForgetPasswordText(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 8.0),
+      padding: const EdgeInsets.only(top: 2.0),
       child: new Align(
         alignment: Alignment.centerRight,
         child: FlatButton(
           child: Text(
-            '去登陆',
-            style: TextStyle(fontSize: 14.0, color: Color(0xFFF2F2F2)),
+            '账号登陆？',
+            style: TextStyle(fontSize: 16.0, color: Color(0xFFF2F2F2)),
           ),
           onPressed: () {
             Navigator.pop(context);
@@ -177,18 +235,21 @@ class _ForgetPageState extends State<Forget> {
           child: new Row(
             children: <Widget>[
               new Expanded(
-                child: new Text(
-                  "账号：",
-                  style: TextStyle(
-                      color: Color(0xFFFFFFFF),
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.w500),
+                child: Padding(
+                  padding: EdgeInsets.only(bottom: 8),
+                  child: new Text(
+                    "账号：",
+                    style: TextStyle(
+                        color: Color(0xFFFFFFFF),
+                        fontSize: 17.0,
+                        fontWeight: FontWeight.w500),
+                  ),
                 ),
                 flex: 2,
               ),
               new Expanded(
                 child: new TextField(
-                  controller: _userEtController,
+                  controller: _PhoneController,
                   cursorColor: Colors.white,
                   keyboardType: TextInputType.phone,
                   //只能输入数字
@@ -203,7 +264,7 @@ class _ForgetPageState extends State<Forget> {
                     hintStyle: new TextStyle(color: Color(0xFFF2F2F2)),
                   ),
                 ),
-                flex: 7,
+                flex: 5,
               )
             ],
           ),
@@ -228,20 +289,20 @@ class _ForgetPageState extends State<Forget> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               new Expanded(
-                child: new Text(
-                  "验证码：",
-                  style: TextStyle(
-                      color: Color(0xFFFFFFFF),
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.w500),
-                ),
+                child: Padding(
+                    padding: EdgeInsets.only(bottom: 8),
+                    child: new Text(
+                      "验证码：",
+                      style: TextStyle(
+                          color: Color(0xFFFFFFFF),
+                          fontSize: 17.0,
+                          fontWeight: FontWeight.w500),
+                    )),
                 flex: 2,
               ),
               new Expanded(
                 child: new TextFormField(
-                  controller: _passwordEtController,
-                  obscureText: _isObscure,
-                  autofocus: true,
+                  controller: _CodeEtController,
                   cursorColor: Colors.white,
                   keyboardType: TextInputType.phone,
                   //只能输入数字
@@ -254,26 +315,33 @@ class _ForgetPageState extends State<Forget> {
                     border: InputBorder.none,
                     hintText: "请输入验证码",
                     hintStyle: new TextStyle(color: Color(0xFFF2F2F2)),
-                    suffix: GestureDetector(
-                      onTap: (_userEtController.text.trim().length == 11 &&
-                              _seconds == 0)
-                          ? () {
-                              setState(() {
-                                _startTimer();
-                              });
-                            }
-                          : null,
-                      child: Text(
-                        _verifyStr,
-                        style: TextStyle(
-                            color: _userEtController.text.trim().length == 11
-                                ? Color(0xFF2BE0E0)
-                                : Color(0xFF2BE0E0)),
-                      ),
+                  ),
+                ),
+                flex: 3,
+              ),
+              new Expanded(
+                child: Container(
+                  child: new GestureDetector(
+                    onTap: (_PhoneController.text.trim().length == 11 &&
+                            _seconds == 0)
+                        ? () {
+                            setState(() {
+                              _startTimer();
+                            });
+                          }
+                        : null,
+                    child: Text(
+                      _verifyStr,
+                      textAlign: TextAlign.right,
+                      style: TextStyle(
+                          fontSize: 17.0,
+                          color: _PhoneController.text.trim().length == 11
+                              ? Color(0xFF2BE0E0)
+                              : Color(0xFFDDDDDD)),
                     ),
                   ),
                 ),
-                flex: 7,
+                flex: 2,
               )
             ],
           ),
@@ -298,22 +366,22 @@ class _ForgetPageState extends State<Forget> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               new Expanded(
-                child: new Text(
-                  "密码：",
-                  style: TextStyle(
-                      color: Color(0xFFFFFFFF),
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.w500),
-                ),
+                child: Padding(
+                    padding: EdgeInsets.only(bottom: 8),
+                    child: new Text(
+                      "密码：",
+                      style: TextStyle(
+                          color: Color(0xFFFFFFFF),
+                          fontSize: 17.0,
+                          fontWeight: FontWeight.w500),
+                    )),
                 flex: 2,
               ),
               new Expanded(
                 child: new TextFormField(
-                  controller: _passwordEtController,
+                  controller: _PasswordEtController,
                   obscureText: _isObscure,
                   cursorColor: Colors.white,
-                  keyboardType: TextInputType.number,
-                  //获取焦点时,启用的键盘类型
                   style: new TextStyle(color: Color(0xFFFFFFFF)),
                   // 设置字体样式
                   decoration: InputDecoration(
@@ -335,7 +403,7 @@ class _ForgetPageState extends State<Forget> {
                         }),
                   ),
                 ),
-                flex: 7,
+                flex: 5,
               )
             ],
           ),
@@ -360,22 +428,23 @@ class _ForgetPageState extends State<Forget> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               new Expanded(
-                child: new Text(
-                  "确认密码：",
-                  style: TextStyle(
-                      color: Color(0xFFFFFFFF),
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.w500),
+                child: Padding(
+                  padding: EdgeInsets.only(bottom: 8),
+                  child: new Text(
+                    "确认密码：",
+                    style: TextStyle(
+                        color: Color(0xFFFFFFFF),
+                        fontSize: 17.0,
+                        fontWeight: FontWeight.w500),
+                  ),
                 ),
                 flex: 2,
               ),
               new Expanded(
                 child: new TextFormField(
-                  controller: _passwordEtController,
+                  controller: _PasswordEnterEtController,
                   obscureText: _isObscure,
                   cursorColor: Colors.white,
-                  keyboardType: TextInputType.number,
-                  //获取焦点时,启用的键盘类型
                   style: new TextStyle(color: Color(0xFFFFFFFF)),
                   // 设置字体样式
                   decoration: InputDecoration(
@@ -397,7 +466,7 @@ class _ForgetPageState extends State<Forget> {
                         }),
                   ),
                 ),
-                flex: 7,
+                flex: 5,
               )
             ],
           ),

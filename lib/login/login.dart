@@ -1,3 +1,4 @@
+import 'package:coach/login/toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -9,11 +10,31 @@ class Login extends StatefulWidget {
 }
 
 class _LoginPageState extends State<Login> {
-  TextEditingController _userEtController = TextEditingController();
-  TextEditingController _passwordEtController = TextEditingController();
+  bool _phoneState, _pwdState = false; //验证码真假
+  String _checkStr; //验证码提示
+  TextEditingController _PhoneController = TextEditingController(); //手机号
+  TextEditingController _PasswordEtController = TextEditingController(); //密码
   final _formKey = GlobalKey<FormState>();
   bool _isObscure = true;
   Color _eyeColor = Color(0xFFF2F2F2);
+//  验证手机号
+  void _checkPhone() {
+    if (_PhoneController.text.isNotEmpty &&
+        _PhoneController.text.trim().length == 11) {
+      _phoneState = true;
+    } else {
+      _phoneState = false;
+    }
+  }
+
+//验证密码
+  void _checkPwd() {
+    if (_PasswordEtController.text.isNotEmpty) {
+      _pwdState = true;
+    } else {
+      _pwdState = false;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +57,7 @@ class _LoginPageState extends State<Login> {
                     SizedBox(height: 30.0),
                     buildPassword(),
                     buildForgetPasswordText(context),
-                    SizedBox(height: 50.0),
+                    SizedBox(height: 30.0),
                     buildLoginButton(context),
                     SizedBox(height: 30.0),
                     buildRegisterText(context),
@@ -60,7 +81,7 @@ class _LoginPageState extends State<Login> {
             GestureDetector(
               child: Text(
                 '点击注册',
-                style: TextStyle(color: Color(0xFF29CCCC), fontSize: 16.0),
+                style: TextStyle(color: Color(0xFF29CCCC), fontSize: 17.0),
               ),
               onTap: () {
                 //TODO 跳转到注册页面
@@ -86,15 +107,23 @@ class _LoginPageState extends State<Login> {
             style: TextStyle(color: Color(0xFFFFFFFF), fontSize: 18.0),
           ),
           color: Color(0xFF29CCCC),
+          disabledColor: Color(0xFFDDDDDD),
           onPressed: () {
-            print(_userEtController.text);
-            print(_passwordEtController.text);
-//            if (_formKey.currentState.validate()) {
-//              ///只有输入的内容符合要求通过才会到达此处
-//              _formKey.currentState.save();
-//              //TODO 执行登录方法
-//              print('email:$_email , assword:$_password');
-//            }
+            _checkPhone();
+            _checkPwd();
+            if (_phoneState && _pwdState) {
+              print("手机号" + _PhoneController.text);
+              print("密码" + _PasswordEtController.text);
+              Router.pushNoParams(context, Router.tabNavigator);
+            } else {
+              if (!_phoneState) {
+                _checkStr = '请输入正确手机号！';
+              } else if (!_pwdState) {
+                _checkStr = '密码不能为空！';
+              }
+              print(_checkStr);
+              Toast.TostshowDialog(context, _checkStr);
+            }
           },
           shape: StadiumBorder(side: BorderSide.none),
         ),
@@ -111,7 +140,7 @@ class _LoginPageState extends State<Login> {
         child: FlatButton(
           child: Text(
             '忘记密码？',
-            style: TextStyle(fontSize: 14.0, color: Color(0xFFF2F2F2)),
+            style: TextStyle(fontSize: 16.0, color: Color(0xFFF2F2F2)),
           ),
           onPressed: () {
             Router.pushNoParams(context, Router.forgetPage);
@@ -149,18 +178,21 @@ class _LoginPageState extends State<Login> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               new Expanded(
-                child: new Text(
-                  "账号：",
-                  style: TextStyle(
-                      color: Color(0xFFFFFFFF),
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.w500),
+                child: Padding(
+                  padding: EdgeInsets.only(bottom: 8),
+                  child: new Text(
+                    "账号：",
+                    style: TextStyle(
+                        color: Color(0xFFFFFFFF),
+                        fontSize: 17.0,
+                        fontWeight: FontWeight.w500),
+                  ),
                 ),
-                flex: 1,
+                flex: 2,
               ),
               new Expanded(
                 child: new TextField(
-                  controller: _userEtController,
+                  controller: _PhoneController,
                   cursorColor: Colors.white,
                   keyboardType: TextInputType.phone,
                   //只能输入数字
@@ -175,7 +207,7 @@ class _LoginPageState extends State<Login> {
                     hintStyle: new TextStyle(color: Color(0xFFF2F2F2)),
                   ),
                 ),
-                flex: 5,
+                flex: 7,
               )
             ],
           ),
@@ -200,18 +232,21 @@ class _LoginPageState extends State<Login> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               new Expanded(
-                child: new Text(
-                  "密码：",
-                  style: TextStyle(
-                      color: Color(0xFFFFFFFF),
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.w500),
+                child: new Padding(
+                  padding: EdgeInsets.only(bottom: 8),
+                  child: new Text(
+                    "密码：",
+                    style: TextStyle(
+                        color: Color(0xFFFFFFFF),
+                        fontSize: 17.0,
+                        fontWeight: FontWeight.w500),
+                  ),
                 ),
-                flex: 1,
+                flex: 2,
               ),
               new Expanded(
                 child: new TextFormField(
-                  controller: _passwordEtController,
+                  controller: _PasswordEtController,
                   obscureText: _isObscure,
                   cursorColor: Colors.white,
                   keyboardType: TextInputType.number,
@@ -237,7 +272,7 @@ class _LoginPageState extends State<Login> {
                         }),
                   ),
                 ),
-                flex: 5,
+                flex: 7,
               )
             ],
           ),

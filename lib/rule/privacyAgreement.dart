@@ -56,13 +56,13 @@ class _PrivacyAgreementState extends State<PrivacyAgreement> {
                             "2018年全国中学生越野滑轮锦标赛暨小学生越野滑轮夏令营2018年全国中学生越野滑轮锦标赛暨小学生越野滑轮夏令营"
                             "2018年全国中学生越野滑轮锦标赛暨小学生越野滑轮夏令营2018年全国中学生越野滑轮锦标赛暨小学生越野滑轮夏令营",
                             style: TextStyle(
-                                color: Color(0xFF333333), fontSize: 15.0),
+                                color: Color(0xFF333333), fontSize: 18.0),
                             textAlign: TextAlign.justify,
                           ),
                           new Text(
                             "2019年7月1日",
                             textAlign: TextAlign.right,
-                            style: TextStyle(fontSize: 14.0),
+                            style: TextStyle(fontSize: 16.0),
                           )
                         ],
                       )),

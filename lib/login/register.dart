@@ -1,3 +1,4 @@
+import 'package:coach/login/toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:async';
@@ -9,15 +10,47 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<Register> {
-  TextEditingController _userEtController = TextEditingController();
-  TextEditingController _passwordEtController = TextEditingController();
+  bool _phoneState, _codeState, _pwdState = false; //验证码真假
+  String _checkStr; //验证码提示
+  TextEditingController _PhoneController = TextEditingController(); //手机号
+  TextEditingController _CodeEtController = TextEditingController(); //验证码
+  TextEditingController _PasswordEtController = TextEditingController(); //密码
   final _formKey = GlobalKey<FormState>();
-  bool _isObscure = true;
-  Color _eyeColor = Color(0xFFF2F2F2);
+  bool _isObscure = true; //密码隐藏
+  Color _eyeColor = Color(0xFFF2F2F2); //密码隐藏默认颜色
   String _verifyStr = '获取验证码';
-  int _seconds = 0;
-  Timer _timer;
-  bool _isCheck = true;
+  int _seconds = 0; //秒数
+  Timer _timer; //到技术组件
+  bool _isCheck = true; //协议
+
+//  验证手机号
+  void _checkPhone() {
+    if (_PhoneController.text.isNotEmpty &&
+        _PhoneController.text.trim().length == 11) {
+      _phoneState = true;
+    } else {
+      _phoneState = false;
+    }
+  }
+
+//  验证验证码位数
+  void _checkCode() {
+    if (_CodeEtController.text.isNotEmpty &&
+        _CodeEtController.text.trim().length == 6) {
+      _codeState = true;
+    } else {
+      _codeState = false;
+    }
+  }
+
+//验证密码
+  void _checkPwd() {
+    if (_PasswordEtController.text.isNotEmpty) {
+      _pwdState = true;
+    } else {
+      _pwdState = false;
+    }
+  }
 
   @override
   // 验证码发送倒计时
@@ -89,7 +122,7 @@ class _RegisterPageState extends State<Register> {
             GestureDetector(
               child: Text(
                 '点击登录',
-                style: TextStyle(color: Color(0xFF29CCCC), fontSize: 16.0),
+                style: TextStyle(color: Color(0xFF29CCCC), fontSize: 17.0),
               ),
               onTap: () {
                 //TODO 跳转到注册页面
@@ -115,16 +148,30 @@ class _RegisterPageState extends State<Register> {
             style: TextStyle(color: Color(0xFFFFFFFF), fontSize: 18.0),
           ),
           color: Color(0xFF29CCCC),
-          onPressed: () {
-            print(_userEtController.text);
-            print(_passwordEtController.text);
-//            if (_formKey.currentState.validate()) {
-//              ///只有输入的内容符合要求通过才会到达此处
-//              _formKey.currentState.save();
-//              //TODO 执行登录方法
-//              print('email:$_email , assword:$_password');
-//            }
-          },
+          disabledColor: Color(0xFFDDDDDD),
+          onPressed: _isCheck
+              ? () {
+                  _checkPhone();
+                  _checkPwd();
+                  _checkCode();
+                  if (_phoneState && _codeState && _pwdState) {
+                    print("手机号" + _PhoneController.text);
+                    print("验证码" + _CodeEtController.text);
+                    print("密码" + _PasswordEtController.text);
+                    Router.pushNoParams(context, Router.tabNavigator);
+                  } else {
+                    if (!_phoneState) {
+                      _checkStr = '请输入正确手机号！';
+                    } else if (!_codeState) {
+                      _checkStr = '验证码不正确！';
+                    } else if (!_pwdState) {
+                      _checkStr = '密码不能为空！';
+                    }
+                    print(_checkStr);
+                    Toast.TostshowDialog(context, _checkStr);
+                  }
+                }
+              : null,
           shape: StadiumBorder(side: BorderSide.none),
         ),
       ),
@@ -151,7 +198,7 @@ class _RegisterPageState extends State<Register> {
             new Text(
               "已阅读并同意",
               style: TextStyle(
-                fontSize: 15.0,
+                fontSize: 17.0,
                 color: Color(0xFFFFFFFF),
               ),
             ),
@@ -159,7 +206,7 @@ class _RegisterPageState extends State<Register> {
               child: new Text(
                 "用户协议、",
                 style: TextStyle(
-                  fontSize: 15.0,
+                  fontSize: 17.0,
                   color: Color(0xFF29CCCC),
                 ),
               ),
@@ -171,7 +218,7 @@ class _RegisterPageState extends State<Register> {
               child: new Text(
                 "隐私条款",
                 style: TextStyle(
-                  fontSize: 15.0,
+                  fontSize: 17.0,
                   color: Color(0xFF29CCCC),
                 ),
               ),
@@ -211,18 +258,21 @@ class _RegisterPageState extends State<Register> {
           child: new Row(
             children: <Widget>[
               new Expanded(
-                child: new Text(
-                  "账号：",
-                  style: TextStyle(
-                      color: Color(0xFFFFFFFF),
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.w500),
+                child: Padding(
+                  padding: EdgeInsets.only(bottom: 8),
+                  child: new Text(
+                    "账号：",
+                    style: TextStyle(
+                        color: Color(0xFFFFFFFF),
+                        fontSize: 17.0,
+                        fontWeight: FontWeight.w500),
+                  ),
                 ),
                 flex: 2,
               ),
               new Expanded(
                 child: new TextField(
-                  controller: _userEtController,
+                  controller: _PhoneController,
                   cursorColor: Colors.white,
                   keyboardType: TextInputType.phone,
                   //只能输入数字
@@ -262,22 +312,22 @@ class _RegisterPageState extends State<Register> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               new Expanded(
-                child: new Text(
-                  "验证码：",
-                  style: TextStyle(
-                      color: Color(0xFFFFFFFF),
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.w500),
-                ),
+                child: Padding(
+                    padding: EdgeInsets.only(bottom: 8),
+                    child: new Text(
+                      "验证码：",
+                      style: TextStyle(
+                          color: Color(0xFFFFFFFF),
+                          fontSize: 17.0,
+                          fontWeight: FontWeight.w500),
+                    )),
                 flex: 2,
               ),
               new Expanded(
                 child: new TextFormField(
-                  controller: _passwordEtController,
-                  obscureText: _isObscure,
-                  autofocus: true,
+                  controller: _CodeEtController,
                   cursorColor: Colors.white,
-                  keyboardType: TextInputType.phone,
+                  keyboardType: TextInputType.number,
                   //只能输入数字
                   inputFormatters: <TextInputFormatter>[
                     WhitelistingTextInputFormatter.digitsOnly,
@@ -288,26 +338,33 @@ class _RegisterPageState extends State<Register> {
                     border: InputBorder.none,
                     hintText: "请输入验证码",
                     hintStyle: new TextStyle(color: Color(0xFFF2F2F2)),
-                    suffix: GestureDetector(
-                      onTap: (_userEtController.text.trim().length == 11 &&
-                              _seconds == 0)
-                          ? () {
-                              setState(() {
-                                _startTimer();
-                              });
-                            }
-                          : null,
-                      child: Text(
-                        _verifyStr,
-                        style: TextStyle(
-                            color: _userEtController.text.trim().length == 11
-                                ? Color(0xFF2BE0E0)
-                                : Color(0xFF2BE0E0)),
-                      ),
+                  ),
+                ),
+                flex: 4,
+              ),
+              new Expanded(
+                child: Container(
+                  child: new GestureDetector(
+                    onTap: (_PhoneController.text.trim().length == 11 &&
+                            _seconds == 0)
+                        ? () {
+                            setState(() {
+                              _startTimer();
+                            });
+                          }
+                        : null,
+                    child: Text(
+                      _verifyStr,
+                      textAlign: TextAlign.right,
+                      style: TextStyle(
+                        fontSize: 17.0,
+                          color: _PhoneController.text.trim().length == 11
+                              ? Color(0xFF2BE0E0)
+                              : Color(0xFFDDDDDD)),
                     ),
                   ),
                 ),
-                flex: 7,
+                flex: 3,
               )
             ],
           ),
@@ -332,22 +389,23 @@ class _RegisterPageState extends State<Register> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               new Expanded(
-                child: new Text(
-                  "密码：",
-                  style: TextStyle(
-                      color: Color(0xFFFFFFFF),
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.w500),
+                child: Padding(
+                  padding: EdgeInsets.only(bottom: 8),
+                  child: new Text(
+                    "密码：",
+                    style: TextStyle(
+                        color: Color(0xFFFFFFFF),
+                        fontSize: 17.0,
+                        fontWeight: FontWeight.w500),
+                  ),
                 ),
                 flex: 2,
               ),
               new Expanded(
                 child: new TextFormField(
-                  controller: _passwordEtController,
+                  controller: _PasswordEtController,
                   obscureText: _isObscure,
                   cursorColor: Colors.white,
-                  keyboardType: TextInputType.number,
-                  //获取焦点时,启用的键盘类型
                   style: new TextStyle(color: Color(0xFFFFFFFF)),
                   // 设置字体样式
                   decoration: InputDecoration(

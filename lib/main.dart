@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'login/login.dart';
-import 'navigator/tabNavigator.dart';
 
 void main() {
   runApp(MyApp());

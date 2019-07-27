@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:coach/navigator/tabNavigator.dart';//路由到首页
 import 'package:coach/login/login.dart'; //登录页面
 import 'package:coach/login/forget.dart';//忘记密码页面
 import 'package:coach/login/register.dart';//注册页面
@@ -13,6 +14,7 @@ class Router {
   static const registerPage = 'app://login/register';//注册页面
   static const userAgreement = 'app://rule/userAgreement';//用户协议
   static const privacyAgreement = 'app://rule/privacyAgreement';//隐私协议
+  static const tabNavigator = 'app://navigator/tabnavigator';//路由到首页
 
   Widget _getPage(String url, dynamic params) {
     if (url.startsWith('https://') || url.startsWith('http://')) {
@@ -29,6 +31,8 @@ class Router {
           return UserAgreement();
         case privacyAgreement://隐私协议
           return PrivacyAgreement();
+        case tabNavigator: //路由到首页
+          return TabNavigator();
       }
     }
     return null;
