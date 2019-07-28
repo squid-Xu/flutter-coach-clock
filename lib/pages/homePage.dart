@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'Clock/MyClock.dart';
 import 'Clock/MyClockRecord.dart';
+import 'StudentClock/StuClock.dart';
 import 'StudentClock/StuClockList.dart';
+import 'StudentClock/StuClockRecord.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -59,31 +61,35 @@ class HomePageState extends State<HomePage> {
                       );
                     },
                   ),
-                  new StuClockList(),
-//              new Navigator(
-//              initialRoute: 'part/part1',
-//              onGenerateRoute: (RouteSettings settings) {
-//                RoutePageBuilder builder;
-//                switch (settings.name) {
-//                  case 'part/part1':
-//                    builder = (_, __, ___) => MyClock(
-//                      pageContext: context,
-//                    );
-//                    break;
-//                  case 'part/part2':
-//                    builder = (_, __, ___) => MyClockRecord(
-//                      pageContext: context,
-//                    );
-//                    break;
-//                  default:
-//                    throw Exception('Invalid route: ${settings.name}');
-//                }
-//                return PageRouteBuilder(
-//                  pageBuilder: builder,
-//                  transitionDuration: const Duration(milliseconds: 0),
-//                );
-//              },
-//            )
+                  new Navigator(
+                    initialRoute: 'part/part1',
+                    onGenerateRoute: (RouteSettings settings) {
+                      RoutePageBuilder builder;
+                      switch (settings.name) {
+                        case 'part/part1':
+                          builder = (_, __, ___) => StuClockList(
+                                pageContext: context,
+                              );
+                          break;
+                        case 'part/part2':
+                          builder = (_, __, ___) => StuClock(
+                                pageContext: context,
+                              );
+                          break;
+                        case 'part/part3':
+                          builder = (_, __, ___) => StuClockRecord(
+                                pageContext: context,
+                              );
+                          break;
+                        default:
+                          throw Exception('Invalid route: ${settings.name}');
+                      }
+                      return PageRouteBuilder(
+                        pageBuilder: builder,
+                        transitionDuration: const Duration(milliseconds: 0),
+                      );
+                    },
+                  )
                 ],
               ),
             )));

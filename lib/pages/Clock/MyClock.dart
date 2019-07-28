@@ -208,7 +208,9 @@ class MyClockState extends State<MyClock> {
                             new Text(
                               "上课打卡",
                               style: TextStyle(
-                                  color: Color(0xFF29CCCC), fontSize: 16.0),
+                                  fontWeight: FontWeight.w600,
+                                  color: Color(0xFF29CCCC),
+                                  fontSize: 16.0),
                             ),
                             new Text(
                               "09:00:00",
