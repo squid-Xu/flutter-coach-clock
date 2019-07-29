@@ -1,28 +1,21 @@
 import 'dart:io';
-import 'package:langju_roller/Routes.dart';
 import 'package:flutter/material.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../Router.dart';
+import 'BottonSheet/bottonSheet.dart';
+
 // 个人信息页面
-class MyInfoPage extends StatefulWidget{
-
+class MyInfoPage extends StatefulWidget {
   @override
-  _MyInfoPageState createState() => _MyInfoPageState();
-
+  MyInfoPageState createState() => MyInfoPageState();
 }
 
-class _MyInfoPageState extends State<MyInfoPage>{
-
-  TextEditingController _nicknameController = new TextEditingController();
-
-  TextEditingController _mobileController = new TextEditingController();
-
+class MyInfoPageState extends State<MyInfoPage> {
   String _nicknameStr = '武大郎';
 
-  String _signatureStr = '我等的人ta在多远的未来';
-
-  bool _nicknameEdit = false;
+  String _signatureStr = '哪有什么岁月静好，不过是有人替你负罪前行。';
 
   String _mobileStr = '18539442736';
 
@@ -47,14 +40,14 @@ class _MyInfoPageState extends State<MyInfoPage>{
   }
 
   // 更换头像
-  updateVavtar(){
+  updateVavtar() {
     setState(() {
       this._image = this._imageTemp;
     });
   }
 
   // 确定取消
-  getImageChouse(){
+  getImageChouse() {
     Alert(
         context: context,
         title: '更换头像',
@@ -66,14 +59,20 @@ class _MyInfoPageState extends State<MyInfoPage>{
         ),
         buttons: [
           DialogButton(
-            child: Text('取消',style: TextStyle(color: Colors.white,fontSize: 16.0),),
+            child: Text(
+              '取消',
+              style: TextStyle(color: Colors.white, fontSize: 16.0),
+            ),
             color: Colors.grey,
             onPressed: () => {
               Navigator.pop(context),
             },
           ),
           DialogButton(
-            child: Text('确定',style: TextStyle(color: Colors.white,fontSize: 16.0),),
+            child: Text(
+              '确定',
+              style: TextStyle(color: Colors.white, fontSize: 16.0),
+            ),
             color: Colors.teal,
             onPressed: () => {
               this.updateVavtar(),
@@ -87,99 +86,135 @@ class _MyInfoPageState extends State<MyInfoPage>{
               Navigator.pop(context),
             },
           ),
-        ]
-    ).show();
+        ]).show();
   }
 
   // 选择照片
-  getImageSelect(){
+  getImageSelect() {
     Alert(
-      context: context,
-      title: '更换头像',
-      content: Center(
-        child: new CircleAvatar(
-          radius: 46.0,
-          backgroundImage: _image == null ? new NetworkImage(_userHead) : new FileImage(_image),
-        ),
-      ),
-      buttons: [
-        DialogButton(
-          child: new Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              new Icon(Icons.camera_alt,size: 30.0,),
-              new Text(' 拍照',style: TextStyle(color: Colors.white,fontSize: 16.0),)
-            ],
+        context: context,
+        title: '更换头像',
+        content: Center(
+          child: new CircleAvatar(
+            radius: 46.0,
+            backgroundImage: _image == null
+                ? new NetworkImage(_userHead)
+                : new FileImage(_image),
           ),
-          onPressed: () => {
-            getImage(ImageSource.camera),
-            Navigator.pop(context),
-
-          },
-          color: Color.fromRGBO(0, 179, 134, 1.0),
         ),
-        DialogButton(
-          child: new Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              new Icon(Icons.photo_album,size: 30.0,),
-              new Text(' 相册',style: TextStyle(color: Colors.white,fontSize: 16.0),)
-            ],
+        buttons: [
+          DialogButton(
+            child: new Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                new Icon(
+                  Icons.camera_alt,
+                  size: 30.0,
+                ),
+                new Text(
+                  ' 拍照',
+                  style: TextStyle(color: Colors.white, fontSize: 16.0),
+                )
+              ],
+            ),
+            onPressed: () => {
+              getImage(ImageSource.camera),
+              Navigator.pop(context),
+            },
+            color: Color.fromRGBO(0, 179, 134, 1.0),
           ),
-
-          onPressed: () => {
-            getImage(ImageSource.gallery),
-            Navigator.pop(context),
-          },
-          color: Color.fromRGBO(52, 138, 199, 1.0)
-        ),
-      ]
-    ).show();
+          DialogButton(
+              child: new Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  new Icon(
+                    Icons.photo_album,
+                    size: 30.0,
+                  ),
+                  new Text(
+                    ' 相册',
+                    style: TextStyle(color: Colors.white, fontSize: 16.0),
+                  )
+                ],
+              ),
+              onPressed: () => {
+                    getImage(ImageSource.gallery),
+                    Navigator.pop(context),
+                  },
+              color: Color.fromRGBO(52, 138, 199, 1.0)),
+        ]).show();
   }
 
   // 头像
-  Widget _avatar(){
-    return new Padding(
-      padding: EdgeInsets.only(left: 15.0,right: 7.0,top: 15.0,bottom: 10.0),
-      child: new Row(
-        children: <Widget>[
-          new Expanded(
-              child: new Text('头像')
-          ),
-          new Padding(
-            padding: const EdgeInsets.only(right: 10.0),
-            child: new GestureDetector(
-              onTap: ()=>{
-//                getImage()
-              },
+  Widget _avatar() {
+    return new Container(
+      height: 55,
+      margin: EdgeInsets.only(left: 10.0, right: 10.0),
+      child: new InkWell(
+        child: new Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            new Expanded(
+                child: new Text(
+              '头像',
+              style: TextStyle(color: Color(0xFF333333), fontSize: 16.0),
+            )),
+            new Container(
               child: new CircleAvatar(
-                  radius: 26.0,
-                  backgroundImage: _image == null ? new NetworkImage(_userHead) : new FileImage(_image)
-              ),
+                  radius: 20.0,
+                  backgroundImage: _image == null
+                      ? new NetworkImage(_userHead)
+                      : new FileImage(_image)),
             ),
-          ),
-          new GestureDetector(
-            onTap: ()=>{
-              getImageSelect()
-            },
-            child: new Icon(Icons.arrow_forward_ios,color: Colors.grey,size: 20.0),
-          ),
-
-        ],
+            new Icon(Icons.arrow_forward_ios,
+                color: Color(0xFF999999), size: 16.0),
+          ],
+        ),
+        onTap: () => {
+          showDialog(
+              barrierDismissible: true, //是否点击空白区域关闭对话框,默认为true，可以关闭
+              context: context,
+              builder: (BuildContext context) {
+                var list = List();
+                list.add('拍照');
+                list.add('从手机相册选择');
+                return CommonBottomSheet(
+                  list: list,
+                  onItemClickListener: (index) async {
+                    print("-----------------------");
+                    print(index);
+                    print("---------------------000");
+                    Navigator.pop(context);
+                  },
+                );
+              })
+//                getImage()
+        },
       ),
+      decoration: BoxDecoration(
+          border: Border(
+              bottom: BorderSide(
+        width: 0.5,
+        color: Color.fromRGBO(0, 0, 0, 0.2),
+      ))),
     );
   }
+
   // 性别
-  Widget _gender(){
-    return new Padding(
-      padding: EdgeInsets.only(left: 15.0,right: 7.0,top: 0.0,bottom: 0.0),
+  Widget _gender() {
+    return new Container(
+      height: 50,
+      margin: EdgeInsets.only(left: 10.0, right: 10.0),
       child: new Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           new Expanded(
-              child: new Text('性别')
-          ),
-          new Padding(
-            padding: EdgeInsets.only(right: 10.0,top: 0.0,bottom: 0.0),
+              child: new Text(
+            '性别',
+            style: TextStyle(color: Color(0xFF333333), fontSize: 16.0),
+          )),
+          new Container(
+            padding: EdgeInsets.only(right: 0),
             child: Switch(
               value: _genderSwitch,
               onChanged: _genderSwitchChange,
@@ -190,210 +225,219 @@ class _MyInfoPageState extends State<MyInfoPage>{
               inactiveTrackColor: Colors.tealAccent,
               inactiveThumbImage: AssetImage('images/man.png'),
             ),
-          )
-//          new Icon(Icons.arrow_forward_ios,color: Colors.grey,size: 20.0,)
+          ),
         ],
       ),
+      decoration: BoxDecoration(
+          border: Border(
+              bottom: BorderSide(
+        width: 0.5,
+        color: Color.fromRGBO(0, 0, 0, 0.2),
+      ))),
     );
   }
 
   // 性别修改
-  _genderSwitchChange(isCheck){
-
+  _genderSwitchChange(isCheck) {
     setState(() {
       _genderSwitch = isCheck;
     });
   }
 
   // 昵称
-  Widget _nickname(){
-    return new Padding(
-      padding: EdgeInsets.only(left: 15.0,right: 7.0,top: 7.0,bottom: 10.0),
-      child: new Row(
-        children: <Widget>[
-          new Expanded(
-              child: new Text('昵称')
-          ),
-          _nicknameInput(),
-          _getNickNameIcon()
-        ],
-      ),
-    );
-
-  }
-
-  // 昵称输入框
-  Widget _nicknameInput(){
-    if(_nicknameEdit){
-      return new Padding(
-        padding: const EdgeInsets.only(left: 10.0,right: 10.0),
-        child: new Container(
-          width: 120,
-          child: new TextField(
-            autofocus: true,
-            decoration: InputDecoration(
-              hintText: "请输入新的昵称",
+  Widget _nickname(BuildContext context) {
+    return new Container(
+      height: 55.0,
+      margin: EdgeInsets.only(left: 10.0, right: 10.0),
+      child: new InkWell(
+        child: new Row(
+          children: <Widget>[
+            new Text(
+              '昵称',
+              style: TextStyle(color: Color(0xFF333333), fontSize: 16.0),
             ),
-            controller: _nicknameController,
-            onSubmitted: (String str){
-              _submitNickName(str);
-            },
-          ),
-        )
-
-      );
-    }else {
-      return new Padding(
-        padding: const EdgeInsets.only(right: 5.0),
-        child: new Text(_nicknameStr,style: TextStyle(color: Colors.grey),),
-      );
-    }
-  }
-
-  Widget _getNickNameIcon(){
-    if(_nicknameEdit){
-      return new GestureDetector(
-        onTap: ()=>{
-          updateNickNameEdit()
+            new Expanded(
+              child: new Container(
+                padding: const EdgeInsets.only(right: 7.0, left: 10.0),
+                child: new Text(
+                  _nicknameStr,
+                  textAlign: TextAlign.right,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(color: Colors.grey, fontSize: 17.0),
+                ),
+              ),
+            ),
+            new Icon(Icons.arrow_forward_ios,
+                color: Color(0xFF999999), size: 16.0),
+          ],
+        ),
+        onTap: () {
+          Router.push(context, Router.myInfoNicknmae, []);
         },
-        child: new Icon(Icons.check,color: Colors.blue,size: 22.0),
-      );
-    }else {
-      return new GestureDetector(
-        onTap: ()=>{
-          updateNickNameEdit()
-        },
-        child: new Icon(Icons.arrow_forward_ios,color: Colors.grey,size: 20.0),
-      );
-    }
+      ),
+      decoration: BoxDecoration(
+          border: Border(
+              bottom: BorderSide(
+        width: 0.5,
+        color: Color.fromRGBO(0, 0, 0, 0.2),
+      ))),
+    );
   }
-
-  updateNickNameEdit(){
-    if(_nicknameEdit){
-      // 完成编辑
-      setState(() {
-        _nicknameStr = _nicknameController.text.trim();
-        _nicknameEdit = false;
-      });
-    }else {
-      // 进入编辑状态
-      setState(() {
-        _nicknameEdit = true;
-      });
-    }
-  }
-
-   _submitNickName(val){
-    setState(() {
-      _nicknameStr = val.trim();
-    });
-  }
-
 
   // 个性签名
-  Widget _signature(BuildContext context){
-    return new Padding(
-      padding: const EdgeInsets.only(left: 15.0,right: 7.0,top: 7.0,bottom: 10.0),
-      child: new Row(
-        children: <Widget>[
-          new Expanded(
-              child: new Text('个性签名')
-          ),
-          new Padding(
-            padding: const EdgeInsets.only(right: 7.0),
-            child: new Text(_signatureStr,style: TextStyle(color: Colors.grey),),
-          ),
-          new GestureDetector(
-            onTap: ()=>{
-              Router.push(context, Router.myInfoSignaturePage, [])
-            },
-            child: new Icon(Icons.arrow_forward_ios,color: Colors.grey,size: 20.0),
-          )
-
-        ],
+  Widget _signature(BuildContext context) {
+    return new Container(
+      height: 55.0,
+      margin: EdgeInsets.only(left: 10.0, right: 10.0),
+      child: new InkWell(
+        child: new Row(
+          children: <Widget>[
+            new Text(
+              '个性签名',
+              style: TextStyle(color: Color(0xFF333333), fontSize: 16.0),
+            ),
+            new Expanded(
+              child: new Container(
+                padding: const EdgeInsets.only(right: 7.0, left: 10.0),
+                child: new Text(
+                  _signatureStr,
+                  textAlign: TextAlign.right,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(color: Colors.grey, fontSize: 17.0),
+                ),
+              ),
+            ),
+            new Icon(Icons.arrow_forward_ios,
+                color: Color(0xFF999999), size: 16.0),
+          ],
+        ),
+        onTap: () {
+          Router.push(context, Router.myInfosignPage, []);
+        },
       ),
+      decoration: BoxDecoration(
+          border: Border(
+              bottom: BorderSide(
+        width: 0.5,
+        color: Color.fromRGBO(0, 0, 0, 0.2),
+      ))),
     );
   }
+
   // 绑定手机号
-  Widget _mobile(BuildContext context){
-    return new Padding(
-      padding: const EdgeInsets.only(left: 15.0,right: 7.0,top: 7.0,bottom: 10.0),
-      child: new Row(
-        children: <Widget>[
-          new Expanded(
-              child: new Text('绑定手机号')
-          ),
-          new Padding(
-            padding: const EdgeInsets.only(right: 7.0),
-            child: new Text(_mobileStr ,style: TextStyle(color: Colors.grey),),
-          ),
-          new GestureDetector(
-            onTap: ()=>{
-              print("修改手机"),
-              _editMobile(context)
-            },
-            child: new Icon(Icons.arrow_forward_ios,color: Colors.grey,size: 20.0),
-          ),
-        ],
+  Widget _mobile(BuildContext context) {
+    return new Container(
+      height: 55.0,
+      margin: EdgeInsets.only(left: 10.0, right: 10.0),
+      child: new InkWell(
+        child: new Row(
+          children: <Widget>[
+            new Expanded(child: new Text('绑定手机号')),
+            new Container(
+              padding: const EdgeInsets.only(right: 7.0),
+              child: new Text(
+                _mobileStr,
+                style: TextStyle(color: Colors.grey),
+              ),
+            ),
+            new Icon(Icons.arrow_forward_ios,
+                color: Color(0xFF999999), size: 16.0),
+          ],
+        ),
+        onTap: () {
+          print("修改手机");
+          _editMobile(context);
+        },
       ),
+      decoration: BoxDecoration(
+          border: Border(
+              bottom: BorderSide(
+        width: 0.5,
+        color: Color.fromRGBO(0, 0, 0, 0.2),
+      ))),
     );
   }
 
-  _editMobile(context){
+  _editMobile(context) {
+    var alertStyle = AlertStyle(
+      animationType: AnimationType.fromTop,
+      isCloseButton: false,
+      isOverlayTapDismiss: true,
+      animationDuration: Duration(milliseconds: 400),
+      alertBorder: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      titleStyle: TextStyle(
+        color: Color(0xFF000000),
+        fontWeight: FontWeight.w600,
+      ),
+    );
     Alert(
       context: context,
-      type: AlertType.warning,
-      title: "手机号更换提示",
-      desc: "更换后需要使用新手机号重新登陆",
+      style: alertStyle,
+      title: "手机号更换提示！",
+      content: Column(
+        children: <Widget>[
+          new Container(
+            padding: EdgeInsets.only(top: 10.0),
+            child: Image.asset("images/success.png"),
+          ),
+          new Container(
+            padding: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20.0),
+            child: new Text(
+              "如果更换手机号，需要使用 新手机号才能登录",
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Color(0xFF666666), fontSize: 16.0),
+            ),
+          )
+        ],
+      ),
       buttons: [
         DialogButton(
           child: Text(
             "取消",
-            style: TextStyle(color: Colors.white, fontSize: 20),
+            style: TextStyle(color: Color(0xFF666666), fontSize: 18),
           ),
           onPressed: () => Navigator.pop(context),
-          color: Colors.grey,
+          color: Color(0xFFF8F8F8),
+          radius: BorderRadius.circular(30.0),
         ),
         DialogButton(
           child: Text(
             "确定",
-            style: TextStyle(color: Colors.white, fontSize: 20),
+            style: TextStyle(color: Colors.white, fontSize: 18),
           ),
           onPressed: () => {
-            Navigator.pop(context),
+//            Navigator.pop(context),
             Router.pushWithAnimation(context, Router.myInfoMobile, _mobileStr),
           },
-          color: Color.fromRGBO(0, 179, 134, 1.0),
+          color: Color(0xFF29CCCC),
+          radius: BorderRadius.circular(30.0),
         )
       ],
     ).show();
   }
 
   // 修改密码
-  Widget _password(){
-    return new Padding(
-      padding: const EdgeInsets.only(left: 15.0,right: 7.0,top: 7.0,bottom: 20.0),
-      child: new Row(
-        children: <Widget>[
-          new Expanded(
-              child: new Text('修改密码')
-          ),
-          new Padding(
-            padding: const EdgeInsets.only(right: 7.0),
-            child: new Text(
-              _havePassword ? '******' : '待完善',
-              style: TextStyle(color: Colors.grey),
-            ),
-          ),
-          new GestureDetector(
-            onTap: ()=>{
-              debugPrint('修改密码'),
-              Router.pushWithAnimation(context, Router.myInfoPwd, this._havePassword)
-            },
-            child: new Icon(Icons.arrow_forward_ios,color: Colors.grey,size: 20.0),
-          ),
-
-        ],
+  Widget _password() {
+    return new Container(
+      height: 55.0,
+      margin: EdgeInsets.only(left: 10.0, right: 10.0),
+      child: new InkWell(
+        child: new Row(
+          children: <Widget>[
+            new Expanded(child: new Text('修改密码')),
+            new Icon(Icons.arrow_forward_ios,
+                color: Color(0xFF999999), size: 16.0),
+          ],
+        ),
+        onTap: () {
+          debugPrint('修改密码');
+          Router.pushWithAnimation(
+              context, Router.myInfoPwd, this._havePassword);
+        },
       ),
     );
   }
@@ -401,91 +445,110 @@ class _MyInfoPageState extends State<MyInfoPage>{
   // 登陆按钮
   Widget _logoutBtn(BuildContext context) {
     Widget btn = new FlatButton(
-      textColor: Colors.white,
-      color: Colors.grey,
-      highlightColor: Colors.red,
+      color: Color(0xFF29CCCC),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25.0)),
       child: new Padding(
         padding: new EdgeInsets.fromLTRB(100.0, 10.0, 100.0, 10.0),
         child: new Text(
           '退出登录',
-          style: TextStyle(fontSize: 18.0),
+          style: TextStyle(fontSize: 18.0, color: Color(0xFFFFFFFF)),
         ),
       ),
-      onPressed: ()=>{
-        logoutFun()
+      onPressed: () => {
+        showDialog(
+            barrierDismissible: true, //是否点击空白区域关闭对话框,默认为true，可以关闭
+            context: context,
+            builder: (BuildContext context) {
+              var list = List();
+              list.add('退出后不会删除历史数据');
+              list.add('退出登录');
+              return CommonBottomSheet(
+                list: list,
+                onItemClickListener: (index) async {
+                  print("-----------------------");
+                  print(index);
+                  print("---------------------000");
+                  Navigator.pop(context);
+                },
+              );
+            })
       },
     );
     return btn;
   }
 
-  logoutFun(){
-
-  }
-
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return new Scaffold(
-      backgroundColor: back_color,
-      appBar: new AppBar(
-        backgroundColor: Color(0xFF7EB1FE),
-        title: new Text('个人信息',style: TextStyle(color: Colors.white),),
-        centerTitle: true,
-      ),
-      body: new SingleChildScrollView(
-        child: new ConstrainedBox(
-          constraints: new BoxConstraints(
-            minHeight: 120.0,
-          ),
-          child: new Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              new Padding(
-                padding: const EdgeInsets.only(top: 20.0,left: 15.0,right: 15.0),
-                child: new Card(
-                  margin: const EdgeInsets.only(top: 10.0,left: 10.0,right: 10.0,bottom: 10.0),
-                  elevation: 4.0,
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(15)),
-                  ),
-                  child: new Column(
-                    children: <Widget>[
-                      _avatar(),
-                      _divider(),
-                      _gender(),
-                      _divider(),
-                      _nickname(),
-                      _divider(),
-                      _signature(context),
-                      _divider(),
-                      _mobile(context),
-                      _divider(),
-                      _password()
-                    ],
-                  ),
-                ),
-              ),
-              new Padding(
-                padding: const EdgeInsets.only(left: 25.0,top: 30.0),
-                child: _logoutBtn(context),
-              )
-            ],
-          ),
+    return new Container(
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage("images/1.jpg"),
+          fit: BoxFit.cover,
         ),
-      )
-
-    );
-  }
-
-  Widget _divider(){
-
-    return new Padding(
-      padding: const EdgeInsets.only(left: 15.0, right: 15.0),
-      child: new Divider(
-        color: Colors.grey,
       ),
+      child: new Scaffold(
+          backgroundColor: Colors.transparent,
+          appBar: new AppBar(
+            backgroundColor: Colors.transparent, //把
+            elevation: 0, //appbar的阴影/**/
+            title: new Text(
+              '个人信息',
+              style: TextStyle(color: Colors.white),
+            ),
+            leading: IconButton(
+                icon: Icon(
+                  Icons.keyboard_arrow_left,
+                  size: 30,
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                }),
+            centerTitle: true,
+          ),
+          body: new SingleChildScrollView(
+            child: new ConstrainedBox(
+              constraints: new BoxConstraints(
+                minHeight: 120.0,
+              ),
+              child: new Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  new Padding(
+                    padding: const EdgeInsets.only(
+                        top: 20.0, left: 15.0, right: 15.0),
+                    child: new Card(
+                      margin: const EdgeInsets.only(
+                          top: 0.0, left: 10.0, right: 10.0, bottom: 10.0),
+                      elevation: 4.0,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(15)),
+                      ),
+                      child: new Column(
+                        children: <Widget>[
+                          _avatar(),
+//                          _divider(),
+                          _gender(),
+//                          _divider(),
+                          _nickname(context),
+//                          _divider(),
+                          _signature(context),
+//                          _divider(),
+                          _mobile(context),
+//                          _divider(),
+                          _password()
+                        ],
+                      ),
+                    ),
+                  ),
+                  new Padding(
+                    padding: const EdgeInsets.only(left: 25.0, top: 30.0),
+                    child: _logoutBtn(context),
+                  )
+                ],
+              ),
+            ),
+          )),
     );
   }
-
 }

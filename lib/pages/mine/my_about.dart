@@ -5,18 +5,19 @@ class MyAbout extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
 
-    const _c = Color(0xFF7EB1FE);
+    const _c = Color(0xFF29CCCC);
 
     const _cc = Color(0xff666666);
 
 
     // TODO: implement build
     return new Scaffold(
-        backgroundColor: Color(0xFFECF2FE),
+        backgroundColor: Color(0xFFF8F8F8),
         appBar: new AppBar(
-          backgroundColor: Color(0xFF7EB1FE),
+          backgroundColor: Color(0xFF29CCCC),
           title: new Text('关于我们',style: TextStyle(color: Colors.white),),
           centerTitle: true,
+          leading: IconButton(icon: Icon(Icons.keyboard_arrow_left,size: 30,), onPressed: (){Navigator.pop(context);}),
         ),
         body: SingleChildScrollView(
             padding: EdgeInsets.all(15.0),
@@ -80,12 +81,16 @@ class MyAbout extends StatelessWidget{
                               ],
                             ),
                             new Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 new Padding(
                                   padding: const EdgeInsets.only(top: 5.0,left: 32.0),
                                   child: Text('微信公众号： ',
                                     style: TextStyle(color: _cc,fontSize: 14.0),),
+                                ),
+                                new Container(
+                                  padding: EdgeInsets.only(top: 10),
+                                  child: new Image(image: new AssetImage("images/weixin.png"),fit: BoxFit.cover,width: 120,height: 120,),
                                 )
                               ],
                             ),

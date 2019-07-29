@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../Router.dart';
+
 class MinePage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => new _MinePageState();
@@ -70,7 +72,7 @@ class _MinePageState extends State<MinePage> {
                         color: Color(0xFFFFFFFF),
                       ),
                       onTap: () {
-//                                MyToast.showPickerModal(context, PickerData);
+                        Router.push(context, Router.myInfoPage, []);
                       },
                     )
                   ],
@@ -166,7 +168,9 @@ class _MinePageState extends State<MinePage> {
                                   width: 1,
                                   color: Color.fromRGBO(0, 0, 0, 0.1)))),
                     ),
-                    onTap: () {},
+                    onTap: () {
+                      Router.pushWithAnimation(context, Router.myNews, null);
+                    },
                   ),
                   new InkWell(
                     child: new Container(
@@ -201,7 +205,9 @@ class _MinePageState extends State<MinePage> {
                                   width: 1,
                                   color: Color.fromRGBO(0, 0, 0, 0.1)))),
                     ),
-                    onTap: () {},
+                    onTap: () {
+                      Router.pushWithAnimation(context, Router.myComplaint, null);
+                    },
                   ),
                   new InkWell(
                     child: new Container(
@@ -236,7 +242,9 @@ class _MinePageState extends State<MinePage> {
                                   width: 1,
                                   color: Color.fromRGBO(0, 0, 0, 0.1)))),
                     ),
-                    onTap: () {},
+                    onTap: () {
+                      Router.pushWithAnimation(context, Router.myAbout, null);
+                    },
                   ),
                 ],
               ),
