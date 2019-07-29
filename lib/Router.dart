@@ -23,6 +23,8 @@ import 'package:coach/pages/mine/MyInfo/my_info_pwd.dart';//修改密码
 import 'package:coach/pages/mine/my_complaint.dart';//投诉建议
 import 'package:coach/pages/mine/my_about.dart';//关于我们
 import 'package:coach/pages/mine/my_news.dart';//我的消息
+//学员页面路由
+import 'package:coach/pages/StudentClock/StuDetail.dart';//学员进度更新
 
 class Router {
   static const forgetPage = 'app://login/forget'; //忘记密码页面
@@ -44,6 +46,7 @@ class Router {
   static const myComplaint = 'app://page/mine/mycomplaint'; //投诉建议
   static const myAbout = 'app://page/mine/myabout'; //关于我们
   static const myNews = 'app://page/mine/mynews'; //我的消息
+  static const stuDetail = 'app://page/studentclock/studetail'; //学员进度更新
 
 
   Widget _getPage(String url, dynamic params) {
@@ -89,6 +92,8 @@ class Router {
           return MyAbout();
         case myNews: //我的消息
           return MyNews();
+        case stuDetail://学员进度更新
+          return StuDetail();
       }
     }
     return null;
