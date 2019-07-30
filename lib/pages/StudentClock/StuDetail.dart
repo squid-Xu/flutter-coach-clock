@@ -51,25 +51,26 @@ class _StuDetailState extends State<StuDetail> {
                                         color: Color(0xFF000000),
                                         fontSize: 16.0),
                                   ),
-                                  flex: 1,
+                                  flex: 2,
                                 ),
                                 new Expanded(
                                   child: new Text(
                                     "李鑫一",
                                     style: TextStyle(
                                         color: Color.fromRGBO(0, 0, 0, 0.7),
-                                        fontSize: 17.0,
+                                        fontSize: 16.0,
                                         fontWeight: FontWeight.w600),
                                   ),
-                                  flex: 2,
+                                  flex: 3,
                                 ),
                                 new Expanded(
                                   child: new Text(
                                     "2019.07.21",
                                     textAlign: TextAlign.right,
-                                    style: TextStyle(color: Color(0xFF666666)),
+                                    style: TextStyle(color: Color(0xFF666666),
+                                    fontSize: 15.0),
                                   ),
-                                  flex: 1,
+                                  flex: 2,
                                 )
                               ],
                             ),
@@ -85,17 +86,17 @@ class _StuDetailState extends State<StuDetail> {
                                         color: Color(0xFF000000),
                                         fontSize: 16.0),
                                   ),
-                                  flex: 1,
+                                  flex: 2,
                                 ),
                                 new Expanded(
                                   child: new Text(
                                     "男",
                                     style: TextStyle(
                                         color: Color.fromRGBO(0, 0, 0, 0.7),
-                                        fontSize: 17.0,
+                                        fontSize: 16.0,
                                         fontWeight: FontWeight.w600),
                                   ),
-                                  flex: 3,
+                                  flex: 5,
                                 ),
                               ],
                             ),
@@ -111,17 +112,17 @@ class _StuDetailState extends State<StuDetail> {
                                         color: Color(0xFF000000),
                                         fontSize: 16.0),
                                   ),
-                                  flex: 1,
+                                  flex: 2,
                                 ),
                                 new Expanded(
                                   child: new Text(
                                     "9岁",
                                     style: TextStyle(
                                         color: Color.fromRGBO(0, 0, 0, 0.7),
-                                        fontSize: 17.0,
+                                        fontSize: 16.0,
                                         fontWeight: FontWeight.w600),
                                   ),
-                                  flex: 3,
+                                  flex: 5,
                                 ),
                               ],
                             ),
@@ -137,17 +138,17 @@ class _StuDetailState extends State<StuDetail> {
                                         color: Color(0xFF000000),
                                         fontSize: 16.0),
                                   ),
-                                  flex: 1,
+                                  flex: 2,
                                 ),
                                 new Expanded(
                                   child: new Text(
                                     "暑假特训班",
                                     style: TextStyle(
                                         color: Color.fromRGBO(0, 0, 0, 0.7),
-                                        fontSize: 17.0,
+                                        fontSize: 16.0,
                                         fontWeight: FontWeight.w600),
                                   ),
-                                  flex: 3,
+                                  flex: 5,
                                 ),
                               ],
                             ),
@@ -164,17 +165,17 @@ class _StuDetailState extends State<StuDetail> {
                                         color: Color(0xFF000000),
                                         fontSize: 16.0),
                                   ),
-                                  flex: 1,
+                                  flex: 2,
                                 ),
                                 new Expanded(
                                   child: new Text(
                                     "套餐一（包含99课时、轮滑鞋一双、 护膝一对）",
                                     style: TextStyle(
                                         color: Color.fromRGBO(0, 0, 0, 0.7),
-                                        fontSize: 17.0,
+                                        fontSize: 16.0,
                                         fontWeight: FontWeight.w600),
                                   ),
-                                  flex: 3,
+                                  flex: 5,
                                 ),
                               ],
                             ),

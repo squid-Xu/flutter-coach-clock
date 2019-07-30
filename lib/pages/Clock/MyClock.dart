@@ -51,138 +51,126 @@ class MyClockState extends State<MyClock> {
           new Expanded(
             child: new Column(
               children: <Widget>[
-                new Expanded(
+                new Container(
+                  padding: EdgeInsets.fromLTRB(10, 20, 10, 0),
                   child: new Container(
-                    padding: EdgeInsets.fromLTRB(10, 20, 10, 0),
-                    child: Row(
+                    padding: EdgeInsets.only(left: 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         new Container(
-                          margin: EdgeInsets.only(top: 10, right: 15.0),
-                          decoration: BoxDecoration(
-                              border: Border(
-                                  right: BorderSide(
-                                      width: 1, color: Color(0xFFFFFFFF)))),
+                          padding: EdgeInsets.only(bottom: 10.0),
+                          child: new Text(
+                            "上班打卡时间：",
+                            style: TextStyle(
+                                color: Color(0xFFFEFEFE), fontSize: 15.0),
+                          ),
                         ),
                         new Container(
-                          child: Column(
+                          padding:
+                          EdgeInsets.only(left: 5.0, bottom: 10.0),
+                          child: new Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               new Container(
-                                padding: EdgeInsets.only(bottom: 10.0),
-                                child: new Text(
-                                  "上班打卡时间：",
-                                  style: TextStyle(
-                                      color: Color(0xFFFEFEFE), fontSize: 15.0),
-                                ),
-                              ),
-                              new Container(
-                                padding:
-                                    EdgeInsets.only(left: 5.0, bottom: 10.0),
-                                child: new Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                child: new Row(
+                                  crossAxisAlignment:
+                                  CrossAxisAlignment.center,
                                   children: <Widget>[
-                                    new Container(
-                                      child: new Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: <Widget>[
-                                          new Icon(
-                                            Icons.access_alarm,
-                                            color: Color(0xFFFEFEFE),
-                                            size: 13.0,
-                                          ),
-                                          new Padding(
-                                            padding: EdgeInsets.only(left: 3.0),
-                                            child: new Text(
-                                              "09:00",
-                                              style: TextStyle(
-                                                  color: Color(0xFFFEFEFE),
-                                                  fontSize: 15.0),
-                                            ),
-                                          )
-                                        ],
-                                      ),
+                                    new Icon(
+                                      Icons.access_alarm,
+                                      color: Color(0xFFFEFEFE),
+                                      size: 13.0,
                                     ),
-                                    new Container(
-                                      child: new Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: <Widget>[
-                                          new Icon(
-                                            Icons.room,
+                                    new Padding(
+                                      padding: EdgeInsets.only(left: 3.0),
+                                      child: new Text(
+                                        "09:00",
+                                        style: TextStyle(
                                             color: Color(0xFFFEFEFE),
-                                            size: 13.0,
-                                          ),
-                                          new Padding(
-                                            padding: EdgeInsets.only(left: 3.0),
-                                            child: new Text(
-                                              "中原智谷",
-                                              style: TextStyle(
-                                                  color: Color(0xFFFEFEFE),
-                                                  fontSize: 15.0),
-                                            ),
-                                          )
-                                        ],
+                                            fontSize: 15.0),
                                       ),
                                     )
                                   ],
                                 ),
                               ),
                               new Container(
-                                padding: EdgeInsets.only(bottom: 10.0),
-                                child: new Text(
-                                  "下班打卡时间：",
-                                  style: TextStyle(
-                                      color: Color(0xFFFEFEFE), fontSize: 15.0),
+                                child: new Row(
+                                  crossAxisAlignment:
+                                  CrossAxisAlignment.center,
+                                  children: <Widget>[
+                                    new Icon(
+                                      Icons.room,
+                                      color: Color(0xFFFEFEFE),
+                                      size: 13.0,
+                                    ),
+                                    new Padding(
+                                      padding: EdgeInsets.only(left: 3.0),
+                                      child: new Text(
+                                        "中原智谷",
+                                        style: TextStyle(
+                                            color: Color(0xFFFEFEFE),
+                                            fontSize: 15.0),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                        new Container(
+                          padding: EdgeInsets.only(bottom: 10.0),
+                          child: new Text(
+                            "下班打卡时间：",
+                            style: TextStyle(
+                                color: Color(0xFFFEFEFE), fontSize: 15.0),
+                          ),
+                        ),
+                        new Container(
+                          padding: EdgeInsets.only(left: 5.0),
+                          child: new Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              new Container(
+                                child: new Row(
+                                  crossAxisAlignment:
+                                  CrossAxisAlignment.center,
+                                  children: <Widget>[
+                                    new Icon(
+                                      Icons.access_alarm,
+                                      color: Color(0xFFFEFEFE),
+                                      size: 13.0,
+                                    ),
+                                    new Padding(
+                                      padding: EdgeInsets.only(left: 3.0),
+                                      child: new Text(
+                                        "09:00",
+                                        style: TextStyle(
+                                            color: Color(0xFFFEFEFE),
+                                            fontSize: 15.0),
+                                      ),
+                                    )
+                                  ],
                                 ),
                               ),
                               new Container(
-                                padding: EdgeInsets.only(left: 5.0),
-                                child: new Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                child: new Row(
+                                  crossAxisAlignment:
+                                  CrossAxisAlignment.center,
                                   children: <Widget>[
-                                    new Container(
-                                      child: new Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: <Widget>[
-                                          new Icon(
-                                            Icons.access_alarm,
-                                            color: Color(0xFFFEFEFE),
-                                            size: 13.0,
-                                          ),
-                                          new Padding(
-                                            padding: EdgeInsets.only(left: 3.0),
-                                            child: new Text(
-                                              "09:00",
-                                              style: TextStyle(
-                                                  color: Color(0xFFFEFEFE),
-                                                  fontSize: 15.0),
-                                            ),
-                                          )
-                                        ],
-                                      ),
+                                    new Icon(
+                                      Icons.room,
+                                      color: Color(0xFFFEFEFE),
+                                      size: 13.0,
                                     ),
-                                    new Container(
-                                      child: new Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: <Widget>[
-                                          new Icon(
-                                            Icons.room,
+                                    new Padding(
+                                      padding: EdgeInsets.only(left: 3.0),
+                                      child: new Text(
+                                        "中原智谷",
+                                        style: TextStyle(
                                             color: Color(0xFFFEFEFE),
-                                            size: 13.0,
-                                          ),
-                                          new Padding(
-                                            padding: EdgeInsets.only(left: 3.0),
-                                            child: new Text(
-                                              "中原智谷",
-                                              style: TextStyle(
-                                                  color: Color(0xFFFEFEFE),
-                                                  fontSize: 15.0),
-                                            ),
-                                          )
-                                        ],
+                                            fontSize: 15.0),
                                       ),
                                     )
                                   ],
@@ -193,8 +181,11 @@ class MyClockState extends State<MyClock> {
                         )
                       ],
                     ),
+                    decoration: BoxDecoration(
+                        border: Border(
+                            left: BorderSide(
+                                width: 1, color: Color(0xFFFFFFFF)))),
                   ),
-                  flex: 4,
                 ),
                 new Expanded(
                   child: new Container(
@@ -226,7 +217,7 @@ class MyClockState extends State<MyClock> {
                 ),
                 new Expanded(
                   child: new Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       new Container(
