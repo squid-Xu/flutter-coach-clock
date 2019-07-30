@@ -3,7 +3,6 @@ import 'package:coach/pages/circlePage.dart';
 import 'package:coach/pages/homePage.dart';
 import 'package:coach/pages/minePage.dart';
 import 'package:coach/pages/studentsPage.dart';
-
 import 'package:flutter/material.dart';
 
 class TabNavigator extends StatefulWidget {
@@ -52,23 +51,23 @@ class _TabNavitagorState extends State<TabNavigator> {
                 title: Text(
                   '首页',style: TextStyle(color: _currentInndex !=0 ? _defaultColor : null),
                 ),
-                icon: Icon(IconFont.icon_index),),
+                icon: Icon(IconFont.icon_shouye),),
             BottomNavigationBarItem(
                 title: Text(
                   '学员',style: TextStyle(color: _currentInndex !=1 ? _defaultColor : null),
                 ),
-                icon: Icon(IconFont.icon_dayuanjiaojianying_kuozhan_),),
+                icon: Icon(IconFont.icon_rg),),
             BottomNavigationBarItem(
                 title: Text(
                   '圈子',style: TextStyle(color: _currentInndex !=2 ? _defaultColor : null),
                 ),
                 icon: Icon(IconFont.icon_quanzi,
-                    size: 27.0),),
+                    ),),
             BottomNavigationBarItem(
                 title: Text(
                   '我的',style: TextStyle(color: _currentInndex !=3 ? _defaultColor : null),
                 ),
-                icon: Icon(IconFont.icon_mine_gray)),
+                icon: Icon(IconFont.icon_wode)),
           ]),
     );
   }

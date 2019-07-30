@@ -205,8 +205,8 @@ class _myInfoEditMobileState extends State<MyInfoEditMobile> {
                 ),
                 _mobileInputCard(),
                 _verifyCodeCard(),
-                new Padding(
-                  padding: const EdgeInsets.only(top: 40.0),
+                new Container(
+                  padding: const EdgeInsets.only(top: 40.0,bottom: 10),
                   child: _submitBtn(context),
                 )
               ],

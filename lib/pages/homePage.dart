@@ -14,9 +14,10 @@ class HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return new Container(
+//        height: 500,
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("images/1.jpg"),
+            image: AssetImage("images/index.jpg"),
             fit: BoxFit.cover,
           ),
         ),

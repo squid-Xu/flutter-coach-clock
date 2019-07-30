@@ -381,8 +381,18 @@ class MyInfoPageState extends State<MyInfoPage> {
       content: Column(
         children: <Widget>[
           new Container(
-            padding: EdgeInsets.only(top: 10.0),
-            child: Image.asset("images/success.png"),
+            margin: EdgeInsets.only(top: 30.0, bottom: 30.0),
+            width: 160.0,
+            height: 107.0,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("images/mobile.png"),
+                fit: BoxFit.fill,
+              ),
+              borderRadius: BorderRadius.all(
+                Radius.circular(10.0),
+              ),
+            ),
           ),
           new Container(
             padding: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20.0),
@@ -483,7 +493,7 @@ class MyInfoPageState extends State<MyInfoPage> {
     return new Container(
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage("images/1.jpg"),
+          image: AssetImage("images/mine.jpg"),
           fit: BoxFit.cover,
         ),
       ),

@@ -62,15 +62,16 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   assets:
-    - images/1.jpg
-    - images/2.jpg
-    - images/3.jpg
-    - images/4.jpg
     - images/logo.png
     - images/man.png
     - images/woman.png
-    - images/success.png
     - images/weixin.png
+    - images/circle.png
+    - images/index.jpg
+    - images/login.jpg
+    - images/mine.jpg
+    - images/mobile.png
+    - images/my-vip.png
   fonts:
     - family: iconfont
       fonts:

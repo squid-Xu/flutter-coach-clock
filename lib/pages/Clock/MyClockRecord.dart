@@ -1,3 +1,4 @@
+import 'package:coach/fonts/iconfont.dart';
 import 'package:flutter/material.dart';
 
 class MyClockRecord extends StatefulWidget {
@@ -209,7 +210,7 @@ class _MyClockRecordState extends State<MyClockRecord> {
                   child: Column(
                     children: <Widget>[
                       new Icon(
-                        Icons.date_range,
+                        IconFont.icon_daqia,
                         color: Color(0xFF999999),
                       ),
                       new Container(
@@ -233,7 +234,7 @@ class _MyClockRecordState extends State<MyClockRecord> {
                     child: Column(
                       children: <Widget>[
                         new Icon(
-                          Icons.date_range,
+                          IconFont.icon_daqiajilu,
                           color: Color(0xFF29CCCC),
                         ),
                         new Container(

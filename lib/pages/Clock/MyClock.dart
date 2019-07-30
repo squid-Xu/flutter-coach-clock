@@ -1,3 +1,4 @@
+import 'package:coach/fonts/iconfont.dart';
 import 'package:flutter/material.dart';
 
 class MyClock extends StatefulWidget {
@@ -67,15 +68,13 @@ class MyClockState extends State<MyClock> {
                           ),
                         ),
                         new Container(
-                          padding:
-                          EdgeInsets.only(left: 5.0, bottom: 10.0),
+                          padding: EdgeInsets.only(left: 5.0, bottom: 10.0),
                           child: new Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               new Container(
                                 child: new Row(
-                                  crossAxisAlignment:
-                                  CrossAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: <Widget>[
                                     new Icon(
                                       Icons.access_alarm,
@@ -96,8 +95,7 @@ class MyClockState extends State<MyClock> {
                               ),
                               new Container(
                                 child: new Row(
-                                  crossAxisAlignment:
-                                  CrossAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: <Widget>[
                                     new Icon(
                                       Icons.room,
@@ -134,8 +132,7 @@ class MyClockState extends State<MyClock> {
                             children: <Widget>[
                               new Container(
                                 child: new Row(
-                                  crossAxisAlignment:
-                                  CrossAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: <Widget>[
                                     new Icon(
                                       Icons.access_alarm,
@@ -156,8 +153,7 @@ class MyClockState extends State<MyClock> {
                               ),
                               new Container(
                                 child: new Row(
-                                  crossAxisAlignment:
-                                  CrossAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: <Widget>[
                                     new Icon(
                                       Icons.room,
@@ -188,7 +184,13 @@ class MyClockState extends State<MyClock> {
                   ),
                 ),
                 new Expanded(
-                  child: new Container(
+                  child: new Card(
+                    elevation: 10.0,
+                    shape: CircleBorder(
+                      side: BorderSide(
+                        color: Colors.white,
+                      ),
+                    ),
                     child: new CircleAvatar(
                       backgroundColor: Color(0xFFFFFFFF),
                       radius: 60.0,
@@ -245,14 +247,14 @@ class MyClockState extends State<MyClock> {
             ),
           ),
           new Container(
-            padding: EdgeInsets.only(bottom: 30.0, top: 10.0),
+            padding: EdgeInsets.only(bottom: 30.0, top: 20.0),
             child: new Row(
               children: <Widget>[
                 Expanded(
                   child: Column(
                     children: <Widget>[
                       new Icon(
-                        Icons.date_range,
+                        IconFont.icon_daqia,
                         color: Color(0xFF29CCCC),
                       ),
                       new Container(
@@ -273,7 +275,7 @@ class MyClockState extends State<MyClock> {
                     child: Column(
                       children: <Widget>[
                         new Icon(
-                          Icons.date_range,
+                          IconFont.icon_daqiajilu,
                           color: Color(0xFF999999),
                         ),
                         new Container(

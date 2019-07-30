@@ -1,3 +1,4 @@
+import 'package:coach/fonts/iconfont.dart';
 import 'package:flutter/material.dart';
 
 import 'Toast.dart';
@@ -112,8 +113,14 @@ class _StuClockdState extends State<StuClock> {
                   flex: 2,
                 ),
                 new Expanded(
-                  child: new Container(
-                    margin: EdgeInsets.only(bottom: 10),
+                  child: new Card(
+                    elevation: 15.0,
+                    shape: CircleBorder(
+                      side: BorderSide(
+                        color: Colors.white,
+                      ),
+                    ),
+//                    margin: EdgeInsets.only(bottom: 10),
                     child: new CircleAvatar(
                       backgroundColor: Color(0xFFFFFFFF),
                       radius: 60.0,
@@ -142,7 +149,7 @@ class _StuClockdState extends State<StuClock> {
                 ),
                 new Expanded(
                   child: new Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       new Container(
@@ -170,14 +177,14 @@ class _StuClockdState extends State<StuClock> {
             ),
           ),
           new Container(
-            padding: EdgeInsets.only(bottom: 50.0),
+            padding: EdgeInsets.only(bottom: 30.0, top: 20.0),
             child: new Row(
               children: <Widget>[
                 Expanded(
                   child: Column(
                     children: <Widget>[
                       new Icon(
-                        Icons.date_range,
+                        IconFont.icon_daqia,
                         color: Color(0xFF29CCCC),
                       ),
                       new Container(
@@ -198,7 +205,7 @@ class _StuClockdState extends State<StuClock> {
                     child: Column(
                       children: <Widget>[
                         new Icon(
-                          Icons.date_range,
+                          IconFont.icon_daqiajilu,
                           color: Color(0xFF999999),
                         ),
                         new Container(

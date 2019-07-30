@@ -1,3 +1,4 @@
+import 'package:coach/fonts/iconfont.dart';
 import 'package:coach/login/toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -80,7 +81,7 @@ class _RegisterPageState extends State<Register> {
     return new Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("images/1.jpg"),
+            image: AssetImage("images/login.jpg"),
             fit: BoxFit.cover,
           ),
         ),
@@ -414,7 +415,7 @@ class _RegisterPageState extends State<Register> {
                     hintStyle: new TextStyle(color: Color(0xFFF2F2F2)),
                     suffixIcon: new IconButton(
                         icon: Icon(
-                          Icons.remove_red_eye,
+                          IconFont.icon_mimaxianshi,
                           color: _eyeColor,
                           size: 20.0,
                         ),

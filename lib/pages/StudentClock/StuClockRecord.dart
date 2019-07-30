@@ -1,3 +1,4 @@
+import 'package:coach/fonts/iconfont.dart';
 import 'package:flutter/material.dart';
 
 import 'Toast.dart';
@@ -1285,7 +1286,7 @@ class _StuClockRecordState extends State<StuClockRecord> {
             ),
           ),
           new Container(
-            padding: EdgeInsets.only(bottom: 20.0, top: 20.0),
+            padding: EdgeInsets.only(bottom: 30.0, top: 20.0),
             child: new Row(
               children: <Widget>[
                 Expanded(
@@ -1293,7 +1294,7 @@ class _StuClockRecordState extends State<StuClockRecord> {
                     child: Column(
                       children: <Widget>[
                         new Icon(
-                          Icons.date_range,
+                          IconFont.icon_daqia,
                           color: Color(0xFF999999),
                         ),
                         new Container(
@@ -1317,7 +1318,7 @@ class _StuClockRecordState extends State<StuClockRecord> {
                   child: Column(
                     children: <Widget>[
                       new Icon(
-                        Icons.date_range,
+                        IconFont.icon_daqiajilu,
                         color: Color(0xFF29CCCC),
                       ),
                       new Container(

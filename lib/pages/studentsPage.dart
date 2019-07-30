@@ -1,3 +1,4 @@
+import 'package:coach/fonts/iconfont.dart';
 import 'package:flutter/material.dart';
 
 import '../Router.dart';
@@ -45,7 +46,7 @@ class _StudentsPageState extends State<StudentsPage> {
                             flex: 5,
                           ),
                           new Icon(
-                            Icons.search,
+                            IconFont.icon_sousuo_copy,
                             color: Color(0xFF29CCCC),
                             size: 25.0,
                           ),
