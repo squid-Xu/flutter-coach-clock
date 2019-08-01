@@ -14,6 +14,7 @@ import 'package:coach/pages/StudentClock/StuClock.dart'; //学员打卡
 import 'package:coach/pages/StudentClock/StuClockList.dart'; //学员打卡列表
 import 'package:coach/pages/StudentClock/StuClockRecord.dart'; //学员打卡记录
 import 'package:coach/pages/homePage.dart'; //首页
+import 'package:coach/pages/StudentClock/StuSearch.dart';//学员搜索
 //我的页面路由
 import 'package:coach/pages/mine/my_info_page.dart';//个人信息
 import 'package:coach/pages/mine/MyInfo/my_info_signature.dart'; //个人签名
@@ -37,6 +38,7 @@ class Router {
   static const stuClock = 'app://page/studentclock/stuclock'; //学员打卡
   static const stuClockList = 'app://page/studentclock/stuclocklist'; //学员打卡列表
   static const stuClockRecord = 'app://page/studentclock/stuclockrecord'; //学员打卡记录
+  static const stuSearch = 'app://page/studentclock/stusearch'; //学员搜索
   static const homePage = 'app://page/homepage'; //首页
   static const myInfoPage = 'app://page/mine/myinfoPage'; //个人信息
   static const myInfosignPage = 'app://page/mine/myinfosignPage'; //个人签名
@@ -94,6 +96,8 @@ class Router {
           return MyNews();
         case stuDetail://学员进度更新
           return StuDetail();
+        case stuSearch://学员搜索
+          return StuSeartch();
       }
     }
     return null;

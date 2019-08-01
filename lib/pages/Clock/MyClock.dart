@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:coach/fonts/iconfont.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class MyClock extends StatefulWidget {
   @override
@@ -10,6 +13,9 @@ class MyClock extends StatefulWidget {
 }
 
 class MyClockState extends State<MyClock> {
+  Timer _timer;
+  String   _Date=new DateFormat('yyyy.MM.dd').format(DateTime.now());
+  String   _Time=new DateFormat('HH:mm:ss').format(DateTime.now());
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -43,7 +49,7 @@ class MyClockState extends State<MyClock> {
               )),
               new Container(
                 child: new Text(
-                  "2019.07.08",
+                  _Date,
                   style: TextStyle(color: Color(0xFFFFFFFF), fontSize: 15.0),
                 ),
               ),
@@ -195,22 +201,27 @@ class MyClockState extends State<MyClock> {
                       backgroundColor: Color(0xFFFFFFFF),
                       radius: 60.0,
                       child: new Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            new Text(
-                              "上课打卡",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  color: Color(0xFF29CCCC),
-                                  fontSize: 16.0),
-                            ),
-                            new Text(
-                              "09:00:00",
-                              style: TextStyle(
-                                  color: Color(0xFF29CCCC), fontSize: 14.0),
-                            )
-                          ],
+                        child: new GestureDetector(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              new Text(
+                                "上课打卡",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    color: Color(0xFF29CCCC),
+                                    fontSize: 16.0),
+                              ),
+                              new Text(
+                                _Time,
+                                style: TextStyle(
+                                    color: Color(0xFF29CCCC), fontSize: 14.0),
+                              )
+                            ],
+                          ),
+                          onTap: (){
+                            print("点击打卡");
+                          },
                         ),
                       ),
                     ),
@@ -291,6 +302,7 @@ class MyClockState extends State<MyClock> {
                       ],
                     ),
                     onTap: () {
+                      cancelTimer();
                       Navigator.of(context).pushNamed('part/part2');
                     },
                   ),
@@ -301,5 +313,34 @@ class MyClockState extends State<MyClock> {
         ],
       ),
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    //获取当期时间
+    startTimer();
+  }
+  void startTimer() {
+    //设置 1 秒回调一次
+    const period = const Duration(seconds: 1);
+    _timer = Timer.periodic(period, (timer) {
+      //更新界面
+      setState(() {
+        _Time=new DateFormat('HH:mm:ss').format(DateTime.now());
+      });
+    });
+  }
+
+  void cancelTimer() {
+    if (_timer != null) {
+      _timer.cancel();
+      _timer = null;
+    }
+  }
+  @override
+  void dispose() {
+    super.dispose();
+    cancelTimer();
   }
 }

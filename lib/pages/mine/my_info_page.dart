@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:image_picker/image_picker.dart';
@@ -464,24 +465,41 @@ class MyInfoPageState extends State<MyInfoPage> {
           style: TextStyle(fontSize: 18.0, color: Color(0xFFFFFFFF)),
         ),
       ),
-      onPressed: () => {
-        showDialog(
-            barrierDismissible: true, //是否点击空白区域关闭对话框,默认为true，可以关闭
-            context: context,
-            builder: (BuildContext context) {
-              var list = List();
-              list.add('退出后不会删除历史数据');
-              list.add('退出登录');
-              return CommonBottomSheet(
-                list: list,
-                onItemClickListener: (index) async {
-                  print("-----------------------");
-                  print(index);
-                  print("---------------------000");
+      onPressed: () {
+        showCupertinoModalPopup(
+          context: context,
+          builder: (context) {
+            return CupertinoActionSheet(
+              title: Text(
+                '提示',
+                style: TextStyle(fontSize: 22),
+              ), //标题
+              message: Text('退出后不会删除任何历史数据，下次登录依然可以使用本账号。'), //提示内容
+              actions: <Widget>[
+                //操作按钮集合
+                CupertinoActionSheetAction(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text(
+                    '退出登录',
+                    style: TextStyle(color: Color(0xFFDC143C)),
+                  ),
+                ),
+              ],
+              cancelButton: CupertinoActionSheetAction(
+                //取消按钮
+                onPressed: () {
                   Navigator.pop(context);
                 },
-              );
-            })
+                child: Text(
+                  '取消',
+                  style: TextStyle(color: Color(0xFF000000)),
+                ),
+              ),
+            );
+          },
+        );
       },
     );
     return btn;

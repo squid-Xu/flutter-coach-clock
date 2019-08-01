@@ -20,7 +20,9 @@ class _ForgetPageState extends State<Forget> {
       TextEditingController(); //确认密码
   final _formKey = GlobalKey<FormState>();
   bool _isObscure = true;
+  bool _isEnterObscure = true;
   Color _eyeColor = Color(0xFFF2F2F2);
+  Color _eyeEnterColor = Color(0xFFF2F2F2);
   String _verifyStr = '获取验证码';
   int _seconds = 0;
   Timer _timer;
@@ -399,7 +401,7 @@ class _ForgetPageState extends State<Forget> {
                           setState(() {
                             _isObscure = !_isObscure;
                             _eyeColor =
-                                _isObscure ? Color(0xFFF2F2F2) : Colors.white;
+                                _isObscure ? Color(0xFFF2F2F2) : Color(0xFF29CCCC);
                           });
                         }),
                   ),
@@ -444,7 +446,7 @@ class _ForgetPageState extends State<Forget> {
               new Expanded(
                 child: new TextFormField(
                   controller: _PasswordEnterEtController,
-                  obscureText: _isObscure,
+                  obscureText: _isEnterObscure,
                   cursorColor: Colors.white,
                   style: new TextStyle(color: Color(0xFFFFFFFF)),
                   // 设置字体样式
@@ -455,14 +457,14 @@ class _ForgetPageState extends State<Forget> {
                     suffixIcon: new IconButton(
                         icon: Icon(
                           IconFont.icon_mimaxianshi,
-                          color: _eyeColor,
+                          color: _eyeEnterColor,
                           size: 20.0,
                         ),
                         onPressed: () {
                           setState(() {
-                            _isObscure = !_isObscure;
-                            _eyeColor =
-                                _isObscure ? Color(0xFFF2F2F2) : Colors.white;
+                            _isEnterObscure = !_isEnterObscure;
+                            _eyeEnterColor =
+                            _isEnterObscure ? Color(0xFFF2F2F2) : Color(0xFF29CCCC);
                           });
                         }),
                   ),

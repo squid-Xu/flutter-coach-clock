@@ -22,6 +22,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.1.2"
+  city_pickers:
+    dependency: "direct main"
+    description:
+      name: city_pickers
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.1.22"
   collection:
     dependency: transitive
     description:
@@ -46,13 +53,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_picker:
-    dependency: "direct main"
-    description:
-      name: flutter_picker
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "1.0.13"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -66,12 +66,19 @@ packages:
     source: hosted
     version: "0.6.0+17"
   intl:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: intl
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.15.8"
+  lpinyin:
+    dependency: transitive
+    description:
+      name: lpinyin
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "1.0.7"
   matcher:
     dependency: transitive
     description:

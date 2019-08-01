@@ -9,6 +9,7 @@ class StudentsPage extends StatefulWidget {
 }
 
 class _StudentsPageState extends State<StudentsPage> {
+  final controller = TextEditingController();
   bool floating = false;
   bool snap = false;
   bool pinned = true;
@@ -39,9 +40,37 @@ class _StudentsPageState extends State<StudentsPage> {
                       child: Row(
                         children: <Widget>[
                           new Expanded(
-                            child: new Text(
-                              "搜索",
-                              style: TextStyle(color: Color(0xFFCCCCCC)),
+                            child: new Container(
+                              child: new Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  SizedBox(
+                                    width: 10.0,
+                                  ),
+                                  Expanded(
+                                    child: Container(
+                                      child: TextField(
+                                        controller: controller,
+                                        decoration: new InputDecoration(
+                                            contentPadding: EdgeInsets.only(top: 0.0),
+                                            hintText: '搜索',
+                                            hintStyle: TextStyle(fontSize: 15.0),
+                                            border: InputBorder.none),
+// onChanged: onSearchTextChanged,
+                                      ),
+                                    ),
+                                  ),
+//                            new IconButton(
+//                              icon: new Icon(Icons.cancel),
+//                              color: Colors.grey,
+//                              iconSize: 18.0,
+//                              onPressed: () {
+//                                controller.clear();
+//// onSearchTextChanged('');
+//                              },
+//                            ),
+                                ],
+                              ),
                             ),
                             flex: 5,
                           ),

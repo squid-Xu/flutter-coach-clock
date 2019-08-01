@@ -423,7 +423,7 @@ class _RegisterPageState extends State<Register> {
                           setState(() {
                             _isObscure = !_isObscure;
                             _eyeColor =
-                                _isObscure ? Color(0xFFF2F2F2) : Colors.white;
+                                _isObscure ? Color(0xFFF2F2F2) : Color(0xFF29CCCC);
                           });
                         }),
                   ),

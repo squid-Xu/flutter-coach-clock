@@ -1,5 +1,6 @@
 import 'package:coach/fonts/iconfont.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class MyClockRecord extends StatefulWidget {
   @override
@@ -10,6 +11,7 @@ class MyClockRecord extends StatefulWidget {
 }
 
 class _MyClockRecordState extends State<MyClockRecord> {
+  String _Date = new DateFormat('yyyy.MM.dd').format(DateTime.now());
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -44,7 +46,7 @@ class _MyClockRecordState extends State<MyClockRecord> {
               ),
               new Container(
                 child: new Text(
-                  "2019.07.08",
+                  _Date,
                   style: TextStyle(color: Color(0xFFFFFFFF), fontSize: 15.0),
                 ),
               ),
@@ -110,11 +112,9 @@ class _MyClockRecordState extends State<MyClockRecord> {
                                 color: Color.fromRGBO(0, 0, 0, 0.1)))),
                   ),
                   new Expanded(
-                    child: ListView.custom(
-                      scrollDirection: Axis.vertical,
-                      childrenDelegate: SliverChildBuilderDelegate(
-                          (BuildContext context, int index) {
-                        return Container(
+                    child: ListView(
+                      children: <Widget>[
+                        new Container(
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -193,8 +193,488 @@ class _MyClockRecordState extends State<MyClockRecord> {
                               border: Border(
                                   bottom: BorderSide(
                                       width: 1, color: Color(0xffe5e5e5)))),
-                        );
-                      }, childCount: 50),
+                        ),
+                        new Container(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              new Expanded(
+                                child: new Container(
+                                  height: 50.0,
+                                  child: new Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      new Text(
+                                        "2019.07.08",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            color: Color(0xFF000000),
+                                            fontSize: 14.0),
+                                      ),
+                                      new Text(
+                                        "09:00:00",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            color: Color(0xFF000000),
+                                            fontSize: 14.0),
+                                      )
+                                    ],
+                                  ),
+                                  decoration: BoxDecoration(
+                                      border: Border(
+                                          right: BorderSide(
+                                              width: 1,
+                                              color: Color.fromRGBO(
+                                                  0, 0, 0, 0.1)))),
+                                ),
+                              ),
+                              new Expanded(
+                                child: new Container(
+                                  height: 50.0,
+                                  padding: EdgeInsets.only(left: 5, right: 5),
+                                  child: new Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      new Text(
+                                        "轮滑俱乐部",
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                        textAlign: TextAlign.justify,
+                                        style: TextStyle(
+                                            color: Color(0xFF000000),
+                                            fontSize: 14.0),
+                                      ),
+                                    ],
+                                  ),
+                                  decoration: BoxDecoration(
+                                      border: Border(
+                                          right: BorderSide(
+                                              width: 1,
+                                              color: Color.fromRGBO(
+                                                  0, 0, 0, 0.1)))),
+                                ),
+                              ),
+                              new Expanded(
+                                child: new Container(
+                                  padding: EdgeInsets.only(left: 5, right: 5),
+                                  child: new Text(
+                                    "267课时",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: Color(0xFF000000),
+                                        fontSize: 14.0),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                          decoration: BoxDecoration(
+                              border: Border(
+                                  bottom: BorderSide(
+                                      width: 1, color: Color(0xffe5e5e5)))),
+                        ),
+                        new Container(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              new Expanded(
+                                child: new Container(
+                                  height: 50.0,
+                                  child: new Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      new Text(
+                                        "2019.07.08",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            color: Color(0xFF000000),
+                                            fontSize: 14.0),
+                                      ),
+                                      new Text(
+                                        "09:00:00",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            color: Color(0xFF000000),
+                                            fontSize: 14.0),
+                                      )
+                                    ],
+                                  ),
+                                  decoration: BoxDecoration(
+                                      border: Border(
+                                          right: BorderSide(
+                                              width: 1,
+                                              color: Color.fromRGBO(
+                                                  0, 0, 0, 0.1)))),
+                                ),
+                              ),
+                              new Expanded(
+                                child: new Container(
+                                  height: 50.0,
+                                  padding: EdgeInsets.only(left: 5, right: 5),
+                                  child: new Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      new Text(
+                                        "轮滑俱乐部",
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                        textAlign: TextAlign.justify,
+                                        style: TextStyle(
+                                            color: Color(0xFF000000),
+                                            fontSize: 14.0),
+                                      ),
+                                    ],
+                                  ),
+                                  decoration: BoxDecoration(
+                                      border: Border(
+                                          right: BorderSide(
+                                              width: 1,
+                                              color: Color.fromRGBO(
+                                                  0, 0, 0, 0.1)))),
+                                ),
+                              ),
+                              new Expanded(
+                                child: new Container(
+                                  padding: EdgeInsets.only(left: 5, right: 5),
+                                  child: new Text(
+                                    "267课时",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: Color(0xFF000000),
+                                        fontSize: 14.0),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                          decoration: BoxDecoration(
+                              border: Border(
+                                  bottom: BorderSide(
+                                      width: 1, color: Color(0xffe5e5e5)))),
+                        ),
+                        new Container(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              new Expanded(
+                                child: new Container(
+                                  height: 50.0,
+                                  child: new Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      new Text(
+                                        "2019.07.08",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            color: Color(0xFF000000),
+                                            fontSize: 14.0),
+                                      ),
+                                      new Text(
+                                        "09:00:00",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            color: Color(0xFF000000),
+                                            fontSize: 14.0),
+                                      )
+                                    ],
+                                  ),
+                                  decoration: BoxDecoration(
+                                      border: Border(
+                                          right: BorderSide(
+                                              width: 1,
+                                              color: Color.fromRGBO(
+                                                  0, 0, 0, 0.1)))),
+                                ),
+                              ),
+                              new Expanded(
+                                child: new Container(
+                                  height: 50.0,
+                                  padding: EdgeInsets.only(left: 5, right: 5),
+                                  child: new Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      new Text(
+                                        "轮滑俱乐部",
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                        textAlign: TextAlign.justify,
+                                        style: TextStyle(
+                                            color: Color(0xFF000000),
+                                            fontSize: 14.0),
+                                      ),
+                                    ],
+                                  ),
+                                  decoration: BoxDecoration(
+                                      border: Border(
+                                          right: BorderSide(
+                                              width: 1,
+                                              color: Color.fromRGBO(
+                                                  0, 0, 0, 0.1)))),
+                                ),
+                              ),
+                              new Expanded(
+                                child: new Container(
+                                  padding: EdgeInsets.only(left: 5, right: 5),
+                                  child: new Text(
+                                    "267课时",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: Color(0xFF000000),
+                                        fontSize: 14.0),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                          decoration: BoxDecoration(
+                              border: Border(
+                                  bottom: BorderSide(
+                                      width: 1, color: Color(0xffe5e5e5)))),
+                        ),
+                        new Container(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              new Expanded(
+                                child: new Container(
+                                  height: 50.0,
+                                  child: new Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      new Text(
+                                        "2019.07.08",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            color: Color(0xFF000000),
+                                            fontSize: 14.0),
+                                      ),
+                                      new Text(
+                                        "09:00:00",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            color: Color(0xFF000000),
+                                            fontSize: 14.0),
+                                      )
+                                    ],
+                                  ),
+                                  decoration: BoxDecoration(
+                                      border: Border(
+                                          right: BorderSide(
+                                              width: 1,
+                                              color: Color.fromRGBO(
+                                                  0, 0, 0, 0.1)))),
+                                ),
+                              ),
+                              new Expanded(
+                                child: new Container(
+                                  height: 50.0,
+                                  padding: EdgeInsets.only(left: 5, right: 5),
+                                  child: new Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      new Text(
+                                        "轮滑俱乐部",
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                        textAlign: TextAlign.justify,
+                                        style: TextStyle(
+                                            color: Color(0xFF000000),
+                                            fontSize: 14.0),
+                                      ),
+                                    ],
+                                  ),
+                                  decoration: BoxDecoration(
+                                      border: Border(
+                                          right: BorderSide(
+                                              width: 1,
+                                              color: Color.fromRGBO(
+                                                  0, 0, 0, 0.1)))),
+                                ),
+                              ),
+                              new Expanded(
+                                child: new Container(
+                                  padding: EdgeInsets.only(left: 5, right: 5),
+                                  child: new Text(
+                                    "267课时",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: Color(0xFF000000),
+                                        fontSize: 14.0),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                          decoration: BoxDecoration(
+                              border: Border(
+                                  bottom: BorderSide(
+                                      width: 1, color: Color(0xffe5e5e5)))),
+                        ),
+                        new Container(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              new Expanded(
+                                child: new Container(
+                                  height: 50.0,
+                                  child: new Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      new Text(
+                                        "2019.07.08",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            color: Color(0xFF000000),
+                                            fontSize: 14.0),
+                                      ),
+                                      new Text(
+                                        "09:00:00",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            color: Color(0xFF000000),
+                                            fontSize: 14.0),
+                                      )
+                                    ],
+                                  ),
+                                  decoration: BoxDecoration(
+                                      border: Border(
+                                          right: BorderSide(
+                                              width: 1,
+                                              color: Color.fromRGBO(
+                                                  0, 0, 0, 0.1)))),
+                                ),
+                              ),
+                              new Expanded(
+                                child: new Container(
+                                  height: 50.0,
+                                  padding: EdgeInsets.only(left: 5, right: 5),
+                                  child: new Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      new Text(
+                                        "轮滑俱乐部",
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                        textAlign: TextAlign.justify,
+                                        style: TextStyle(
+                                            color: Color(0xFF000000),
+                                            fontSize: 14.0),
+                                      ),
+                                    ],
+                                  ),
+                                  decoration: BoxDecoration(
+                                      border: Border(
+                                          right: BorderSide(
+                                              width: 1,
+                                              color: Color.fromRGBO(
+                                                  0, 0, 0, 0.1)))),
+                                ),
+                              ),
+                              new Expanded(
+                                child: new Container(
+                                  padding: EdgeInsets.only(left: 5, right: 5),
+                                  child: new Text(
+                                    "267课时",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: Color(0xFF000000),
+                                        fontSize: 14.0),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                          decoration: BoxDecoration(
+                              border: Border(
+                                  bottom: BorderSide(
+                                      width: 1, color: Color(0xffe5e5e5)))),
+                        ),
+                        new Container(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              new Expanded(
+                                child: new Container(
+                                  height: 50.0,
+                                  child: new Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      new Text(
+                                        "2019.07.08",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            color: Color(0xFF000000),
+                                            fontSize: 14.0),
+                                      ),
+                                      new Text(
+                                        "09:00:00",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            color: Color(0xFF000000),
+                                            fontSize: 14.0),
+                                      )
+                                    ],
+                                  ),
+                                  decoration: BoxDecoration(
+                                      border: Border(
+                                          right: BorderSide(
+                                              width: 1,
+                                              color: Color.fromRGBO(
+                                                  0, 0, 0, 0.1)))),
+                                ),
+                              ),
+                              new Expanded(
+                                child: new Container(
+                                  height: 50.0,
+                                  padding: EdgeInsets.only(left: 5, right: 5),
+                                  child: new Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      new Text(
+                                        "轮滑俱乐部",
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                        textAlign: TextAlign.justify,
+                                        style: TextStyle(
+                                            color: Color(0xFF000000),
+                                            fontSize: 14.0),
+                                      ),
+                                    ],
+                                  ),
+                                  decoration: BoxDecoration(
+                                      border: Border(
+                                          right: BorderSide(
+                                              width: 1,
+                                              color: Color.fromRGBO(
+                                                  0, 0, 0, 0.1)))),
+                                ),
+                              ),
+                              new Expanded(
+                                child: new Container(
+                                  padding: EdgeInsets.only(left: 5, right: 5),
+                                  child: new Text(
+                                    "267课时",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: Color(0xFF000000),
+                                        fontSize: 14.0),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                          decoration: BoxDecoration(
+                              border: Border(
+                                  bottom: BorderSide(
+                                      width: 1, color: Color(0xffe5e5e5)))),
+                        ),
+                      ],
                     ),
                   )
                 ]),

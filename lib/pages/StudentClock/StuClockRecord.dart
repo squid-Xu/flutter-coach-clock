@@ -1,7 +1,6 @@
 import 'package:coach/fonts/iconfont.dart';
+import 'package:coach/pages/StudentClock/picker.dart';
 import 'package:flutter/material.dart';
-
-import 'Toast.dart';
 
 class StuClockRecord extends StatefulWidget {
   @override
@@ -13,31 +12,7 @@ class StuClockRecord extends StatefulWidget {
 
 class _StuClockRecordState extends State<StuClockRecord> {
   @override
-  final PickerData = '''
-[
-  {
-	"范冰冰": [{}]
-  },
-  {
-	"关晓彤": [{}]
-  },
-    {
-	"杨幂": [{}]
-  },
-    {
-	"章子怡": [{}]
-  },
-    {
-	"杨超越": [{}]
-  },
-    {
-	"杨颖": [{}]
-  },
-    {
-	"马云": [{}]
-  }
-]
-    ''';
+  PickerItem showTypeAttr =   PickerItem(name: '马云',value: "马云");
   Widget build(BuildContext context) {
     // TODO: implement build
     return new Container(
@@ -65,25 +40,34 @@ class _StuClockRecordState extends State<StuClockRecord> {
                   child: new Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  new Row(
-                    children: <Widget>[
-                      new Text(
-                        "迪丽热巴",
-                        style: TextStyle(
-                            color: Color(0xFFFFFFFF),
-                            fontWeight: FontWeight.w600,
-                            fontSize: 15.0),
-                      ),
-                      new GestureDetector(
-                        child: new Icon(
+                  new Container(
+                    child: new Picker(
+                      target: showTypeAttr != null && showTypeAttr.name != null ? Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[new Text(showTypeAttr.name,style: TextStyle(color: Colors.white,fontSize: 18.0),), new Icon(
                           Icons.expand_more,
                           color: Color(0xFFFFFFFF),
-                        ),
-                        onTap: () {
-                          MyToast.showPickerModal(context, PickerData);
-                        },
-                      )
-                    ],
+                        )],) : Text("显示几级联动"),
+                      onConfirm: (PickerItem item) {
+                        setState(() {
+                          showTypeAttr = item;
+                          print("-----------------------------");
+                          print(item.value);
+                          print("-----------------------------");
+                        });
+                      },
+                      items: [
+                        PickerItem(name: '范冰冰',value: "范冰冰"),
+                        PickerItem(name: '关晓彤',value: "关晓彤"),
+                        PickerItem(name: '杨幂',value: "杨幂"),
+                        PickerItem(name: '章子怡',value: "章子怡"),
+                        PickerItem(name: '杨超越',value: "杨超越"),
+                        PickerItem(name: '杨颖',value: "杨颖"),
+                        PickerItem(name: '马云',value: "马云"),
+                        PickerItem(name: '范冰冰',value: "范冰冰"),
+                        PickerItem(name: '范冰冰',value: "范冰冰"),
+                      ],
+                    ),
                   ),
                   new Container(
                     child: new Text(

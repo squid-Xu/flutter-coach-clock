@@ -268,7 +268,7 @@ class _LoginPageState extends State<Login> {
                           setState(() {
                             _isObscure = !_isObscure;
                             _eyeColor =
-                                _isObscure ? Color(0xFFF2F2F2) : Colors.white;
+                                _isObscure ? Color(0xFFFFFFFF) : Color(0xFF29CCCC);
                           });
                         }),
                   ),
