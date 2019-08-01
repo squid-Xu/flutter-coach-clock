@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 
-class MyInfoNickname extends StatefulWidget{
-  @override
-  MyInfoNicknameState createState() => MyInfoNicknameState();
+class MyInfoNickname extends StatefulWidget {
+  final current_nickName;
+  MyInfoNickname(this.current_nickName, {Key key}) : super(key: key);
 
+  @override
+  State<StatefulWidget> createState() {
+    return MyInfoNicknameState(current_nickName);
+  }
 }
 
-class MyInfoNicknameState extends State<MyInfoNickname>{
-
+class MyInfoNicknameState extends State<MyInfoNickname> {
+  final current_nickName;
+  MyInfoNicknameState(this.current_nickName);
   TextEditingController _signatureController = new TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -17,20 +21,32 @@ class MyInfoNicknameState extends State<MyInfoNickname>{
       backgroundColor: Color(0xFFF8F8F8),
       appBar: new AppBar(
         backgroundColor: Color(0xFF29CCCC),
-        title: new Text('设置昵称',style: TextStyle(color: Colors.white),),
+        title: new Text(
+          '设置昵称',
+          style: TextStyle(color: Colors.white),
+        ),
         centerTitle: true,
-        leading: IconButton(icon: Icon(Icons.keyboard_arrow_left,size: 30,), onPressed: (){Navigator.pop(context);}),
+        leading: IconButton(
+            icon: Icon(
+              Icons.keyboard_arrow_left,
+              size: 30,
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            }),
         actions: <Widget>[
           new RaisedButton(
-            onPressed: (){
+            onPressed: () {
               print(_signatureController.text.trim());
               Navigator.pop(context);
             },
-            child: new Text("保存",style: TextStyle(
-                color: Color(0xFFFFFFFF),
-                fontSize: 18.0
-            ),),
-            color: Color(0xFF29CCCC),elevation: 0,)
+            child: new Text(
+              "保存",
+              style: TextStyle(color: Color(0xFFFFFFFF), fontSize: 18.0),
+            ),
+            color: Color(0xFF29CCCC),
+            elevation: 0,
+          )
         ],
       ),
       body: new Card(
@@ -44,10 +60,9 @@ class MyInfoNicknameState extends State<MyInfoNickname>{
           padding: const EdgeInsets.all(10.0),
           child: TextField(
             controller: _signatureController,
+            autofocus: true,
             decoration: InputDecoration(
-              border: OutlineInputBorder(
-                  borderSide: BorderSide.none
-              ),
+              border: OutlineInputBorder(borderSide: BorderSide.none),
               hintText: '请输入您的个性签名',
             ),
             maxLength: 15,
@@ -58,4 +73,9 @@ class MyInfoNicknameState extends State<MyInfoNickname>{
     );
   }
 
+  @override
+  void initState() {
+    super.initState();
+    _signatureController.text = current_nickName;
+  }
 }

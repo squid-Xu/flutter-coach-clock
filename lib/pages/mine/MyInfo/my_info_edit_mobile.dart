@@ -97,7 +97,6 @@ class _myInfoEditMobileState extends State<MyInfoEditMobile> {
               new Expanded(
                   child: new Container(
                 child: TextField(
-//            autofocus: true,
                   controller: _verifyCodeController,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(borderSide: BorderSide.none),
@@ -206,7 +205,7 @@ class _myInfoEditMobileState extends State<MyInfoEditMobile> {
                 _mobileInputCard(),
                 _verifyCodeCard(),
                 new Container(
-                  padding: const EdgeInsets.only(top: 40.0,bottom: 10),
+                  padding: const EdgeInsets.only(top: 40.0, bottom: 10),
                   child: _submitBtn(context),
                 )
               ],

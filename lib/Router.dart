@@ -16,17 +16,17 @@ import 'package:coach/pages/StudentClock/StuClockRecord.dart'; //学员打卡记
 import 'package:coach/pages/homePage.dart'; //首页
 
 //我的页面路由
-import 'package:coach/pages/mine/my_info_page.dart';//个人信息
+import 'package:coach/pages/mine/my_info_page.dart'; //个人信息
 import 'package:coach/pages/mine/MyInfo/my_info_signature.dart'; //个人签名
-import 'package:coach/pages/mine/MyInfo/my_info_nickname.dart';//个人昵称
-import 'package:coach/pages/mine/MyInfo/my_info_edit_mobile.dart';//修改手机号
-import 'package:coach/pages/mine/MyInfo/my_info_pwd.dart';//修改密码
-import 'package:coach/pages/mine/my_complaint.dart';//投诉建议
-import 'package:coach/pages/mine/my_about.dart';//关于我们
-import 'package:coach/pages/mine/my_news.dart';//我的消息
+import 'package:coach/pages/mine/MyInfo/my_info_nickname.dart'; //个人昵称
+import 'package:coach/pages/mine/MyInfo/my_info_edit_mobile.dart'; //修改手机号
+import 'package:coach/pages/mine/MyInfo/my_info_pwd.dart'; //修改密码
+import 'package:coach/pages/mine/my_complaint.dart'; //投诉建议
+import 'package:coach/pages/mine/my_about.dart'; //关于我们
+import 'package:coach/pages/mine/my_news.dart'; //我的消息
 //学员页面路由
-import 'package:coach/pages/StudentClock/StuDetail.dart';//学员进度详情
-import 'package:coach/pages/StudentClock/StuProgress.dart';//学员进度更新
+import 'package:coach/pages/StudentClock/StuDetail.dart'; //学员进度详情
+import 'package:coach/pages/StudentClock/StuProgress.dart'; //学员进度更新
 
 class Router {
   static const forgetPage = 'app://login/forget'; //忘记密码页面
@@ -38,7 +38,8 @@ class Router {
   static const myClockRecord = 'app://page/clock/myclockRecord'; //我的打卡记录
   static const stuClock = 'app://page/studentclock/stuclock'; //学员打卡
   static const stuClockList = 'app://page/studentclock/stuclocklist'; //学员打卡列表
-  static const stuClockRecord = 'app://page/studentclock/stuclockrecord'; //学员打卡记录
+  static const stuClockRecord =
+      'app://page/studentclock/stuclockrecord'; //学员打卡记录
   static const homePage = 'app://page/homepage'; //首页
   static const myInfoPage = 'app://page/mine/myinfoPage'; //个人信息
   static const myInfosignPage = 'app://page/mine/myinfosignPage'; //个人签名
@@ -50,7 +51,6 @@ class Router {
   static const myNews = 'app://page/mine/mynews'; //我的消息
   static const stuDetail = 'app://page/studentclock/studetail'; //学员进度详情
   static const stuProgress = 'app://page/studentclock/stuprogress'; //学员进度更新
-
 
   Widget _getPage(String url, dynamic params) {
     if (url.startsWith('https://') || url.startsWith('http://')) {
@@ -82,22 +82,22 @@ class Router {
         case myInfoPage: //个人信息
           return MyInfoPage();
         case myInfosignPage: //个人签名
-          return MyInfoSignature();
-        case myInfoNicknmae://个人昵称
-          return MyInfoNickname();
+          return MyInfoSignature(params);
+        case myInfoNicknmae: //个人昵称
+          return MyInfoNickname(params);
         case myInfoMobile: //修改手机号
           return MyInfoEditMobile(params);
-        case myInfoPwd://修改密码
+        case myInfoPwd: //修改密码
           return MyInfoPwd();
-        case myComplaint://投诉建议
+        case myComplaint: //投诉建议
           return MyComplaint();
-        case myAbout://关于我们
+        case myAbout: //关于我们
           return MyAbout();
         case myNews: //我的消息
           return MyNews();
-        case stuDetail://学员进度详情
+        case stuDetail: //学员进度详情
           return StuDetail();
-        case stuProgress://学员进度更新
+        case stuProgress: //学员进度更新
           return StuProgress();
       }
     }

@@ -14,8 +14,8 @@ class MyClock extends StatefulWidget {
 
 class MyClockState extends State<MyClock> {
   Timer _timer;
-  String   _Date=new DateFormat('yyyy.MM.dd').format(DateTime.now());
-  String   _Time=new DateFormat('HH:mm:ss').format(DateTime.now());
+  String _Date = new DateFormat('yyyy.MM.dd').format(DateTime.now());
+  String _Time = new DateFormat('HH:mm:ss').format(DateTime.now());
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -219,7 +219,7 @@ class MyClockState extends State<MyClock> {
                               )
                             ],
                           ),
-                          onTap: (){
+                          onTap: () {
                             print("点击打卡");
                           },
                         ),
@@ -321,13 +321,14 @@ class MyClockState extends State<MyClock> {
     //获取当期时间
     startTimer();
   }
+
   void startTimer() {
     //设置 1 秒回调一次
     const period = const Duration(seconds: 1);
     _timer = Timer.periodic(period, (timer) {
       //更新界面
       setState(() {
-        _Time=new DateFormat('HH:mm:ss').format(DateTime.now());
+        _Time = new DateFormat('HH:mm:ss').format(DateTime.now());
       });
     });
   }
@@ -338,6 +339,7 @@ class MyClockState extends State<MyClock> {
       _timer = null;
     }
   }
+
   @override
   void dispose() {
     super.dispose();

@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
@@ -14,6 +13,7 @@ class MyInfoPage extends StatefulWidget {
 }
 
 class MyInfoPageState extends State<MyInfoPage> {
+  var _imgPath;
   String _nicknameStr = '武大郎';
 
   String _signatureStr = '哪有什么岁月静好，不过是有人替你负罪前行。';
@@ -24,127 +24,9 @@ class MyInfoPageState extends State<MyInfoPage> {
 
   bool _genderSwitch = false;
 
-  File _image;
-
-  File _imageTemp;
-
   Color back_color = const Color(0xFFECF2FE);
   final String _userHead =
       'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKXgcsLsqQU2aQbgFcraKSgaC33pZM3BNDrpItMicXQZpI8SGrHOv7rdlUia2ic2G78Zgb1yG3RNxpMw/132';
-
-  Future getImage(ImageSource source) async {
-    var image = await ImagePicker.pickImage(source: source);
-    setState(() {
-      _imageTemp = image;
-      getImageChouse();
-    });
-  }
-
-  // 更换头像
-  updateVavtar() {
-    setState(() {
-      this._image = this._imageTemp;
-    });
-  }
-
-  // 确定取消
-  getImageChouse() {
-    Alert(
-        context: context,
-        title: '更换头像',
-        content: Center(
-          child: new CircleAvatar(
-            radius: 46.0,
-            backgroundImage: new FileImage(_imageTemp),
-          ),
-        ),
-        buttons: [
-          DialogButton(
-            child: Text(
-              '取消',
-              style: TextStyle(color: Colors.white, fontSize: 16.0),
-            ),
-            color: Colors.grey,
-            onPressed: () => {
-              Navigator.pop(context),
-            },
-          ),
-          DialogButton(
-            child: Text(
-              '确定',
-              style: TextStyle(color: Colors.white, fontSize: 16.0),
-            ),
-            color: Colors.teal,
-            onPressed: () => {
-              this.updateVavtar(),
-//              Fluttertoast.showToast(
-//                msg: '头像更新成功',
-//                toastLength: Toast.LENGTH_LONG,
-//                gravity: ToastGravity.TOP,
-//                backgroundColor: new Color(Colors.tealAccent.value),
-//                textColor: new Color(Colors.white.value)
-//              ),
-              Navigator.pop(context),
-            },
-          ),
-        ]).show();
-  }
-
-  // 选择照片
-  getImageSelect() {
-    Alert(
-        context: context,
-        title: '更换头像',
-        content: Center(
-          child: new CircleAvatar(
-            radius: 46.0,
-            backgroundImage: _image == null
-                ? new NetworkImage(_userHead)
-                : new FileImage(_image),
-          ),
-        ),
-        buttons: [
-          DialogButton(
-            child: new Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                new Icon(
-                  Icons.camera_alt,
-                  size: 30.0,
-                ),
-                new Text(
-                  ' 拍照',
-                  style: TextStyle(color: Colors.white, fontSize: 16.0),
-                )
-              ],
-            ),
-            onPressed: () => {
-              getImage(ImageSource.camera),
-              Navigator.pop(context),
-            },
-            color: Color.fromRGBO(0, 179, 134, 1.0),
-          ),
-          DialogButton(
-              child: new Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  new Icon(
-                    Icons.photo_album,
-                    size: 30.0,
-                  ),
-                  new Text(
-                    ' 相册',
-                    style: TextStyle(color: Colors.white, fontSize: 16.0),
-                  )
-                ],
-              ),
-              onPressed: () => {
-                    getImage(ImageSource.gallery),
-                    Navigator.pop(context),
-                  },
-              color: Color.fromRGBO(52, 138, 199, 1.0)),
-        ]).show();
-  }
 
   // 头像
   Widget _avatar() {
@@ -163,9 +45,9 @@ class MyInfoPageState extends State<MyInfoPage> {
             new Container(
               child: new CircleAvatar(
                   radius: 20.0,
-                  backgroundImage: _image == null
+                  backgroundImage: _imgPath == null
                       ? new NetworkImage(_userHead)
-                      : new FileImage(_image)),
+                      : new FileImage(_imgPath)),
             ),
             new Icon(Icons.arrow_forward_ios,
                 color: Color(0xFF999999), size: 16.0),
@@ -182,10 +64,17 @@ class MyInfoPageState extends State<MyInfoPage> {
                 return CommonBottomSheet(
                   list: list,
                   onItemClickListener: (index) async {
-                    print("-----------------------");
-                    print(index);
-                    print("---------------------000");
-                    Navigator.pop(context);
+                    if (index == 0) {
+                      _takePhoto();
+                      print("拍照");
+                      Navigator.pop(context);
+                    } else if (index == 2) {
+                      _openGallery();
+                      print("相册");
+                      Navigator.pop(context);
+                    } else {
+                      Navigator.pop(context);
+                    }
                   },
                 );
               })
@@ -274,7 +163,8 @@ class MyInfoPageState extends State<MyInfoPage> {
           ],
         ),
         onTap: () {
-          Router.push(context, Router.myInfoNicknmae, []);
+          Router.pushWithAnimation(
+              context, Router.myInfoNicknmae, _nicknameStr);
         },
       ),
       decoration: BoxDecoration(
@@ -315,7 +205,8 @@ class MyInfoPageState extends State<MyInfoPage> {
           ],
         ),
         onTap: () {
-          Router.push(context, Router.myInfosignPage, []);
+          Router.pushWithAnimation(
+              context, Router.myInfosignPage, _signatureStr);
         },
       ),
       decoration: BoxDecoration(
@@ -555,15 +446,10 @@ class MyInfoPageState extends State<MyInfoPage> {
                       child: new Column(
                         children: <Widget>[
                           _avatar(),
-//                          _divider(),
                           _gender(),
-//                          _divider(),
                           _nickname(context),
-//                          _divider(),
                           _signature(context),
-//                          _divider(),
                           _mobile(context),
-//                          _divider(),
                           _password()
                         ],
                       ),
@@ -578,5 +464,22 @@ class MyInfoPageState extends State<MyInfoPage> {
             ),
           )),
     );
+  }
+
+  /*拍照*/
+  _takePhoto() async {
+    var image = await ImagePicker.pickImage(source: ImageSource.camera);
+
+    setState(() {
+      _imgPath = image;
+    });
+  }
+
+  /*相册*/
+  _openGallery() async {
+    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      _imgPath = image;
+    });
   }
 }
