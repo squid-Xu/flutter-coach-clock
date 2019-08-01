@@ -14,7 +14,7 @@ import 'package:coach/pages/StudentClock/StuClock.dart'; //学员打卡
 import 'package:coach/pages/StudentClock/StuClockList.dart'; //学员打卡列表
 import 'package:coach/pages/StudentClock/StuClockRecord.dart'; //学员打卡记录
 import 'package:coach/pages/homePage.dart'; //首页
-import 'package:coach/pages/StudentClock/StuSearch.dart';//学员搜索
+
 //我的页面路由
 import 'package:coach/pages/mine/my_info_page.dart';//个人信息
 import 'package:coach/pages/mine/MyInfo/my_info_signature.dart'; //个人签名
@@ -25,7 +25,8 @@ import 'package:coach/pages/mine/my_complaint.dart';//投诉建议
 import 'package:coach/pages/mine/my_about.dart';//关于我们
 import 'package:coach/pages/mine/my_news.dart';//我的消息
 //学员页面路由
-import 'package:coach/pages/StudentClock/StuDetail.dart';//学员进度更新
+import 'package:coach/pages/StudentClock/StuDetail.dart';//学员进度详情
+import 'package:coach/pages/StudentClock/StuProgress.dart';//学员进度更新
 
 class Router {
   static const forgetPage = 'app://login/forget'; //忘记密码页面
@@ -38,7 +39,6 @@ class Router {
   static const stuClock = 'app://page/studentclock/stuclock'; //学员打卡
   static const stuClockList = 'app://page/studentclock/stuclocklist'; //学员打卡列表
   static const stuClockRecord = 'app://page/studentclock/stuclockrecord'; //学员打卡记录
-  static const stuSearch = 'app://page/studentclock/stusearch'; //学员搜索
   static const homePage = 'app://page/homepage'; //首页
   static const myInfoPage = 'app://page/mine/myinfoPage'; //个人信息
   static const myInfosignPage = 'app://page/mine/myinfosignPage'; //个人签名
@@ -48,7 +48,8 @@ class Router {
   static const myComplaint = 'app://page/mine/mycomplaint'; //投诉建议
   static const myAbout = 'app://page/mine/myabout'; //关于我们
   static const myNews = 'app://page/mine/mynews'; //我的消息
-  static const stuDetail = 'app://page/studentclock/studetail'; //学员进度更新
+  static const stuDetail = 'app://page/studentclock/studetail'; //学员进度详情
+  static const stuProgress = 'app://page/studentclock/stuprogress'; //学员进度更新
 
 
   Widget _getPage(String url, dynamic params) {
@@ -94,10 +95,10 @@ class Router {
           return MyAbout();
         case myNews: //我的消息
           return MyNews();
-        case stuDetail://学员进度更新
+        case stuDetail://学员进度详情
           return StuDetail();
-        case stuSearch://学员搜索
-          return StuSeartch();
+        case stuProgress://学员进度更新
+          return StuProgress();
       }
     }
     return null;
