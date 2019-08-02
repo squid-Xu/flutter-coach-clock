@@ -1,5 +1,4 @@
 import 'package:coach/fonts/iconfont.dart';
-import 'package:coach/login/toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -123,7 +122,7 @@ class _LoginPageState extends State<Login> {
                 _checkStr = '密码不能为空！';
               }
               print(_checkStr);
-              Toast.TostshowDialog(context, _checkStr);
+//              Toast.TostshowDialog(context, _checkStr);
             }
           },
           shape: StadiumBorder(side: BorderSide.none),

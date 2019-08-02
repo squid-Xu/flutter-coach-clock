@@ -1,5 +1,4 @@
 import 'package:coach/fonts/iconfont.dart';
-import 'package:coach/login/toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:async';
@@ -184,7 +183,7 @@ class _ForgetPageState extends State<Forget> {
                 _checkStr = '两次输入密码不一致！';
               }
               print(_checkStr);
-              Toast.TostshowDialog(context, _checkStr);
+//              Toast.TostshowDialog(context, _checkStr);
             }
           },
           shape: StadiumBorder(side: BorderSide.none),
