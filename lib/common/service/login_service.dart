@@ -7,8 +7,6 @@ import 'package:coach/common/utils/global_toast.dart';
 import 'package:coach/model/UserInfo.dart';
 import 'package:dio/dio.dart';
 
-import 'package:fluttertoast/fluttertoast.dart';
-
 /// 登陆
 class LoginService{
 
@@ -22,7 +20,7 @@ class LoginService{
     print("requestMap:${requestMap}");
     Map<String, dynamic> res = await httpManager.netFetch(BaseConfig.BASE_URL+'/sendCode', requestMap, null);
     if(res['code'] != 0){
-      GlobalToast.errorBottomToast(res['msg']);
+      GlobalToast.globalToast(res['msg']);
       return false;
     }
   }
@@ -37,7 +35,7 @@ class LoginService{
     Map<String, dynamic> res = await httpManager.netFetch(BaseConfig.BASE_URL+'/login/code',
         requestMap, new Options(method: 'post'));
     if(res['code'] != 0){
-      GlobalToast.errorBottomToast(res['msg']);
+      GlobalToast.globalToast(res['msg']);
       return null;
     }
     print("res:${res['data']}");
@@ -60,7 +58,7 @@ class LoginService{
 
     Map<String, dynamic> res = await httpManager.netFetch(BaseConfig.BASE_URL+'/user/info', null, null);
     if(res['code'] != 0){
-      GlobalToast.errorBottomToast(res['msg']);
+      GlobalToast.globalToast(res['msg']);
       return null;
     }
     print("res:${res['info']}");
@@ -86,7 +84,7 @@ class LoginService{
     Map<String, dynamic> res = await httpManager.netFetch(BaseConfig.BASE_URL+'/user/avatar',
                                         formData, new Options(method: 'post'));
     if(res['code'] != 0){
-      GlobalToast.errorBottomToast(res['msg']);
+      GlobalToast.globalToast(res['msg']);
       return null;
     }
     print("res:${res['url']}");
@@ -127,7 +125,7 @@ class LoginService{
     Map<String, dynamic> res = await httpManager.netFetch(BaseConfig.BASE_URL+'/user/update',
         requestMap, new Options(method: 'post'));
     if(res['code'] != 0){
-      GlobalToast.errorBottomToast(res['msg']);
+      GlobalToast.globalToast(res['msg']);
       return false;
     }
     return true;
@@ -145,7 +143,7 @@ class LoginService{
     Map<String, dynamic> res = await httpManager.netFetch(BaseConfig.BASE_URL+'/user/update/mobile',
         requestMap, new Options(method: 'post'));
     if(res['code'] != 0){
-      GlobalToast.errorBottomToast(res['msg']);
+      GlobalToast.globalToast(res['msg']);
       return false;
     }
     return true;

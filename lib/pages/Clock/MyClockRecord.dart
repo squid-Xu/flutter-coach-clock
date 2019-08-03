@@ -710,28 +710,23 @@ class _MyClockRecordState extends State<MyClockRecord> {
                   },
                 )),
                 Expanded(
-                  child: GestureDetector(
-                    child: Column(
-                      children: <Widget>[
-                        new Icon(
-                          IconFont.icon_daqiajilu,
-                          color: Color(0xFF29CCCC),
+                  child: Column(
+                    children: <Widget>[
+                      new Icon(
+                        IconFont.icon_daqiajilu,
+                        color: Color(0xFF29CCCC),
+                      ),
+                      new Container(
+                        padding: const EdgeInsets.only(top: 10),
+                        child: new Text(
+                          "打卡记录",
+                          style: new TextStyle(
+                              fontSize: 16.0,
+                              color: Color(0xFF29CCCC),
+                              fontWeight: FontWeight.w500),
                         ),
-                        new Container(
-                          padding: const EdgeInsets.only(top: 10),
-                          child: new Text(
-                            "打卡记录",
-                            style: new TextStyle(
-                                fontSize: 16.0,
-                                color: Color(0xFF29CCCC),
-                                fontWeight: FontWeight.w500),
-                          ),
-                        ),
-                      ],
-                    ),
-                    onTap: () {
-                      Navigator.of(context).pushNamed('part/part2');
-                    },
+                      ),
+                    ],
                   ),
                 ),
               ],

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:async';
 
+
 class MyInfoEditMobile extends StatefulWidget {
   final current_mobile;
   MyInfoEditMobile(this.current_mobile, {Key key}) : super(key: key);
@@ -213,4 +214,5 @@ class _myInfoEditMobileState extends State<MyInfoEditMobile> {
           ),
         ));
   }
+
 }

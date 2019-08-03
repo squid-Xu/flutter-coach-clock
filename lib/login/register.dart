@@ -1,8 +1,15 @@
+import 'package:coach/common/providers/UserInfoProvider.dart';
+import 'package:coach/common/utils/data_util.dart';
+import 'package:coach/common/utils/global_toast.dart';
+import 'package:coach/model/UserInfo.dart';
+import 'package:coach/pages/homePage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'dart:async';
 import '../Router.dart';
-import 'Toastt.dart';
+import 'package:coach/common/service/login_service.dart';
+import 'package:coach/common/utils/verification_code_type.dart';
 
 class Register extends StatefulWidget {
   @override
@@ -169,20 +176,31 @@ class _RegisterPageState extends State<Register> {
           ),
           color: Color(0xFFFFFFFF),
           onPressed: () {
-                  _checkPhone();
-                  _checkCode();
-                  if (_phoneState && _codeState) {
-                    print("手机号" + _PhoneController.text);
-                    print("验证码" + _CodeEtController.text);
-                    Router.pushNoParams(context, Router.tabNavigator);
-                  } else {
-                    if (!_phoneState) {
-                      Toast.toast(context, msg: "请输入手机号 ");
-                    } else if (!_codeState) {
-                      Toast.toast(context, msg: "请输入验证码 ");
-                    }
-                  }
-                },
+            _checkPhone();
+            _checkCode();
+            if (_phoneState && _codeState) {
+              LoginService.mobileLogin(
+                      this._PhoneController.text, this._CodeEtController.text)
+                  .then((UserInfo res) {
+                print("res结果:${res}");
+                if (res != null) {
+                  Provider.of<UserInfoProvider>(context).setUserInfo(res);
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (BuildContext context) => HomePage()));
+                }
+              });
+              print("手机号" + _PhoneController.text);
+              print("验证码" + _CodeEtController.text);
+            } else {
+              if (!_phoneState) {
+                GlobalToast.globalToast("请输入手机号");
+              } else if (!_codeState) {
+                GlobalToast.globalToast("请输入验证码");
+              }
+            }
+          },
           shape: StadiumBorder(side: BorderSide.none),
         ),
       ),
@@ -370,32 +388,34 @@ class _RegisterPageState extends State<Register> {
                         ),
                       ),
                     ),
-                    new Container(
-                      padding: EdgeInsets.fromLTRB(10, 4, 10, 4),
-                      decoration: new BoxDecoration(
-                        color: Color(0xFFDDDDDD), // 底色
-                        borderRadius: new BorderRadius.circular((20.0)), // 圆角度
-                      ),
-                      child: new GestureDetector(
-                        onTap: () {
-                          if (_PhoneController.text.trim().length != 11) {
-                            Toast.toast(context, msg: "请输入手机号 ");
-                          } else {
-                            if (_seconds == 0) {
-                              Toast.toast(context, msg: "验证按已发送");
-                              setState(() {
-                                _startTimer();
-                              });
-                            }
-                          }
-                        },
+                    new GestureDetector(
+                      child: new Container(
+                        padding: EdgeInsets.fromLTRB(10, 4, 10, 5),
+                        decoration: new BoxDecoration(
+                          color: Color(0xFFDDDDDD), // 底色
+                          borderRadius:
+                              new BorderRadius.circular((20.0)), // 圆角度
+                        ),
                         child: Text(
                           _verifyStr,
                           style: TextStyle(
-                              fontSize: 13.0,
-                              color:Color(0xFF2BE0E0)),
+                              fontSize: 13.0, color: Color(0xFF2BE0E0)),
                         ),
                       ),
+                      onTap: () {
+                        print("点击获取验证码");
+                        if (_PhoneController.text.trim().length != 11) {
+                          GlobalToast.globalToast("请输入手机号");
+                        } else {
+                          if (_seconds == 0) {
+                            GlobalToast.globalToast("验证码已发送");
+                            setState(() {
+                              // 发送验证码
+                              sendCode();
+                            });
+                          }
+                        }
+                      },
                     ),
                   ],
                 ),
@@ -474,4 +494,32 @@ class _RegisterPageState extends State<Register> {
 //          ))),
 //        ));
 //  }
+  sendCode() async {
+    // 发送验证码
+    LoginService.sendVerificationCode(
+        this._PhoneController.text, VerificationCodeType.LOGIN);
+    print("开始倒计时60秒");
+    _startTimer();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    DataUtil.getUserInfo().then((UserInfo user) {
+      print("===========================================");
+      print("登录页获取用户信息");
+      print("user:${user}");
+      print("============================================");
+      if (user != null) {
+        Router.pushNoParams(context, Router.tabNavigator);
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    _timer = null;
+    super.dispose();
+  }
 }

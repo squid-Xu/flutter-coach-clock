@@ -10,39 +10,45 @@ import 'common/event/index.dart';
 import 'common/net/code.dart';
 import 'common/providers/UserInfoProvider.dart';
 import 'common/utils/data_util.dart';
-import 'login/login.dart';
 import 'login/register.dart';
 import 'model/UserInfo.dart';
 import 'navigator/tabNavigator.dart';
 
 void main() {
-  isLogin().then((bool b){
+  isLogin().then((bool b) {
+    print("_______________________________________");
+    print("是否有用户信息");
     print("b:${b}");
-    if(b){
+    print("_______________________________________");
+    if (b) {
+      print("++++++++++++++++++++++++++++++++");
+      print("有用户信息");
+      print("++++++++++++++++++++++++++++++++++");
       // 已经登陆
-      getUserInfo().then((UserInfo user){
-        runApp(
-            MultiProvider(
-              providers: [
-                // 用户信息状态管理
-                ChangeNotifierProvider(builder: (_) => UserInfoProvider(user),)
-              ],
-              child: MyApp(TabNavigator()),
+      getUserInfo().then((UserInfo user) {
+        runApp(MultiProvider(
+          providers: [
+            // 用户信息状态管理
+            ChangeNotifierProvider(
+              builder: (_) => UserInfoProvider(user),
             )
-        );
+          ],
+          child: MyApp(TabNavigator()),
+        ));
       });
-
-    }else {
-      runApp(
-          MultiProvider(
-            providers: [
-              // 用户信息状态管理
-              ChangeNotifierProvider(builder: (_) => UserInfoProvider(null),),
-            ],
-            child: MyApp(Register()),
-          )
-
-      );
+    } else {
+      print("++++++++++++++++++++++++++++++++");
+      print("没有用户信息");
+      print("++++++++++++++++++++++++++++++++++");
+      runApp(MultiProvider(
+        providers: [
+          // 用户信息状态管理
+          ChangeNotifierProvider(
+            builder: (_) => UserInfoProvider(null),
+          ),
+        ],
+        child: MyApp(Register()),
+      ));
     }
   });
   if (Platform.isAndroid) {
@@ -55,14 +61,18 @@ void main() {
 
 Future<bool> isLogin() async {
   bool res = await DataUtil.getIsLogin();
+  print("__________________________________________");
+  print("拉取用户信息");
   print("isLogin:${res}");
+  print("__________________________________________");
   return res;
 }
 
-Future<UserInfo> getUserInfo() async{
-
+Future<UserInfo> getUserInfo() async {
   UserInfo userInfo = await DataUtil.getUserInfo();
+  print("------------------------------------------");
   print("当前用户信息:${userInfo}");
+  print("-------------------------------------------");
   return userInfo;
 }
 
@@ -72,10 +82,10 @@ class MyApp extends StatelessWidget {
   Widget bodyWidget;
   MyApp(this.bodyWidget);
 
-
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
+    return new RestartWidget(
+        child: MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
           backgroundColor: Color(0xFF29CCCC),
@@ -91,10 +101,10 @@ class MyApp extends StatelessWidget {
       ],
 //      home: new Login(),
       home: Scaffold(
-          resizeToAvoidBottomPadding: false,
-          body: bodyWidget
+        resizeToAvoidBottomPadding: false,
+        body: bodyWidget,
       ),
-    );
+    ));
   }
 }
 
@@ -109,7 +119,7 @@ class RestartWidget extends StatefulWidget {
 
   static restartApp(BuildContext context) {
     final _RestartWidgetState state =
-    context.ancestorStateOfType(const TypeMatcher<_RestartWidgetState>());
+        context.ancestorStateOfType(const TypeMatcher<_RestartWidgetState>());
     state.restartApp();
   }
 
@@ -118,7 +128,6 @@ class RestartWidget extends StatefulWidget {
 }
 
 class _RestartWidgetState extends State<RestartWidget> {
-
   StreamSubscription stream;
 
   Key key = UniqueKey();
@@ -150,42 +159,35 @@ class _RestartWidgetState extends State<RestartWidget> {
   void initState() {
     super.initState();
     print("事件监听注册成功————————");
+
     ///Stream演示event bus
     stream = eventBus.on<HttpErrorEvent>().listen((event) {
       errorHandleFunction(event.code, event.message);
     });
   }
 
-  errorHandleFunction(int code, message){
+  errorHandleFunction(int code, message) {
     print("code:${code},message:${message}");
     switch (code) {
       case Code.NETWORK_ERROR:
-        Fluttertoast.showToast(
-            msg: '网络异常！');
+        Fluttertoast.showToast(msg: '网络异常！');
         break;
       case 401:
-        Fluttertoast.showToast(
-            msg: "401${message}");
+        Fluttertoast.showToast(msg: "401${message}");
         break;
       case 403:
-        Fluttertoast.showToast(
-            msg: "403${message}");
+        Fluttertoast.showToast(msg: "403${message}");
         break;
       case 404:
-        Fluttertoast.showToast(
-            msg: "404${message}");
+        Fluttertoast.showToast(msg: "404${message}");
         break;
       case Code.NETWORK_TIMEOUT:
-      //超时
-        Fluttertoast.showToast(
-            msg: '请求超时，请重新操作');
+        //超时
+        Fluttertoast.showToast(msg: '请求超时，请重新操作');
         break;
       default:
-        Fluttertoast.showToast(
-            msg: "error:${message}");
+        Fluttertoast.showToast(msg: "error:${message}");
         break;
     }
   }
-
-
 }

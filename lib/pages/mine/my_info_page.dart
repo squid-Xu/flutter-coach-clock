@@ -5,6 +5,7 @@ import 'package:image_picker/image_picker.dart';
 
 import '../../Router.dart';
 import 'BottonSheet/bottonSheet.dart';
+import 'MyInfo/my_info_edit_mobile.dart';
 
 // 个人信息页面
 class MyInfoPage extends StatefulWidget {
@@ -313,7 +314,8 @@ class MyInfoPageState extends State<MyInfoPage> {
           ),
           onPressed: () => {
 //            Navigator.pop(context),
-            Router.pushWithAnimation(context, Router.myInfoMobile, _mobileStr),
+    Navigator.pushReplacement( context, MaterialPageRoute(builder: (BuildContext context) => MyInfoEditMobile(_mobileStr))),
+//            Router.pushWithAnimation(context, Router.myInfoMobile, _mobileStr),
           },
           color: Color(0xFF29CCCC),
           radius: BorderRadius.circular(30.0),
@@ -482,4 +484,5 @@ class MyInfoPageState extends State<MyInfoPage> {
       _imgPath = image;
     });
   }
+
 }
