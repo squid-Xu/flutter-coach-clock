@@ -2,7 +2,6 @@ import 'package:coach/common/providers/UserInfoProvider.dart';
 import 'package:coach/common/utils/data_util.dart';
 import 'package:coach/common/utils/global_toast.dart';
 import 'package:coach/model/UserInfo.dart';
-import 'package:coach/pages/homePage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -10,6 +9,7 @@ import 'dart:async';
 import '../Router.dart';
 import 'package:coach/common/service/login_service.dart';
 import 'package:coach/common/utils/verification_code_type.dart';
+import 'package:coach/navigator/tabNavigator.dart';
 
 class Register extends StatefulWidget {
   @override
@@ -188,7 +188,7 @@ class _RegisterPageState extends State<Register> {
                   Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                          builder: (BuildContext context) => HomePage()));
+                          builder: (BuildContext context) => TabNavigator()));
                 }
               });
               print("手机号" + _PhoneController.text);

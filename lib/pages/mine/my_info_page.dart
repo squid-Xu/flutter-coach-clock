@@ -1,11 +1,21 @@
+import 'dart:io';
+
+import 'package:coach/common/providers/UserInfoProvider.dart';
+import 'package:coach/common/service/login_service.dart';
+import 'package:coach/common/utils/global_toast.dart';
+import 'package:coach/model/UserInfo.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../Router.dart';
 import 'BottonSheet/bottonSheet.dart';
 import 'MyInfo/my_info_edit_mobile.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:city_pickers/city_pickers.dart';
 
 // 个人信息页面
 class MyInfoPage extends StatefulWidget {
@@ -14,23 +24,30 @@ class MyInfoPage extends StatefulWidget {
 }
 
 class MyInfoPageState extends State<MyInfoPage> {
-  var _imgPath;
-  String _nicknameStr = '武大郎';
-
-  String _signatureStr = '哪有什么岁月静好，不过是有人替你负罪前行。';
-
-  String _mobileStr = '18539442736';
-
+  // 加载框
+  bool _isInAsyncCall = false;
+  File _imgPath;
   bool _havePassword = true;
-
-  bool _genderSwitch = false;
-
   Color back_color = const Color(0xFFECF2FE);
-  final String _userHead =
-      'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKXgcsLsqQU2aQbgFcraKSgaC33pZM3BNDrpItMicXQZpI8SGrHOv7rdlUia2ic2G78Zgb1yG3RNxpMw/132';
+
+
+  // 显示加载的圈圈
+  showLoading() {
+    setState(() {
+      _isInAsyncCall = true;
+    });
+  }
+
+  // 关闭加载的圈圈
+  shutdownLoading() {
+    setState(() {
+      _isInAsyncCall = false;
+    });
+  }
+
 
   // 头像
-  Widget _avatar() {
+  Widget _avatar(String avatar) {
     return new Container(
       height: 55,
       margin: EdgeInsets.only(left: 10.0, right: 10.0),
@@ -47,7 +64,7 @@ class MyInfoPageState extends State<MyInfoPage> {
               child: new CircleAvatar(
                   radius: 20.0,
                   backgroundImage: _imgPath == null
-                      ? new NetworkImage(_userHead)
+                      ? new NetworkImage(avatar)
                       : new FileImage(_imgPath)),
             ),
             new Icon(Icons.arrow_forward_ios,
@@ -92,7 +109,8 @@ class MyInfoPageState extends State<MyInfoPage> {
   }
 
   // 性别
-  Widget _gender() {
+  Widget _gender(int gender) {
+    bool _genderSwitch = gender == 2 ? true : false;
     return new Container(
       height: 50,
       margin: EdgeInsets.only(left: 10.0, right: 10.0),
@@ -130,13 +148,22 @@ class MyInfoPageState extends State<MyInfoPage> {
 
   // 性别修改
   _genderSwitchChange(isCheck) {
-    setState(() {
-      _genderSwitch = isCheck;
+    this.showLoading();
+    LoginService.updateUserInfo(gender: isCheck ? 2 : 1).then((bool b) {
+      if (b) {
+        LoginService.getUserInfo().then((UserInfo user) {
+          Provider.of<UserInfoProvider>(context).setUserInfo(user);
+          this.shutdownLoading();
+          GlobalToast.globalToast('性别修改成功');
+        });
+      } else {
+        this.shutdownLoading();
+      }
     });
   }
 
   // 昵称
-  Widget _nickname(BuildContext context) {
+  Widget _nickname(String nickName) {
     return new Container(
       height: 55.0,
       margin: EdgeInsets.only(left: 10.0, right: 10.0),
@@ -151,7 +178,7 @@ class MyInfoPageState extends State<MyInfoPage> {
               child: new Container(
                 padding: const EdgeInsets.only(right: 7.0, left: 10.0),
                 child: new Text(
-                  _nicknameStr,
+                  nickName,
                   textAlign: TextAlign.right,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
@@ -164,8 +191,7 @@ class MyInfoPageState extends State<MyInfoPage> {
           ],
         ),
         onTap: () {
-          Router.pushWithAnimation(
-              context, Router.myInfoNicknmae, _nicknameStr);
+          Router.push(context, Router.myInfoNicknmae, nickName);
         },
       ),
       decoration: BoxDecoration(
@@ -178,7 +204,7 @@ class MyInfoPageState extends State<MyInfoPage> {
   }
 
   // 个性签名
-  Widget _signature(BuildContext context) {
+  Widget _signature(BuildContext context, String signature) {
     return new Container(
       height: 55.0,
       margin: EdgeInsets.only(left: 10.0, right: 10.0),
@@ -193,7 +219,7 @@ class MyInfoPageState extends State<MyInfoPage> {
               child: new Container(
                 padding: const EdgeInsets.only(right: 7.0, left: 10.0),
                 child: new Text(
-                  _signatureStr,
+                  signature,
                   textAlign: TextAlign.right,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
@@ -206,8 +232,7 @@ class MyInfoPageState extends State<MyInfoPage> {
           ],
         ),
         onTap: () {
-          Router.pushWithAnimation(
-              context, Router.myInfosignPage, _signatureStr);
+          Router.push(context, Router.myInfosignPage, signature);
         },
       ),
       decoration: BoxDecoration(
@@ -220,7 +245,7 @@ class MyInfoPageState extends State<MyInfoPage> {
   }
 
   // 绑定手机号
-  Widget _mobile(BuildContext context) {
+  Widget _mobile(BuildContext context, String mobile) {
     return new Container(
       height: 55.0,
       margin: EdgeInsets.only(left: 10.0, right: 10.0),
@@ -231,7 +256,7 @@ class MyInfoPageState extends State<MyInfoPage> {
             new Container(
               padding: const EdgeInsets.only(right: 7.0),
               child: new Text(
-                _mobileStr,
+                mobile,
                 style: TextStyle(color: Colors.grey),
               ),
             ),
@@ -241,19 +266,13 @@ class MyInfoPageState extends State<MyInfoPage> {
         ),
         onTap: () {
           print("修改手机");
-          _editMobile(context);
+          _editMobile(context, mobile);
         },
       ),
-      decoration: BoxDecoration(
-          border: Border(
-              bottom: BorderSide(
-        width: 0.5,
-        color: Color.fromRGBO(0, 0, 0, 0.2),
-      ))),
     );
   }
 
-  _editMobile(context) {
+  _editMobile(context, String mobile) {
     var alertStyle = AlertStyle(
       animationType: AnimationType.fromTop,
       isCloseButton: false,
@@ -314,7 +333,11 @@ class MyInfoPageState extends State<MyInfoPage> {
           ),
           onPressed: () => {
 //            Navigator.pop(context),
-    Navigator.pushReplacement( context, MaterialPageRoute(builder: (BuildContext context) => MyInfoEditMobile(_mobileStr))),
+            Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder: (BuildContext context) =>
+                        MyInfoEditMobile(mobile))),
 //            Router.pushWithAnimation(context, Router.myInfoMobile, _mobileStr),
           },
           color: Color(0xFF29CCCC),
@@ -344,6 +367,87 @@ class MyInfoPageState extends State<MyInfoPage> {
         },
       ),
     );
+  }
+
+//地区
+  Widget _city(String province, String city, String region) {
+    return new Container(
+      height: 55.0,
+      margin: EdgeInsets.only(left: 10.0, right: 10.0),
+      child: InkWell(
+        child: new Row(
+          children: <Widget>[
+            new Text(
+              "地区",
+              style: TextStyle(
+                  color: Color(0xFF000000),
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.w500),
+            ),
+            new Expanded(
+              child: new Container(
+                padding: const EdgeInsets.only(right: 7.0, left: 10.0),
+                child: new Text(
+                  "${city == null ? '请选择地区' : province + "-" + city + "-" + region}",
+                  textAlign: TextAlign.right,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(color: Colors.grey, fontSize: 17.0),
+                ),
+              ),
+            ),
+            new Icon(Icons.arrow_forward_ios,
+                color: Color(0xFF999999), size: 16.0),
+          ],
+        ),
+        onTap: () async {
+          Result tempResult = await CityPickers.showCityPicker(
+              context: context,
+              locationCode: "410000",
+              showType: ShowType.pca,
+              cancelWidget: Text(
+                '取消',
+                style: TextStyle(fontSize: 15.0, color: Color(0xFF29CCCC)),
+              ),
+              confirmWidget: Text(
+                '确定',
+                style: TextStyle(fontSize: 15.0, color: Color(0xFF29CCCC)),
+              ),
+              height: 280.0);
+          print("___________________");
+          print(tempResult);
+          if (tempResult != null) {
+            this.updateRegionEdit(tempResult.provinceName, tempResult.cityName,
+                tempResult.areaName);
+          }
+          print("___________________");
+        },
+      ),
+      decoration: BoxDecoration(
+          border: Border(
+              bottom: BorderSide(
+        width: 0.5,
+        color: Color.fromRGBO(0, 0, 0, 0.2),
+      ))),
+    );
+  }
+
+  // 修改地址
+  updateRegionEdit(String province, String city, String region) {
+    print("修改地址：" + province + city + region);
+    this.showLoading();
+    LoginService.updateUserInfo(province: province, city: city, region: region)
+        .then((bool b) {
+      if (b) {
+        LoginService.getUserInfo().then((UserInfo user) {
+          Provider.of<UserInfoProvider>(context).setUserInfo(user);
+          this.shutdownLoading();
+          GlobalToast.globalToast('位置修改成功');
+        });
+      } else {
+        this.shutdownLoading();
+      }
+    });
   }
 
   // 登陆按钮
@@ -427,44 +531,57 @@ class MyInfoPageState extends State<MyInfoPage> {
                 }),
             centerTitle: true,
           ),
-          body: new SingleChildScrollView(
-            child: new ConstrainedBox(
-              constraints: new BoxConstraints(
-                minHeight: 120.0,
-              ),
-              child: new Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  new Padding(
-                    padding: const EdgeInsets.only(
-                        top: 20.0, left: 15.0, right: 15.0),
-                    child: new Card(
-                      margin: const EdgeInsets.only(
-                          top: 0.0, left: 10.0, right: 10.0, bottom: 10.0),
-                      elevation: 4.0,
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(15)),
-                      ),
-                      child: new Column(
-                        children: <Widget>[
-                          _avatar(),
-                          _gender(),
-                          _nickname(context),
-                          _signature(context),
-                          _mobile(context),
-                          _password()
-                        ],
-                      ),
+          body: ModalProgressHUD(
+              inAsyncCall: _isInAsyncCall,
+              child: new SingleChildScrollView(
+                child: new ConstrainedBox(
+                  constraints: new BoxConstraints(
+                    minHeight: 120.0,
+                  ),
+                  child: Consumer<UserInfoProvider>(
+                    builder: (context, userInfo, _) => new Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        new Padding(
+                          padding: const EdgeInsets.only(
+                              top: 20.0, left: 15.0, right: 15.0),
+                          child: new Card(
+                            margin: const EdgeInsets.only(
+                                top: 0.0,
+                                left: 10.0,
+                                right: 10.0,
+                                bottom: 10.0),
+                            elevation: 4.0,
+                            shape: const RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(15)),
+                            ),
+                            child: new Column(
+                              children: <Widget>[
+                                _avatar(userInfo.userInfo.avatar),
+                                _gender(userInfo.userInfo.gender),
+                                _nickname(userInfo.userInfo.nickName),
+                                _signature(
+                                    context, userInfo.userInfo.signature),
+                                _city(
+                                    userInfo.userInfo.province,
+                                    userInfo.userInfo.city,
+                                    userInfo.userInfo.region),
+                                _mobile(context, userInfo.userInfo.mobile),
+//                                _password()
+                              ],
+                            ),
+                          ),
+                        ),
+                        new Padding(
+                          padding: const EdgeInsets.only(left: 25.0, top: 30.0),
+                          child: _logoutBtn(context),
+                        )
+                      ],
                     ),
                   ),
-                  new Padding(
-                    padding: const EdgeInsets.only(left: 25.0, top: 30.0),
-                    child: _logoutBtn(context),
-                  )
-                ],
-              ),
-            ),
-          )),
+                ),
+              ))),
     );
   }
 
@@ -474,6 +591,7 @@ class MyInfoPageState extends State<MyInfoPage> {
 
     setState(() {
       _imgPath = image;
+      updateVavtar();
     });
   }
 
@@ -482,7 +600,29 @@ class MyInfoPageState extends State<MyInfoPage> {
     var image = await ImagePicker.pickImage(source: ImageSource.gallery);
     setState(() {
       _imgPath = image;
+      updateVavtar();
     });
   }
 
+  // 更换头像
+  updateVavtar(){
+
+    this.showLoading();
+    String path = _imgPath.path;
+    var name = path.substring(path.lastIndexOf("/") + 1, path.length);
+    var suffix = name.substring(name.lastIndexOf(".") + 1, name.length);
+    print("+++++++++++++++++++++++++++++");
+    print(name);
+    print(suffix);
+    print("+++++++++++++++++++++++++++++");
+    UploadFileInfo uploadFileInfo = new UploadFileInfo(new File(path), name,
+        contentType: ContentType.parse("image/$suffix"));
+    LoginService.uploadAvatar(uploadFileInfo).then((String url){
+      LoginService.getUserInfo().then((UserInfo user){
+        Provider.of<UserInfoProvider>(context).setUserInfo(user);
+        this.shutdownLoading();
+        GlobalToast.globalToast('头像更新成功');
+      });
+    });
+  }
 }
