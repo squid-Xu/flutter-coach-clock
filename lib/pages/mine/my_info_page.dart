@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:coach/common/providers/UserInfoProvider.dart';
 import 'package:coach/common/service/login_service.dart';
 import 'package:coach/common/utils/global_toast.dart';
+import 'package:coach/login/register.dart';
 import 'package:coach/model/UserInfo.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
@@ -476,7 +477,27 @@ class MyInfoPageState extends State<MyInfoPage> {
                 //操作按钮集合
                 CupertinoActionSheetAction(
                   onPressed: () {
-                    Navigator.pop(context);
+                    LoginService.logout().then((bool b) {
+                      if(b){
+                        MultiProvider(
+                          providers: [
+                            // 用户信息状态管理
+                            ChangeNotifierProvider(
+                              builder: (_) => UserInfoProvider(null),
+                            ),
+                          ],
+                          child:Register(),
+                        );
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (BuildContext context) => Register()));
+                        print("_____________");
+                      }else{
+                        print("++++++++++++++");
+                      }
+                      Navigator.pop(context);
+                    });
                   },
                   child: Text(
                     '退出登录',
@@ -607,22 +628,36 @@ class MyInfoPageState extends State<MyInfoPage> {
   // 更换头像
   updateVavtar(){
 
-    this.showLoading();
+//    this.showLoading();
     String path = _imgPath.path;
     var name = path.substring(path.lastIndexOf("/") + 1, path.length);
     var suffix = name.substring(name.lastIndexOf(".") + 1, name.length);
     print("+++++++++++++++++++++++++++++");
     print(name);
     print(suffix);
+    print(path);
     print("+++++++++++++++++++++++++++++");
     UploadFileInfo uploadFileInfo = new UploadFileInfo(new File(path), name,
         contentType: ContentType.parse("image/$suffix"));
-    LoginService.uploadAvatar(uploadFileInfo).then((String url){
-      LoginService.getUserInfo().then((UserInfo user){
-        Provider.of<UserInfoProvider>(context).setUserInfo(user);
-        this.shutdownLoading();
-        GlobalToast.globalToast('头像更新成功');
-      });
+    print("______________________________________");
+    print(uploadFileInfo.file);
+    print(uploadFileInfo.bytes);
+    print(uploadFileInfo.contentType);
+    print(uploadFileInfo.fileName);
+    print(uploadFileInfo.hashCode);
+    print(uploadFileInfo.runtimeType);
+    print("______________________________________");
+if(uploadFileInfo.file!=null){
+  LoginService.uploadAvatar(uploadFileInfo).then((String url){
+    print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+    print(url);
+    print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+    LoginService.getUserInfo().then((UserInfo user){
+      Provider.of<UserInfoProvider>(context).setUserInfo(user);
+//      this.shutdownLoading();
+      GlobalToast.globalToast('头像更新成功');
     });
+  });
+}
   }
 }

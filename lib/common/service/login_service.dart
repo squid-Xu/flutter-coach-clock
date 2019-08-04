@@ -83,11 +83,16 @@ class LoginService{
 
     Map<String, dynamic> res = await httpManager.netFetch(BaseConfig.BASE_URL+'/user/avatar',
                                         formData, new Options(method: 'post'));
+    print("——————————————————————————————————————");
+    print(res['code']);
+    print("——————————————————————————————————————");
     if(res['code'] != 0){
       GlobalToast.globalToast(res['msg']);
       return null;
     }
+    print("+++++++++++++++++++++++++++++++++++++++");
     print("res:${res['url']}");
+    print("+++++++++++++++++++++++++++++++++++++++");
     if(res !=null && res['url'] != null){
       return res['url'];
     }
@@ -161,6 +166,21 @@ class LoginService{
     print("requestMap:${requestMap}");
     Map<String, dynamic> res = await httpManager.netFetch(BaseConfig.BASE_URL+'/user/update/pwd',
         requestMap, new Options(method: 'post'));
+    if(res['code'] != 0){
+      GlobalToast.errorBottomToast(res['msg']);
+      return false;
+    }
+    return true;
+  }
+
+  //退出登录
+  static Future<bool> logout() async {
+
+    Map<String, dynamic> res = await httpManager.netFetch(BaseConfig.BASE_URL+'/user/logout',
+        null,   new Options(method: 'post'));
+    print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+    print(res);
+    print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
     if(res['code'] != 0){
       GlobalToast.errorBottomToast(res['msg']);
       return false;

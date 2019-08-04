@@ -112,6 +112,7 @@ class _myInfoSignatureState extends State<MyInfoSignature> {
     String newSignature = _signatureController.text.trim();
     print(newSignature);
     if (newSignature.isEmpty) {
+      this.shutdownLoading();
       GlobalToast.globalToast('个性签名不能为空');
     } else {
       LoginService.updateUserInfo(signature: newSignature).then((bool b) {

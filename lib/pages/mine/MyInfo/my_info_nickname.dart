@@ -112,6 +112,7 @@ class MyInfoNicknameState extends State<MyInfoNickname> {
     String newNickName = _nickNameController.text.trim();
     print(newNickName);
     if (newNickName.isEmpty) {
+      this.shutdownLoading();
       GlobalToast.globalToast('昵称不能为空');
     } else {
       LoginService.updateUserInfo(nickName: newNickName).then((bool b) {

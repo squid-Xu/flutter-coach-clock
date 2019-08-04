@@ -10,6 +10,7 @@ import '../Router.dart';
 import 'package:coach/common/service/login_service.dart';
 import 'package:coach/common/utils/verification_code_type.dart';
 import 'package:coach/navigator/tabNavigator.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 class Register extends StatefulWidget {
   @override
@@ -29,8 +30,22 @@ class _RegisterPageState extends State<Register> {
   int _seconds = 0; //秒数
   Timer _timer; //到技术组件
 //  bool _isCheck = true; //协议
+  bool _isInAsyncCall = false;
 
   Color _bgColor = Color.fromRGBO(84, 214, 214, 0.1); //背景颜色
+
+  // 显示加载的圈圈
+  showLoading(){
+    setState(() {
+      _isInAsyncCall =true;
+    });
+  }
+  // 关闭加载的圈圈
+  shutdownLoading(){
+    setState(() {
+      _isInAsyncCall =false;
+    });
+  }
 
 //  验证手机号
   void _checkPhone() {
@@ -95,31 +110,33 @@ class _RegisterPageState extends State<Register> {
         ),
         child: new Scaffold(
             backgroundColor: _bgColor,
-            body: new GestureDetector(
-              behavior: HitTestBehavior.translucent,
-              onTap: () {
-                // 触摸收起键盘
-                FocusScope.of(context).requestFocus(FocusNode());
-              },
-              child: Form(
-                  key: _formKey,
-                  child: ListView(
-                    children: <Widget>[
-                      buildLogo(),
-                      SizedBox(height: 50.0),
-                      buildUser(),
-                      SizedBox(height: 30.0),
-                      buildVaild(),
-                      SizedBox(height: 30.0),
+            body: new ModalProgressHUD(
+                inAsyncCall: _isInAsyncCall,
+                child: new GestureDetector(
+                  behavior: HitTestBehavior.translucent,
+                  onTap: () {
+                    // 触摸收起键盘
+                    FocusScope.of(context).requestFocus(FocusNode());
+                  },
+                  child: Form(
+                      key: _formKey,
+                      child: ListView(
+                        children: <Widget>[
+                          buildLogo(),
+                          SizedBox(height: 50.0),
+                          buildUser(),
+                          SizedBox(height: 30.0),
+                          buildVaild(),
+                          SizedBox(height: 30.0),
 //                    buildPassword(),
-                      SizedBox(height: 20.0),
+                          SizedBox(height: 20.0),
 //                    buildForgetPasswordText(context),
-                      buildLoginButton(context),
-                      SizedBox(height: 20.0),
-                      buildRegisterText(context),
-                    ],
-                  )),
-            )));
+                          buildLoginButton(context),
+                          SizedBox(height: 20.0),
+                          buildRegisterText(context),
+                        ],
+                      )),
+                ))));
   }
 
 //注册
@@ -179,16 +196,21 @@ class _RegisterPageState extends State<Register> {
             _checkPhone();
             _checkCode();
             if (_phoneState && _codeState) {
+              showLoading();
               LoginService.mobileLogin(
                       this._PhoneController.text, this._CodeEtController.text)
                   .then((UserInfo res) {
                 print("res结果:${res}");
                 if (res != null) {
+                  shutdownLoading();
                   Provider.of<UserInfoProvider>(context).setUserInfo(res);
                   Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
                           builder: (BuildContext context) => TabNavigator()));
+                }
+                else{
+                  shutdownLoading();
                 }
               });
               print("手机号" + _PhoneController.text);
