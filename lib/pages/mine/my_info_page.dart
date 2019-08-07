@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:coach/common/providers/UserInfoProvider.dart';
 import 'package:coach/common/service/login_service.dart';
 import 'package:coach/common/utils/global_toast.dart';
@@ -605,6 +604,7 @@ class MyInfoPageState extends State<MyInfoPage> {
               ))),
     );
   }
+
 
   /*拍照*/
   _takePhoto() async {

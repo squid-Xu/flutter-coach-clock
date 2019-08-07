@@ -27,12 +27,12 @@ class _StuClockdState extends State<StuClock> {
   StreamSubscription<Map<String, Object>> _locationListener;
 
   AmapLocationFlutterPlugin _locationPlugin = new AmapLocationFlutterPlugin();
-  var list = [];
+  List<String> list = new List<String>();
 
 
   void _onceLocation(){
     _locationPlugin.startLocation();
-    new Future.delayed(const Duration(seconds: 5), () => _locationPlugin.stopLocation());
+    new Future.delayed(const Duration(seconds: 30), () => _locationPlugin.stopLocation());
   }
   Widget build(BuildContext context) {
 
@@ -166,7 +166,7 @@ class _StuClockdState extends State<StuClock> {
                         ),
                       ),
                      Expanded(child:  new Text(
-                       _loationResult==null ? "定位失败":list[4],
+                       _loationResult==null ? "定位失败":list[list.length - 1],
                        textAlign: TextAlign.center,
                        style:
                        TextStyle(color: Color(0xFF333333), fontSize: 14.0),
@@ -253,7 +253,7 @@ class _StuClockdState extends State<StuClock> {
     //获取位置信息
     startLocation();
     _locationPlugin.startLocation();
-    new Future.delayed(const Duration(seconds: 5), () => _locationPlugin.stopLocation());
+    new Future.delayed(const Duration(seconds: 30), () => _locationPlugin.stopLocation());
   }
 
   void startLocation(){
@@ -261,19 +261,23 @@ class _StuClockdState extends State<StuClock> {
         _locationPlugin.onLocationChanged().listen((Map<String, Object> result) {
           setState(() {
             _loationResult = result;
+          });
+          if (_loationResult != null) {
             print("------------------------------");
             print(result);
-            _loationResult.forEach(
-                    (key, value) {
-                  list.add('$value');
-                  print('$key');
-                  print('$value');
-                }
-            );
-            print(list[4]);
+            _loationResult.forEach((key, value) {
+              list.add('$value');
+              print('$key');
+              print('$value');
+            });
+            print(list[0]);
+            print(list[1]);
+            print(list[2]);
+            print(list[3]);
+            print(list[list.length - 1]);
             print(_loationResult.toString().split(","));
             print("------------------------------");
-          });
+          }
         });
   }
   void startTimer() {

@@ -85,13 +85,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_amap_location:
-    dependency: "direct main"
-    description:
-      name: flutter_amap_location
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "0.0.5"
   flutter_localizations:
     dependency: "direct main"
     description: flutter

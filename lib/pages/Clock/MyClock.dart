@@ -26,12 +26,11 @@ class MyClockState extends State<MyClock> {
   AmapLocationFlutterPlugin _locationPlugin = new AmapLocationFlutterPlugin();
   List<String> list = new List<String>();
 
-
-  void _onceLocation(){
-      _locationPlugin.startLocation();
-      new Future.delayed(const Duration(seconds: 10), () => _locationPlugin.stopLocation());
+  void _onceLocation() {
+    _locationPlugin.startLocation();
+    new Future.delayed(
+        const Duration(seconds: 30), () => _locationPlugin.stopLocation());
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -75,136 +74,151 @@ class MyClockState extends State<MyClock> {
           new Expanded(
             child: new Column(
               children: <Widget>[
-                new Container(
-                  padding: EdgeInsets.fromLTRB(10, 20, 10, 0),
-                  child: new Container(
-                    padding: EdgeInsets.only(left: 10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        new Container(
-                          padding: EdgeInsets.only(bottom: 10.0),
-                          child: new Text(
-                            "上班打卡时间：",
-                            style: TextStyle(
-                                color: Color(0xFFFEFEFE), fontSize: 15.0),
+                new Expanded(
+                  child: Container(
+                    padding: EdgeInsets.fromLTRB(10, 20, 0, 0),
+                    child: new Container(
+                      padding: EdgeInsets.only(left: 10),
+                      child: ListView(
+//                      crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          new Container(
+                            padding: EdgeInsets.only(bottom: 10.0),
+                            child: new Text(
+                              "上班打卡时间：",
+                              style: TextStyle(
+                                  color: Color(0xFFFEFEFE), fontSize: 15.0),
+                            ),
                           ),
-                        ),
-                        new Container(
-                          padding: EdgeInsets.only(left: 5.0, bottom: 10.0),
-                          child: new Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              new Container(
-                                child: new Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: <Widget>[
-                                    new Icon(
-                                      Icons.access_alarm,
-                                      color: Color(0xFFFEFEFE),
-                                      size: 13.0,
-                                    ),
-                                    new Padding(
-                                      padding: EdgeInsets.only(left: 3.0),
-                                      child: new Text(
-                                        "09:00",
-                                        style: TextStyle(
-                                            color: Color(0xFFFEFEFE),
-                                            fontSize: 15.0),
+                          new Container(
+                            padding: EdgeInsets.only(left: 5.0, bottom: 10.0),
+                            child: new Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                new Container(
+                                  child: new Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: <Widget>[
+                                      new Icon(
+                                        Icons.access_alarm,
+                                        color: Color(0xFFFEFEFE),
+                                        size: 13.0,
                                       ),
-                                    )
-                                  ],
+                                      new Padding(
+                                        padding: EdgeInsets.only(left: 3.0),
+                                        child: new Text(
+                                          "09:00",
+                                          style: TextStyle(
+                                              color: Color(0xFFFEFEFE),
+                                              fontSize: 15.0),
+                                        ),
+                                      )
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              new Container(
-                                child: new Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: <Widget>[
-                                    new Icon(
-                                      Icons.room,
-                                      color: Color(0xFFFEFEFE),
-                                      size: 13.0,
-                                    ),
-                                    new Padding(
-                                      padding: EdgeInsets.only(left: 3.0),
-                                      child: new Text(
-                                        "中原智谷",
-                                        style: TextStyle(
-                                            color: Color(0xFFFEFEFE),
-                                            fontSize: 15.0),
+                                new Container(
+                                  child: new Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      new Container(
+                                        padding: EdgeInsets.only(top: 3.0),
+                                        child: new Icon(
+                                          Icons.room,
+                                          color: Color(0xFFFEFEFE),
+                                          size: 14.0,
+                                        ),
                                       ),
-                                    )
-                                  ],
-                                ),
-                              )
-                            ],
+                                      new Expanded(
+                                          child: new Padding(
+                                        padding: EdgeInsets.only(left: 3.0),
+                                        child: new Text(
+                                          "河南省郑州市荥阳市中原西路55号靠近荥阳市公安局出入境接待大厅",
+                                          style: TextStyle(
+                                              color: Color(0xFFFEFEFE),
+                                              fontSize: 14.0),
+                                        ),
+                                      ))
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
-                        ),
-                        new Container(
-                          padding: EdgeInsets.only(bottom: 10.0),
-                          child: new Text(
-                            "下班打卡时间：",
-                            style: TextStyle(
-                                color: Color(0xFFFEFEFE), fontSize: 15.0),
+                          new Container(
+                            padding: EdgeInsets.only(bottom: 10.0),
+                            child: new Text(
+                              "下班打卡时间：",
+                              style: TextStyle(
+                                  color: Color(0xFFFEFEFE), fontSize: 15.0),
+                            ),
                           ),
-                        ),
-                        new Container(
-                          padding: EdgeInsets.only(left: 5.0),
-                          child: new Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              new Container(
-                                child: new Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: <Widget>[
-                                    new Icon(
-                                      Icons.access_alarm,
-                                      color: Color(0xFFFEFEFE),
-                                      size: 13.0,
-                                    ),
-                                    new Padding(
-                                      padding: EdgeInsets.only(left: 3.0),
-                                      child: new Text(
-                                        "09:00",
-                                        style: TextStyle(
-                                            color: Color(0xFFFEFEFE),
-                                            fontSize: 15.0),
+                          new Container(
+                            padding: EdgeInsets.only(left: 5.0),
+                            child: new Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                new Container(
+                                  child: new Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: <Widget>[
+                                      new Icon(
+                                        Icons.access_alarm,
+                                        color: Color(0xFFFEFEFE),
+                                        size: 13.0,
                                       ),
-                                    )
-                                  ],
+                                      new Padding(
+                                        padding: EdgeInsets.only(left: 3.0),
+                                        child: new Text(
+                                          "09:00",
+                                          style: TextStyle(
+                                              color: Color(0xFFFEFEFE),
+                                              fontSize: 15.0),
+                                        ),
+                                      )
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              new Container(
-                                child: new Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: <Widget>[
-                                    new Icon(
-                                      Icons.room,
-                                      color: Color(0xFFFEFEFE),
-                                      size: 13.0,
-                                    ),
-                                    new Padding(
-                                      padding: EdgeInsets.only(left: 3.0),
-                                      child: new Text(
-                                        "中原智谷",
-                                        style: TextStyle(
-                                            color: Color(0xFFFEFEFE),
-                                            fontSize: 15.0),
+                                new Container(
+                                  child: new Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      new Container(
+                                        padding: EdgeInsets.only(top: 3.0),
+                                        child: new Icon(
+                                          Icons.room,
+                                          color: Color(0xFFFEFEFE),
+                                          size: 14.0,
+                                        ),
                                       ),
-                                    )
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
-                        )
-                      ],
+                                      new Expanded(
+                                          child: new Padding(
+                                        padding: EdgeInsets.only(left: 3.0),
+                                        child: new Text(
+                                          "河南省郑州市荥阳市中原西路55号靠近荥阳市公安局出入境接待大厅",
+                                          style: TextStyle(
+                                              color: Color(0xFFFEFEFE),
+                                              fontSize: 14.0),
+                                        ),
+                                      ))
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                      decoration: BoxDecoration(
+                          border: Border(
+                              left: BorderSide(
+                                  width: 1, color: Color(0xFFFFFFFF)))),
                     ),
-                    decoration: BoxDecoration(
-                        border: Border(
-                            left: BorderSide(
-                                width: 1, color: Color(0xFFFFFFFF)))),
                   ),
+                  flex: 2,
                 ),
                 new Expanded(
                   child: new Card(
@@ -259,18 +273,20 @@ class MyClockState extends State<MyClock> {
                       ),
                       new Expanded(
                           child: new Text(
-                        _loationResult==null ? "定位失败":list[4],
+                        _loationResult == null ? "定位失败" : list[list.length - 1],
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.center,
                         style:
-                        TextStyle(color: Color(0xFF333333), fontSize: 16.0),
+                            TextStyle(color: Color(0xFF333333), fontSize: 14.0),
                       )),
                       new InkWell(
                         child: new Text(
                           "重新定位",
-                          style:
-                          TextStyle(color: Color(0xFF29CCCC), fontSize: 16.0),
+                          style: TextStyle(
+                              color: Color(0xFF29CCCC), fontSize: 16.0),
                         ),
-                        onTap: (){
+                        onTap: () {
                           _onceLocation();
                         },
                       )
@@ -282,7 +298,7 @@ class MyClockState extends State<MyClock> {
             ),
           ),
           new Container(
-            padding: EdgeInsets.only(bottom: 30.0, top: 20.0),
+            padding: EdgeInsets.only(bottom: 20.0, top: 10.0),
             child: new Row(
               children: <Widget>[
                 Expanded(
@@ -347,36 +363,36 @@ class MyClockState extends State<MyClock> {
     //获取位置信息
     startLocation();
     _locationPlugin.startLocation();
-    new Future.delayed(const Duration(seconds: 5), () => _locationPlugin.stopLocation());
+    new Future.delayed(
+        const Duration(seconds: 30), () => _locationPlugin.stopLocation());
   }
 
-
-  void startLocation(){
-    _locationListener =
-        _locationPlugin.onLocationChanged().listen((Map<String, Object> result) {
-          setState(() {
-            _loationResult = result;
-          });
-          if(_loationResult!=null){
-            print("------------------------------");
-            print(result);
-            _loationResult.forEach(
-                    (key, value) {
-                  list.add('$value');
-                  print('$key');
-                  print('$value');
-                }
-            );
-            print(list[0]);
-            print(list[1]);
-            print(list[2]);
-            print(list[3]);
-            print(list[4]);
-            print(_loationResult.toString().split(","));
-            print("------------------------------");
-          }
+  void startLocation() {
+    _locationListener = _locationPlugin
+        .onLocationChanged()
+        .listen((Map<String, Object> result) {
+      setState(() {
+        _loationResult = result;
+      });
+      if (_loationResult != null) {
+        print("------------------------------");
+        print(result);
+        _loationResult.forEach((key, value) {
+          list.add('$value');
+          print('$key');
+          print('$value');
         });
+        print(list[0]);
+        print(list[1]);
+        print(list[2]);
+        print(list[3]);
+        print(list[list.length - 1]);
+        print(_loationResult.toString().split(","));
+        print("------------------------------");
+      }
+    });
   }
+
   void startTimer() {
     //设置 1 秒回调一次
     const period = const Duration(seconds: 1);
@@ -387,19 +403,20 @@ class MyClockState extends State<MyClock> {
       });
     });
   }
+
   void cancelTimer() {
     if (_timer != null) {
       _timer.cancel();
       _timer = null;
     }
   }
+
   @override
   void dispose() {
     super.dispose();
     cancelTimer();
-    if(null != _locationListener) {
+    if (null != _locationListener) {
       _locationListener.cancel();
     }
   }
-
 }

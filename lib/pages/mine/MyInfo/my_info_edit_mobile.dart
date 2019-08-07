@@ -1,7 +1,14 @@
+import 'package:coach/common/providers/UserInfoProvider.dart';
+import 'package:coach/common/service/login_service.dart';
+import 'package:coach/common/utils/global_toast.dart';
+import 'package:coach/common/utils/verification_code_type.dart';
+import 'package:coach/login/register.dart';
+import 'package:coach/model/UserInfo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:async';
 
+import 'package:provider/provider.dart';
 
 class MyInfoEditMobile extends StatefulWidget {
   final current_mobile;
@@ -15,7 +22,7 @@ class MyInfoEditMobile extends StatefulWidget {
 
 class _myInfoEditMobileState extends State<MyInfoEditMobile> {
   final current_mobile;
-
+  bool _isInAsyncCall = false;
   TextEditingController _mobileController = new TextEditingController();
 
   TextEditingController _verifyCodeController = new TextEditingController();
@@ -24,6 +31,20 @@ class _myInfoEditMobileState extends State<MyInfoEditMobile> {
   int _seconds = 0;
   Timer _timer;
   _myInfoEditMobileState(this.current_mobile);
+
+  // 显示加载的圈圈
+  showLoading() {
+    setState(() {
+      _isInAsyncCall = true;
+    });
+  }
+
+  // 关闭加载的圈圈
+  shutdownLoading() {
+    setState(() {
+      _isInAsyncCall = false;
+    });
+  }
 
   // 手机号输入框
   Widget _mobileInputCard() {
@@ -51,6 +72,8 @@ class _myInfoEditMobileState extends State<MyInfoEditMobile> {
             //只能输入数字
             inputFormatters: <TextInputFormatter>[
               WhitelistingTextInputFormatter.digitsOnly,
+              BlacklistingTextInputFormatter(RegExp("[a-z]")),
+              LengthLimitingTextInputFormatter(11)
             ],
           ),
         ),
@@ -111,6 +134,8 @@ class _myInfoEditMobileState extends State<MyInfoEditMobile> {
                   //只能输入数字
                   inputFormatters: <TextInputFormatter>[
                     WhitelistingTextInputFormatter.digitsOnly,
+                    BlacklistingTextInputFormatter(RegExp("[a-z]")),
+                    LengthLimitingTextInputFormatter(6)
                   ],
                 ),
               )),
@@ -120,7 +145,7 @@ class _myInfoEditMobileState extends State<MyInfoEditMobile> {
                           _seconds == 0)
                       ? () {
                           setState(() {
-                            _startTimer();
+                            sendCode();
                           });
                         }
                       : null,
@@ -136,6 +161,23 @@ class _myInfoEditMobileState extends State<MyInfoEditMobile> {
         ),
       ),
     );
+  }
+
+  sendCode() {
+    print("new mobile :${_mobileController.text.trim()}");
+    if (_seconds != 0) {
+      return;
+    } else if (_mobileController.text.trim().length != 11) {
+      GlobalToast.globalToast('请输入正确的手机号');
+      return;
+    } else {
+      LoginService.sendVerificationCode(
+          _mobileController.text.trim(), VerificationCodeType.UPDATE_INFO);
+      print("开始倒计时---");
+      setState(() {
+        _startTimer();
+      });
+    }
   }
 
   // 提交按钮
@@ -161,6 +203,29 @@ class _myInfoEditMobileState extends State<MyInfoEditMobile> {
   _submitFun(BuildContext context) {
     print(_mobileController.text);
     print(_verifyCodeController.text);
+    this.showLoading();
+    LoginService.updateMobile(
+            _mobileController.text.trim(), _verifyCodeController.text.trim())
+        .then((bool b) {
+      if (b) {
+        LoginService.getUserInfo().then((UserInfo user) {
+          Provider.of<UserInfoProvider>(context).setUserInfo(user);
+          this.shutdownLoading();
+          GlobalToast.globalToast('手机号修改成功');
+          LoginService.logout().then((bool b) async {
+            if (b) {
+//        await SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (BuildContext context) => Register()));
+            } else {
+              GlobalToast.globalToast("退出失败");
+            }
+          });
+        });
+      }
+    });
   }
 
   @override
@@ -214,5 +279,4 @@ class _myInfoEditMobileState extends State<MyInfoEditMobile> {
           ),
         ));
   }
-
 }

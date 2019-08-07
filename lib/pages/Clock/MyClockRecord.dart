@@ -682,7 +682,7 @@ class _MyClockRecordState extends State<MyClockRecord> {
             ),
           ),
           new Container(
-            padding: EdgeInsets.only(bottom: 30.0, top: 20.0),
+            padding: EdgeInsets.only(bottom: 20.0, top: 20.0),
             child: new Row(
               children: <Widget>[
                 Expanded(
