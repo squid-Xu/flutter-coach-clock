@@ -3,6 +3,7 @@ import 'package:coach/fonts/iconfont.dart';
 import 'package:coach/pages/StudentClock/picker.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:amap_location_flutter_plugin/amap_location_flutter_plugin.dart';
 
 class StuClock extends StatefulWidget {
   @override
@@ -21,8 +22,20 @@ class _StuClockdState extends State<StuClock> {
   @override
 
   PickerItem showTypeAttr =   PickerItem(name: '马云',value: "马云");
+  Map<String, Object> _loationResult;
 
+  StreamSubscription<Map<String, Object>> _locationListener;
+
+  AmapLocationFlutterPlugin _locationPlugin = new AmapLocationFlutterPlugin();
+  var list = [];
+
+
+  void _onceLocation(){
+    _locationPlugin.startLocation();
+    new Future.delayed(const Duration(seconds: 5), () => _locationPlugin.stopLocation());
+  }
   Widget build(BuildContext context) {
+
     // TODO: implement build
     return new Container(
       padding: const EdgeInsets.fromLTRB(15, 10, 15, 0),
@@ -152,16 +165,22 @@ class _StuClockdState extends State<StuClock> {
                           color: Color(0xFF29CCCC),
                         ),
                       ),
-                      new Text(
-                        "中原智谷",
-                        style:
-                            TextStyle(color: Color(0xFF333333), fontSize: 14.0),
-                      ),
-                      new Text(
-                        "重新定位",
-                        style:
-                            TextStyle(color: Color(0xFF29CCCC), fontSize: 14.0),
-                      ),
+                     Expanded(child:  new Text(
+                       _loationResult==null ? "定位失败":list[4],
+                       textAlign: TextAlign.center,
+                       style:
+                       TextStyle(color: Color(0xFF333333), fontSize: 14.0),
+                     ),),
+                      new InkWell(
+                        child: new Text(
+                          "重新定位",
+                          style:
+                          TextStyle(color: Color(0xFF29CCCC), fontSize: 16.0),
+                        ),
+                        onTap: (){
+                          _onceLocation();
+                        },
+                      )
                     ],
                   ),
                   flex: 2,
@@ -231,6 +250,31 @@ class _StuClockdState extends State<StuClock> {
     super.initState();
     //获取当期时间
     startTimer();
+    //获取位置信息
+    startLocation();
+    _locationPlugin.startLocation();
+    new Future.delayed(const Duration(seconds: 5), () => _locationPlugin.stopLocation());
+  }
+
+  void startLocation(){
+    _locationListener =
+        _locationPlugin.onLocationChanged().listen((Map<String, Object> result) {
+          setState(() {
+            _loationResult = result;
+            print("------------------------------");
+            print(result);
+            _loationResult.forEach(
+                    (key, value) {
+                  list.add('$value');
+                  print('$key');
+                  print('$value');
+                }
+            );
+            print(list[4]);
+            print(_loationResult.toString().split(","));
+            print("------------------------------");
+          });
+        });
   }
   void startTimer() {
     //设置 1 秒回调一次
@@ -253,5 +297,8 @@ class _StuClockdState extends State<StuClock> {
   void dispose() {
     super.dispose();
     cancelTimer();
+    if(null != _locationListener) {
+      _locationListener.cancel();
+    }
   }
 }

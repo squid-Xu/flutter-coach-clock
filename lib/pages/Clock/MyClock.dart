@@ -1,8 +1,10 @@
 import 'dart:async';
 
+import 'dart:convert' as convert;
 import 'package:coach/fonts/iconfont.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:amap_location_flutter_plugin/amap_location_flutter_plugin.dart';
 
 class MyClock extends StatefulWidget {
   @override
@@ -16,6 +18,21 @@ class MyClockState extends State<MyClock> {
   Timer _timer;
   String _Date = new DateFormat('yyyy.MM.dd').format(DateTime.now());
   String _Time = new DateFormat('HH:mm:ss').format(DateTime.now());
+
+  Map<String, Object> _loationResult;
+
+  StreamSubscription<Map<String, Object>> _locationListener;
+
+  AmapLocationFlutterPlugin _locationPlugin = new AmapLocationFlutterPlugin();
+  List<String> list = new List<String>();
+
+
+  void _onceLocation(){
+      _locationPlugin.startLocation();
+      new Future.delayed(const Duration(seconds: 10), () => _locationPlugin.stopLocation());
+  }
+
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -240,16 +257,23 @@ class MyClockState extends State<MyClock> {
                           color: Color(0xFF29CCCC),
                         ),
                       ),
-                      new Text(
-                        "中原智谷",
+                      new Expanded(
+                          child: new Text(
+                        _loationResult==null ? "定位失败":list[4],
+                        textAlign: TextAlign.center,
                         style:
-                            TextStyle(color: Color(0xFF333333), fontSize: 16.0),
-                      ),
-                      new Text(
-                        "重新定位",
-                        style:
-                            TextStyle(color: Color(0xFF29CCCC), fontSize: 16.0),
-                      ),
+                        TextStyle(color: Color(0xFF333333), fontSize: 16.0),
+                      )),
+                      new InkWell(
+                        child: new Text(
+                          "重新定位",
+                          style:
+                          TextStyle(color: Color(0xFF29CCCC), fontSize: 16.0),
+                        ),
+                        onTap: (){
+                          _onceLocation();
+                        },
+                      )
                     ],
                   ),
                   flex: 1,
@@ -320,8 +344,39 @@ class MyClockState extends State<MyClock> {
     super.initState();
     //获取当期时间
     startTimer();
+    //获取位置信息
+    startLocation();
+    _locationPlugin.startLocation();
+    new Future.delayed(const Duration(seconds: 5), () => _locationPlugin.stopLocation());
   }
 
+
+  void startLocation(){
+    _locationListener =
+        _locationPlugin.onLocationChanged().listen((Map<String, Object> result) {
+          setState(() {
+            _loationResult = result;
+          });
+          if(_loationResult!=null){
+            print("------------------------------");
+            print(result);
+            _loationResult.forEach(
+                    (key, value) {
+                  list.add('$value');
+                  print('$key');
+                  print('$value');
+                }
+            );
+            print(list[0]);
+            print(list[1]);
+            print(list[2]);
+            print(list[3]);
+            print(list[4]);
+            print(_loationResult.toString().split(","));
+            print("------------------------------");
+          }
+        });
+  }
   void startTimer() {
     //设置 1 秒回调一次
     const period = const Duration(seconds: 1);
@@ -332,17 +387,19 @@ class MyClockState extends State<MyClock> {
       });
     });
   }
-
   void cancelTimer() {
     if (_timer != null) {
       _timer.cancel();
       _timer = null;
     }
   }
-
   @override
   void dispose() {
     super.dispose();
     cancelTimer();
+    if(null != _locationListener) {
+      _locationListener.cancel();
+    }
   }
+
 }

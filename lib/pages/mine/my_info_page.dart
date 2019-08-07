@@ -8,6 +8,7 @@ import 'package:coach/model/UserInfo.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:image_picker/image_picker.dart';
@@ -477,27 +478,7 @@ class MyInfoPageState extends State<MyInfoPage> {
                 //操作按钮集合
                 CupertinoActionSheetAction(
                   onPressed: () {
-                    LoginService.logout().then((bool b) {
-                      if(b){
-                        MultiProvider(
-                          providers: [
-                            // 用户信息状态管理
-                            ChangeNotifierProvider(
-                              builder: (_) => UserInfoProvider(null),
-                            ),
-                          ],
-                          child:Register(),
-                        );
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (BuildContext context) => Register()));
-                        print("_____________");
-                      }else{
-                        print("++++++++++++++");
-                      }
-                      Navigator.pop(context);
-                    });
+                    this.submitLogout();
                   },
                   child: Text(
                     '退出登录',
@@ -522,6 +503,25 @@ class MyInfoPageState extends State<MyInfoPage> {
     );
     return btn;
   }
+
+  submitLogout(){
+    setState(() {
+      this._isInAsyncCall = true;
+    });
+    LoginService.logout().then((bool b) async {
+      if(b){
+//        await SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (BuildContext context) => Register()));
+
+      } else {
+        GlobalToast.globalToast("操作失败");
+      }
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {

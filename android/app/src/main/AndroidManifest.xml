@@ -8,8 +8,12 @@
          FlutterApplication and put your custom class here. -->
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="coach"
+        android:label="乐轮滑教练"
         android:icon="@mipmap/ic_launcher">
+        <service android:name="com.amap.api.location.APSService"/>
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="68be31cb3d8d1fe90ab4f32b243364d9"/>
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

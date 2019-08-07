@@ -148,6 +148,11 @@ class DataUtil{
     bool isLogin = sp.getBool(SP_IS_LOGIN);
     return isLogin == null ? false : isLogin ;
   }
+  /// 清除存储
+  static Future<bool> clear() async {
+    SharedPreferences sp = await SharedPreferences.getInstance();
+    return sp.clear();
+  }
 
 }
 

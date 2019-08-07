@@ -175,17 +175,16 @@ class LoginService{
 
   //退出登录
   static Future<bool> logout() async {
-
-    Map<String, dynamic> res = await httpManager.netFetch(BaseConfig.BASE_URL+'/user/logout',
-        null,   new Options(method: 'post'));
-    print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-    print(res);
-    print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+    Map<String, dynamic> res = await httpManager.netFetch(BaseConfig.BASE_URL+'/user/logout', null, new Options(
+        method: "post"
+    ));
     if(res['code'] != 0){
       GlobalToast.errorBottomToast(res['msg']);
       return false;
+    }else {
+      DataUtil.clear();
+      return true;
     }
-    return true;
   }
 
 }
