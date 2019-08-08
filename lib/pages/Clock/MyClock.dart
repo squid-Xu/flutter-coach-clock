@@ -1,7 +1,5 @@
 import 'dart:async';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'dart:convert' as convert;
 import 'package:coach/fonts/iconfont.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -10,30 +8,23 @@ import 'package:amap_location_flutter_plugin/amap_location_flutter_plugin.dart';
 class MyClock extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => new MyClockState();
-  final BuildContext pageContext;
 
+  //路由跳转参数
+  final BuildContext pageContext;
   const MyClock({Key key, this.pageContext}) : super(key: key);
 }
 
 class MyClockState extends State<MyClock> {
+  //初始化时间
   Timer _timer;
   String _Date = new DateFormat('yyyy.MM.dd').format(DateTime.now());
   String _Time = new DateFormat('HH:mm:ss').format(DateTime.now());
 
+  //初始化位置信息
   Map<String, Object> _loationResult;
-
   StreamSubscription<Map<String, Object>> _locationListener;
-
   AmapLocationFlutterPlugin _locationPlugin = new AmapLocationFlutterPlugin();
   List<String> list = new List<String>();
-
-  void _onceLocation() {
-    //获取位置信息
-    startLocation();
-    _locationPlugin.startLocation();
-    new Future.delayed(
-        const Duration(seconds: 30), () => _locationPlugin.stopLocation());
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -290,12 +281,12 @@ class MyClockState extends State<MyClock> {
                               color: Color(0xFF29CCCC), fontSize: 16.0),
                         ),
                         onTap: () {
-                          if(list[list.length - 3]=='12'){
+                          if (list[list.length - 3] == '12') {
                             //获取位置权限
                             requestPermission();
-                            _onceLocation();
-                          }else{
-                            _onceLocation();
+                            onceLocation();
+                          } else {
+                            onceLocation();
                           }
                         },
                       )
@@ -364,6 +355,49 @@ class MyClockState extends State<MyClock> {
     );
   }
 
+  //获取位置
+  Future startLocation() async {
+    _locationListener = _locationPlugin
+        .onLocationChanged()
+        .listen((Map<String, Object> result) {
+      setState(() {
+        _loationResult = result;
+        _loationResult.forEach((key, value) {
+          list.add('$value');
+        });
+      });
+    });
+  }
+
+  //重新获取位置
+  Future onceLocation() async {
+    //获取位置信息
+    startLocation();
+    _locationPlugin.startLocation();
+    new Future.delayed(
+        const Duration(seconds: 30), () => _locationPlugin.stopLocation());
+  }
+
+  //获取时间
+  Future startTimer() async {
+    //设置 1 秒回调一次
+    const period = const Duration(seconds: 1);
+    _timer = Timer.periodic(period, (timer) {
+      //更新界面
+      setState(() {
+        _Time = new DateFormat('HH:mm:ss').format(DateTime.now());
+      });
+    });
+  }
+
+  //取消获取时间
+  Future cancelTimer() async {
+    if (_timer != null) {
+      _timer.cancel();
+      _timer = null;
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -378,50 +412,6 @@ class MyClockState extends State<MyClock> {
         const Duration(seconds: 30), () => _locationPlugin.stopLocation());
   }
 
-  Future startLocation() async{
-    _locationListener = await _locationPlugin
-        .onLocationChanged()
-        .listen((Map<String, Object> result) {
-      setState(() {
-        _loationResult = result;
-      });
-      if (_loationResult != null) {
-        print("------------------------------");
-        print(result);
-        _loationResult.forEach((key, value) {
-          list.add('$value');
-          print('$key');
-          print('$value');
-        });
-        print(list[0]);
-        print(list[1]);
-        print(list[2]);
-        print(list[3]);
-        print(list[list.length - 1]);
-        print(_loationResult.toString().split(","));
-        print("------------------------------");
-      }
-    });
-  }
-
-  void startTimer() {
-    //设置 1 秒回调一次
-    const period = const Duration(seconds: 1);
-    _timer = Timer.periodic(period, (timer) {
-      //更新界面
-      setState(() {
-        _Time = new DateFormat('HH:mm:ss').format(DateTime.now());
-      });
-    });
-  }
-
-  void cancelTimer() {
-    if (_timer != null) {
-      _timer.cancel();
-      _timer = null;
-    }
-  }
-
   @override
   void dispose() {
     super.dispose();
@@ -431,13 +421,13 @@ class MyClockState extends State<MyClock> {
     }
   }
 }
-Future requestPermission() async {
 
+//获取权限
+Future requestPermission() async {
   // 申请权限
 
-  Map<PermissionGroup, PermissionStatus> permissions =
-
-  await PermissionHandler().requestPermissions([PermissionGroup.locationWhenInUse]);
+  Map<PermissionGroup, PermissionStatus> permissions = await PermissionHandler()
+      .requestPermissions([PermissionGroup.locationWhenInUse]);
 
   // 申请结果
 
@@ -454,5 +444,4 @@ Future requestPermission() async {
 //    Fluttertoast.showToast(msg: "权限申请被拒绝");
 //
 //  }
-
 }

@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:convert'as convert;
 import 'package:coach/common/config/base_config.dart';
 import 'package:coach/common/net/api.dart';
 import 'package:coach/common/utils/data_util.dart';
@@ -154,24 +153,24 @@ class LoginService{
     return true;
   }
 
-  // 修改密码
-  static Future<bool> updatePwd(String newPassword,{String oldPwd}) async {
-
-    Map<String, dynamic> requestMap = {
-      "newPassword": newPassword
-    };
-    if(oldPwd!=null && oldPwd.isNotEmpty){
-      requestMap['oldPwd'] = oldPwd;
-    }
-    print("requestMap:${requestMap}");
-    Map<String, dynamic> res = await httpManager.netFetch(BaseConfig.BASE_URL+'/user/update/pwd',
-        requestMap, new Options(method: 'post'));
-    if(res['code'] != 0){
-      GlobalToast.errorBottomToast(res['msg']);
-      return false;
-    }
-    return true;
-  }
+//  // 修改密码
+//  static Future<bool> updatePwd(String newPassword,{String oldPwd}) async {
+//
+//    Map<String, dynamic> requestMap = {
+//      "newPassword": newPassword
+//    };
+//    if(oldPwd!=null && oldPwd.isNotEmpty){
+//      requestMap['oldPwd'] = oldPwd;
+//    }
+//    print("requestMap:${requestMap}");
+//    Map<String, dynamic> res = await httpManager.netFetch(BaseConfig.BASE_URL+'/user/update/pwd',
+//        requestMap, new Options(method: 'post'));
+//    if(res['code'] != 0){
+//      GlobalToast.errorBottomToast(res['msg']);
+//      return false;
+//    }
+//    return true;
+//  }
 
   //退出登录
   static Future<bool> logout() async {

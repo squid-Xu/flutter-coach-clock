@@ -1,10 +1,10 @@
 import 'package:coach/common/providers/UserInfoProvider.dart';
+import 'package:coach/common/service/coachClub.dart';
 import 'package:coach/fonts/iconfont.dart';
+import 'package:coach/model/CoachClubEntity.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../Router.dart';
-
-
 
 class MinePage extends StatefulWidget {
   @override
@@ -12,6 +12,11 @@ class MinePage extends StatefulWidget {
 }
 
 class _MinePageState extends State<MinePage> {
+  bool _ClubState = true;
+  String coachNmae = '';
+  String clubName = '';
+  int student = 0;
+
   @override
   Widget build(BuildContext context) {
     return Consumer<UserInfoProvider>(
@@ -101,38 +106,51 @@ class _MinePageState extends State<MinePage> {
                   ),
                   borderRadius: new BorderRadius.circular((8.0)), // 圆角度
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    new Container(
-                      padding: EdgeInsets.only(bottom: 40.0),
-                      child: new Row(
+                child: _ClubState
+                    ? new Container(
+                        padding: EdgeInsets.only(top: 20, bottom: 30),
+                        child: new Column(
+                          children: <Widget>[
+                            new Icon(
+                              Icons.lock,
+                              color: Color(0xFF29CCCC),
+                            ),
+                            new Text("你目前还没有俱乐部，请前往俱乐部合作！"),
+                          ],
+                        ),
+                      )
+                    : new Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          new Expanded(
-                              child: new Text(
-                            "张超教练",
-                            style: TextStyle(
-                                color: Color(0xFF333333), fontSize: 16.0),
-                          )),
-                          new Expanded(
-                              child: new Text(
-                            "526轮滑俱乐部",
-                            style: TextStyle(
-                                color: Color(0xFF333333), fontSize: 16.0),
-                          ))
+                          new Container(
+                            padding: EdgeInsets.only(bottom: 40.0),
+                            child: new Row(
+                              children: <Widget>[
+                                new Expanded(
+                                    child: new Text(
+                                  coachNmae,
+                                  style: TextStyle(
+                                      color: Color(0xFF333333), fontSize: 16.0),
+                                )),
+                                new Expanded(
+                                    child: new Text(
+                                  clubName,
+                                  style: TextStyle(
+                                      color: Color(0xFF333333), fontSize: 16.0),
+                                ))
+                              ],
+                            ),
+                          ),
+                          new Container(
+                            padding: EdgeInsets.only(bottom: 20.0),
+                            child: new Text(
+                              "学员数量: " + student.toString() + '名',
+                              style: TextStyle(
+                                  color: Color(0xFF29CCCC), fontSize: 18.0),
+                            ),
+                          )
                         ],
                       ),
-                    ),
-                    new Container(
-                      padding: EdgeInsets.only(bottom: 20.0),
-                      child: new Text(
-                        "学员数量：99名",
-                        style:
-                            TextStyle(color: Color(0xFF29CCCC), fontSize: 18.0),
-                      ),
-                    )
-                  ],
-                ),
               ),
             ),
             new Card(
@@ -257,5 +275,33 @@ class _MinePageState extends State<MinePage> {
         ),
       ),
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _getcoachClub();
+  }
+
+  _getcoachClub() async {
+    await CoachClubService.getCoachClub().then((CoachClubEntity v) {
+      if (v == null) {
+        setState(() {
+          _ClubState = true;
+        });
+      } else {
+        setState(() {
+          _ClubState = false;
+          coachNmae = v.coachName;
+          clubName = v.clubInfoEntity.clubName;
+          if (v.clubInfoEntity.clubAccount != null) {
+            student = v.clubInfoEntity.clubAccount;
+          }
+        });
+      }
+      print("=============================================");
+      print(v.coachName);
+      print("=============================================");
+    });
   }
 }

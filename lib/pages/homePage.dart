@@ -57,7 +57,7 @@ class HomePageState extends State<HomePage> {
                       }
                       return PageRouteBuilder(
                         pageBuilder: builder,
-                        transitionDuration: const Duration(milliseconds: 0),
+                        transitionDuration: const Duration(milliseconds: 2),
                       );
                     },
                   ),
