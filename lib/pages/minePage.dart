@@ -176,7 +176,7 @@ class _MinePageState extends State<MinePage> {
                                     color: Color.fromRGBO(0, 0, 0, 0.1)))),
                       ),
                       onTap: () {
-                        Router.pushWithAnimation(context, Router.myNews, null);
+                        Router.push(context, Router.myNews, null);
                       },
                     ),
                     new InkWell(

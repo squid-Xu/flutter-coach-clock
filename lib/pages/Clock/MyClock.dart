@@ -1,5 +1,6 @@
 import 'dart:async';
-
+import 'package:permission_handler/permission_handler.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'dart:convert' as convert;
 import 'package:coach/fonts/iconfont.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +28,8 @@ class MyClockState extends State<MyClock> {
   List<String> list = new List<String>();
 
   void _onceLocation() {
+    //获取位置信息
+    startLocation();
     _locationPlugin.startLocation();
     new Future.delayed(
         const Duration(seconds: 30), () => _locationPlugin.stopLocation());
@@ -287,7 +290,13 @@ class MyClockState extends State<MyClock> {
                               color: Color(0xFF29CCCC), fontSize: 16.0),
                         ),
                         onTap: () {
-                          _onceLocation();
+                          if(list[list.length - 3]=='12'){
+                            //获取位置权限
+                            requestPermission();
+                            _onceLocation();
+                          }else{
+                            _onceLocation();
+                          }
                         },
                       )
                     ],
@@ -358,6 +367,8 @@ class MyClockState extends State<MyClock> {
   @override
   void initState() {
     super.initState();
+    //获取位置权限
+    requestPermission();
     //获取当期时间
     startTimer();
     //获取位置信息
@@ -367,8 +378,8 @@ class MyClockState extends State<MyClock> {
         const Duration(seconds: 30), () => _locationPlugin.stopLocation());
   }
 
-  void startLocation() {
-    _locationListener = _locationPlugin
+  Future startLocation() async{
+    _locationListener = await _locationPlugin
         .onLocationChanged()
         .listen((Map<String, Object> result) {
       setState(() {
@@ -419,4 +430,29 @@ class MyClockState extends State<MyClock> {
       _locationListener.cancel();
     }
   }
+}
+Future requestPermission() async {
+
+  // 申请权限
+
+  Map<PermissionGroup, PermissionStatus> permissions =
+
+  await PermissionHandler().requestPermissions([PermissionGroup.locationWhenInUse]);
+
+  // 申请结果
+
+//  PermissionStatus permission =
+//
+//  await PermissionHandler().checkPermissionStatus(PermissionGroup.locationWhenInUse);
+//
+//  if (permission == PermissionStatus.granted) {
+//
+//    Fluttertoast.showToast(msg: "权限申请通过");
+//
+//  } else {
+//
+//    Fluttertoast.showToast(msg: "权限申请被拒绝");
+//
+//  }
+
 }

@@ -31,6 +31,7 @@ class _StuClockdState extends State<StuClock> {
 
 
   void _onceLocation(){
+    startLocation();
     _locationPlugin.startLocation();
     new Future.delayed(const Duration(seconds: 30), () => _locationPlugin.stopLocation());
   }
@@ -256,9 +257,9 @@ class _StuClockdState extends State<StuClock> {
     new Future.delayed(const Duration(seconds: 30), () => _locationPlugin.stopLocation());
   }
 
-  void startLocation(){
+  Future startLocation()async{
     _locationListener =
-        _locationPlugin.onLocationChanged().listen((Map<String, Object> result) {
+        await _locationPlugin.onLocationChanged().listen((Map<String, Object> result) {
           setState(() {
             _loationResult = result;
           });

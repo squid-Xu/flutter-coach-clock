@@ -158,6 +158,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.7.0"
+  permission_handler:
+    dependency: "direct main"
+    description:
+      name: permission_handler
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "3.2.1+1"
   provider:
     dependency: "direct main"
     description:
