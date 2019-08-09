@@ -1,9 +1,9 @@
+import 'package:coach/common/service/coachClub.dart';
+import 'package:coach/model/CoachClubEntity.dart';
 import 'package:flutter/material.dart';
 import 'Clock/MyClock.dart';
-import 'Clock/MyClockRecord.dart';
-import 'StudentClock/StuClock.dart';
 import 'StudentClock/StuClockList.dart';
-import 'StudentClock/StuClockRecord.dart';
+
 
 class HomePage extends StatefulWidget {
   @override
@@ -11,6 +11,9 @@ class HomePage extends StatefulWidget {
 }
 
 class HomePageState extends State<HomePage> {
+  //俱乐部有没有
+  bool _ClubState = true;
+
   @override
   Widget build(BuildContext context) {
     return new Container(
@@ -35,63 +38,67 @@ class HomePageState extends State<HomePage> {
                   labelStyle: TextStyle(fontSize: 18.0),
                 ),
               ),
-              body: TabBarView(
+              body: _ClubState ? TabBarView(
                 children: [
-                  new Navigator(
-                    initialRoute: 'part/part1',
-                    onGenerateRoute: (RouteSettings settings) {
-                      RoutePageBuilder builder;
-                      switch (settings.name) {
-                        case 'part/part1':
-                          builder = (_, __, ___) => MyClock(
-                                pageContext: context,
-                              );
-                          break;
-                        case 'part/part2':
-                          builder = (_, __, ___) => MyClockRecord(
-                                pageContext: context,
-                              );
-                          break;
-                        default:
-                          throw Exception('Invalid route: ${settings.name}');
-                      }
-                      return PageRouteBuilder(
-                        pageBuilder: builder,
-                        transitionDuration: const Duration(milliseconds: 2),
-                      );
-                    },
+                  new Container(
+                    child: new Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        new Icon(
+                          Icons.lock,
+                          color: Color(0xFFFFFFFF),
+                        ),
+                        new Text("你目前还没有俱乐部，请前往俱乐部合作！",style: TextStyle(
+//                          color: Color(0xFFFFFFFF),
+                            fontSize: 16.0
+                        ),),
+                      ],
+                    ),
                   ),
-                  new Navigator(
-                    initialRoute: 'part/part1',
-                    onGenerateRoute: (RouteSettings settings) {
-                      RoutePageBuilder builder;
-                      switch (settings.name) {
-                        case 'part/part1':
-                          builder = (_, __, ___) => StuClockList(
-                                pageContext: context,
-                              );
-                          break;
-                        case 'part/part2':
-                          builder = (_, __, ___) => StuClock(
-                                pageContext: context,
-                              );
-                          break;
-                        case 'part/part3':
-                          builder = (_, __, ___) => StuClockRecord(
-                                pageContext: context,
-                              );
-                          break;
-                        default:
-                          throw Exception('Invalid route: ${settings.name}');
-                      }
-                      return PageRouteBuilder(
-                        pageBuilder: builder,
-                        transitionDuration: const Duration(milliseconds: 0),
-                      );
-                    },
+                  new Container(
+                    child: new Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        new Icon(
+                          Icons.lock,
+                          color: Color(0xFFFFFFFF),
+                        ),
+                        new Text("你目前还没有俱乐部，请前往俱乐部合作！",style: TextStyle(
+//                          color: Color(0xFFFFFFFF),
+                            fontSize: 16.0
+                        ),),
+                      ],
+                    ),
                   )
                 ],
-              ),
+              ):TabBarView(children: [new MyClock(), new StuClockList()],),
             )));
+  }
+
+
+//获取教练在俱乐部的信息
+  Future _getcoachClub() async {
+    await CoachClubService.getCoachClub().then((CoachClubEntity v) {
+      if (v == null) {
+        setState(() {
+          _ClubState = true;
+        });
+      } else {
+        setState(() {
+          _ClubState = false;
+        });
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _getcoachClub();
+  }
+  @override
+  void dispose() {
+    super.dispose();
+    _getcoachClub();
   }
 }

@@ -1,22 +1,19 @@
 import 'package:coach/fonts/iconfont.dart';
 import 'package:flutter/material.dart';
 
+import 'StuClock.dart';
+
 class StuClockList extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => new StuClockListState();
-  final BuildContext pageContext;
-
-  const StuClockList({Key key, this.pageContext}) : super(key: key);
 }
 
 class StuClockListState extends State<StuClockList> {
+  //搜索值
   final controller = TextEditingController();
 
-  @override
-  void initState() {
-    super.initState();
-  }
 
+  //选中打卡切换
   bool _isCheck = false;
   bool _isEnter = false;
   void _valueChanged(bool value) {
@@ -29,7 +26,6 @@ class StuClockListState extends State<StuClockList> {
     _isEnter = !_isEnter;
     _isBoolCheck();
   }
-
   void _isBoolCheck() {
     var count = 0;
     var clickcount = 0;
@@ -56,10 +52,14 @@ class StuClockListState extends State<StuClockList> {
   var _color1 = Color(0xFF29CCCC);
   var _color2 = Color(0xFF999999);
   var _color3 = Color(0xFF999999);
+
+  //学员详情页面
+  bool _StuDetail=true;
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return new Card(
+    return _StuDetail ? new Card(
       elevation: 10,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
       margin: const EdgeInsets.fromLTRB(15, 15, 15, 20),
@@ -172,7 +172,7 @@ class StuClockListState extends State<StuClockList> {
                                     textInputAction: TextInputAction.search,
                                     decoration: new InputDecoration(
                                         contentPadding:
-                                            EdgeInsets.only(top: 0.0),
+                                        EdgeInsets.only(top: 0.0),
                                         hintText: '搜索',
                                         hintStyle: TextStyle(fontSize: 15.0),
                                         border: InputBorder.none),
@@ -244,11 +244,11 @@ class StuClockListState extends State<StuClockList> {
                       ),
                       new Expanded(
                           child: new Text(
-                        "打卡情况",
-                        textAlign: TextAlign.center,
-                        style:
+                            "打卡情况",
+                            textAlign: TextAlign.center,
+                            style:
                             TextStyle(color: Color(0xFF29CCCC), fontSize: 15.0),
-                      )),
+                          )),
                       new Container(
                         height: 40.0,
                         child: new Checkbox(
@@ -294,39 +294,42 @@ class StuClockListState extends State<StuClockList> {
                                         right: BorderSide(
                                             width: 1,
                                             color:
-                                                Color.fromRGBO(0, 0, 0, 0.1)))),
+                                            Color.fromRGBO(0, 0, 0, 0.1)))),
                               ),
                             ),
                             new Expanded(
                                 child: new InkWell(
-                              child: new Container(
-                                height: 40.0,
-                                padding: EdgeInsets.only(left: 5, right: 5),
-                                child: new Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    new Text(
-                                      "李鑫一",
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                      textAlign: TextAlign.justify,
-                                      style: TextStyle(
-                                          color: Color(0xFF000000),
-                                          fontSize: 14.0),
+                                  child: new Container(
+                                    height: 40.0,
+                                    padding: EdgeInsets.only(left: 5, right: 5),
+                                    child: new Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: <Widget>[
+                                        new Text(
+                                          "李鑫一",
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                          textAlign: TextAlign.justify,
+                                          style: TextStyle(
+                                              color: Color(0xFF000000),
+                                              fontSize: 14.0),
+                                        ),
+                                      ],
                                     ),
-                                  ],
-                                ),
-                                decoration: BoxDecoration(
-                                    border: Border(
-                                        right: BorderSide(
-                                            width: 1,
-                                            color:
+                                    decoration: BoxDecoration(
+                                        border: Border(
+                                            right: BorderSide(
+                                                width: 1,
+                                                color:
                                                 Color.fromRGBO(0, 0, 0, 0.1)))),
-                              ),
-                              onTap: () {
-                                Navigator.of(context).pushNamed('part/part2');
-                              },
-                            )),
+                                  ),
+                                  onTap: () {
+                                    setState(() {
+                                      _StuDetail=false;
+                                    });
+//                                    Navigator.of(context).pushNamed('part/part2');
+                                  },
+                                )),
                             new Expanded(
                               child: new Container(
                                 padding: EdgeInsets.only(left: 5, right: 5),
@@ -385,7 +388,7 @@ class StuClockListState extends State<StuClockList> {
                                         right: BorderSide(
                                             width: 1,
                                             color:
-                                                Color.fromRGBO(0, 0, 0, 0.1)))),
+                                            Color.fromRGBO(0, 0, 0, 0.1)))),
                               ),
                             ),
                             new Expanded(
@@ -415,7 +418,7 @@ class StuClockListState extends State<StuClockList> {
                                                   0, 0, 0, 0.1)))),
                                 ),
                                 onTap: () {
-                                  Navigator.of(context).pushNamed('part/part2');
+//                                  Navigator.of(context).pushNamed('part/part2');
                                 },
                               ),
                             ),
@@ -477,7 +480,7 @@ class StuClockListState extends State<StuClockList> {
                                         right: BorderSide(
                                             width: 1,
                                             color:
-                                                Color.fromRGBO(0, 0, 0, 0.1)))),
+                                            Color.fromRGBO(0, 0, 0, 0.1)))),
                               ),
                             ),
                             new Expanded(
@@ -507,7 +510,7 @@ class StuClockListState extends State<StuClockList> {
                                                   0, 0, 0, 0.1)))),
                                 ),
                                 onTap: () {
-                                  Navigator.of(context).pushNamed('part/part2');
+//                                  Navigator.of(context).pushNamed('part/part2');
                                 },
                               ),
                             ),
@@ -569,39 +572,39 @@ class StuClockListState extends State<StuClockList> {
                                         right: BorderSide(
                                             width: 1,
                                             color:
-                                                Color.fromRGBO(0, 0, 0, 0.1)))),
+                                            Color.fromRGBO(0, 0, 0, 0.1)))),
                               ),
                             ),
                             new Expanded(
                                 child: new InkWell(
-                              child: new Container(
-                                height: 40.0,
-                                padding: EdgeInsets.only(left: 5, right: 5),
-                                child: new Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    new Text(
-                                      "李鑫一",
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                      textAlign: TextAlign.justify,
-                                      style: TextStyle(
-                                          color: Color(0xFF000000),
-                                          fontSize: 14.0),
+                                  child: new Container(
+                                    height: 40.0,
+                                    padding: EdgeInsets.only(left: 5, right: 5),
+                                    child: new Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: <Widget>[
+                                        new Text(
+                                          "李鑫一",
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                          textAlign: TextAlign.justify,
+                                          style: TextStyle(
+                                              color: Color(0xFF000000),
+                                              fontSize: 14.0),
+                                        ),
+                                      ],
                                     ),
-                                  ],
-                                ),
-                                decoration: BoxDecoration(
-                                    border: Border(
-                                        right: BorderSide(
-                                            width: 1,
-                                            color:
+                                    decoration: BoxDecoration(
+                                        border: Border(
+                                            right: BorderSide(
+                                                width: 1,
+                                                color:
                                                 Color.fromRGBO(0, 0, 0, 0.1)))),
-                              ),
-                              onTap: () {
-                                Navigator.of(context).pushNamed('part/part2');
-                              },
-                            )),
+                                  ),
+                                  onTap: () {
+//                                    Navigator.of(context).pushNamed('part/part2');
+                                  },
+                                )),
                             new Expanded(
                               child: new Container(
                                 padding: EdgeInsets.only(left: 5, right: 5),
@@ -648,7 +651,7 @@ class StuClockListState extends State<StuClockList> {
                     child: Text(
                       '确认打卡',
                       style:
-                          TextStyle(color: Color(0xFFFFFFFF), fontSize: 18.0),
+                      TextStyle(color: Color(0xFFFFFFFF), fontSize: 18.0),
                     ),
                     color: Color(0xFF29CCCC),
                     disabledColor: Color(0xFFDDDDDD),
@@ -661,6 +664,11 @@ class StuClockListState extends State<StuClockList> {
           ],
         ),
       ),
-    );
+    ): new StuClock();
+  }
+
+  @override
+  void initState() {
+    super.initState();
   }
 }

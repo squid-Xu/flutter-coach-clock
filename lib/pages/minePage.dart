@@ -108,7 +108,7 @@ class _MinePageState extends State<MinePage> {
                 ),
                 child: _ClubState
                     ? new Container(
-                        padding: EdgeInsets.only(top: 20, bottom: 30),
+                        padding: EdgeInsets.only(top: 25, bottom: 35),
                         child: new Column(
                           children: <Widget>[
                             new Icon(
@@ -283,6 +283,7 @@ class _MinePageState extends State<MinePage> {
     _getcoachClub();
   }
 
+  //获取教练在俱乐部的信息
   _getcoachClub() async {
     await CoachClubService.getCoachClub().then((CoachClubEntity v) {
       if (v == null) {

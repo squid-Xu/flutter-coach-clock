@@ -5,9 +5,6 @@ import 'package:flutter/material.dart';
 class StuClockRecord extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => new _StuClockRecordState();
-  final BuildContext pageContext;
-
-  const StuClockRecord({Key key, this.pageContext}) : super(key: key);
 }
 
 class _StuClockRecordState extends State<StuClockRecord> {
