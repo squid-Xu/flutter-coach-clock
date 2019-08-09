@@ -96,9 +96,4 @@ class HomePageState extends State<HomePage> {
     super.initState();
     _getcoachClub();
   }
-  @override
-  void dispose() {
-    super.dispose();
-    _getcoachClub();
-  }
 }
