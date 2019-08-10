@@ -1,5 +1,7 @@
 
 //学员进度
+import 'Progress.dart';
+
 class StuProgress {
   int stuId;
   String stuName;
@@ -10,7 +12,7 @@ class StuProgress {
   int classTimes;
   String packageName;
   String gifts;
-//  List<Null> progresses;
+  List<ProgressesEntity> progresses;
 
   StuProgress(
       {this.stuId,
@@ -21,7 +23,8 @@ class StuProgress {
         this.className,
         this.classTimes,
         this.packageName,
-        this.gifts,});
+        this.gifts,
+        this.progresses});
 
   StuProgress.fromJson(Map<String, dynamic> json) {
     stuId = json['stuId'];
@@ -33,12 +36,12 @@ class StuProgress {
     classTimes = json['classTimes'];
     packageName = json['packageName'];
     gifts = json['gifts'];
-//    if (json['progresses'] != null) {
-//      progresses = new List<Null>();
-//      json['progresses'].forEach((v) {
-//        progresses.add(new Null.fromJson(v));
-//      });
-//    }
+    if (json['progresses'] != null) {
+      progresses = new List<ProgressesEntity>();
+      json['progresses'].forEach((v) {
+        progresses.add(new ProgressesEntity.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -52,15 +55,15 @@ class StuProgress {
     data['classTimes'] = this.classTimes;
     data['packageName'] = this.packageName;
     data['gifts'] = this.gifts;
-//    if (this.progresses != null) {
-//      data['progresses'] = this.progresses.map((v) => v.toJson()).toList();
-//    }
+    if (this.progresses != null) {
+      data['progresses'] = this.progresses.map((v) => v.toJson()).toList();
+    }
     return data;
   }
   @override
   String toString() {
     return 'InvitationEntity{stuId: $stuId, stuName: $stuName, stuGender: $stuGender, '
         'stuBirthYear: $stuBirthYear, stuAge: $stuAge, className: $className, classTimes: $classTimes, '
-        'packageName: $packageName, gifts: $gifts}';
+        'packageName: $packageName, gifts: $gifts,progresses:$progresses}';
   }
 }

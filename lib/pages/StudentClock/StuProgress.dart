@@ -76,7 +76,7 @@ class StuProgressState extends State<StuProgress>{
                   ),
                   hintText: '请输入你的评价',
                 ),
-                maxLength: 50,
+                maxLength: 100,
                 maxLines: 8,
               ),
             ),
