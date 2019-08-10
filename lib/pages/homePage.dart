@@ -13,6 +13,7 @@ class HomePage extends StatefulWidget {
 class HomePageState extends State<HomePage> {
   //俱乐部有没有
   bool _ClubState = true;
+  bool isLoading = true; // 是否正在请求数据中
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +26,10 @@ class HomePageState extends State<HomePage> {
         ),
         child: new DefaultTabController(
             length: 2,
-            child: new Scaffold(
+            child:isLoading ? Center(
+              child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation(Color(0xFFFFFFFF))),
+            ): new Scaffold(
               backgroundColor: Colors.transparent,
               appBar: AppBar(
                 backgroundColor: Colors.transparent, //把
@@ -78,14 +82,19 @@ class HomePageState extends State<HomePage> {
 
 //获取教练在俱乐部的信息
   Future _getcoachClub() async {
+    setState(() {
+      isLoading = true;
+    });
     await CoachClubService.getCoachClub().then((CoachClubEntity v) {
       if (v == null) {
         setState(() {
           _ClubState = true;
+          isLoading = false;
         });
       } else {
         setState(() {
           _ClubState = false;
+          isLoading = false;
         });
       }
     });

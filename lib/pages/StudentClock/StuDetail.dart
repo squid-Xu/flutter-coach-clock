@@ -1,13 +1,29 @@
+import 'package:coach/common/service/StudentsInfo.dart';
+import 'package:coach/model/StuProgress.dart';
 import 'package:flutter/material.dart';
-
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 import '../../Router.dart';
 
 class StuDetail extends StatefulWidget {
+  final currentStuId;
+  StuDetail(this.currentStuId, {Key key}) : super(key: key);
   @override
-  State<StatefulWidget> createState() => _StuDetailState();
+  State<StatefulWidget> createState() => _StuDetailState(currentStuId);
 }
 
 class _StuDetailState extends State<StuDetail> {
+  final currentStuId;
+  _StuDetailState(this.currentStuId);
+
+  //加载
+  bool isLoading=true;
+
+  //学员基本信息
+  String stuName="";
+  int  stuGender=1;
+  String className="";
+  String packageName="";
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -26,7 +42,7 @@ class _StuDetailState extends State<StuDetail> {
         actions: <Widget>[
           new RaisedButton(
             onPressed: (){
-              Router.pushWithAnimation(context, Router.stuProgress, null);
+              Router.push(context, Router.stuProgress, currentStuId);
             },
             child: new Text("更新",style: TextStyle(
                 color: Color(0xFFFFFFFF),
@@ -37,7 +53,13 @@ class _StuDetailState extends State<StuDetail> {
         elevation: 15,
         centerTitle: true,
       ),
-      body: new Card(
+      body: isLoading ? Container(
+        child: Center(
+          child: CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation(Color(0xFF29CCCC))),
+        ),
+      ) :
+      new Card(
         elevation: 10,
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10.0)),
@@ -61,7 +83,7 @@ class _StuDetailState extends State<StuDetail> {
                     ),
                     new Expanded(
                       child: new Text(
-                        "李鑫一",
+                        stuName,
                         style: TextStyle(
                             color: Color.fromRGBO(0, 0, 0, 0.7),
                             fontSize: 16.0,
@@ -96,7 +118,7 @@ class _StuDetailState extends State<StuDetail> {
                     ),
                     new Expanded(
                       child: new Text(
-                        "男",
+                        stuGender==1 ? "男": "女",
                         style: TextStyle(
                             color: Color.fromRGBO(0, 0, 0, 0.7),
                             fontSize: 16.0,
@@ -148,7 +170,7 @@ class _StuDetailState extends State<StuDetail> {
                     ),
                     new Expanded(
                       child: new Text(
-                        "暑假特训班",
+                        className,
                         style: TextStyle(
                             color: Color.fromRGBO(0, 0, 0, 0.7),
                             fontSize: 16.0,
@@ -175,7 +197,7 @@ class _StuDetailState extends State<StuDetail> {
                     ),
                     new Expanded(
                       child: new Text(
-                        "套餐一（包含99课时、轮滑鞋一双、 护膝一对）",
+                        packageName,
                         style: TextStyle(
                             color: Color.fromRGBO(0, 0, 0, 0.7),
                             fontSize: 16.0,
@@ -206,220 +228,252 @@ class _StuDetailState extends State<StuDetail> {
                             color: Color.fromRGBO(0, 0, 0, 0.1)))),
               ),
               new Expanded(
-                child: ListView(
-                  children: <Widget>[
-                    new Container(
-                      padding: EdgeInsets.only(top: 10.0,bottom: 10.0),
-                      child: new Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          new Container(
-                            padding: EdgeInsets.only(bottom: 5.0),
-                            child: Row(
-                              children: <Widget>[
-                                Expanded( child: new Text(
-                                  "教练评价：",
-                                  style: TextStyle(
-                                      fontSize: 15.0,
-                                      color: Color.fromRGBO(0, 0, 0, 0.7),
-                                      fontWeight: FontWeight.w600),
-                                ),),
-                                new Text(
-                                  "2019.07.08",
-                                  style: TextStyle(fontSize: 15.0, color: Color(0xFF999999)),
-                                )
-                              ],
-                            ),
-                          ),
-                          new Container(
-                            padding: EdgeInsets.only(bottom: 10.0, right: 15.0),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                new Text(
-                                  "教练：",
-                                  style: TextStyle(
-                                      fontSize: 17.0,
-                                      color: Color.fromRGBO(0, 0, 0, 0),
-                                      fontWeight: FontWeight.w600),
+                child: RefreshIndicator(
+                    child: ListView(
+                      children: <Widget>[
+                        new Container(
+                          padding: EdgeInsets.only(top: 10.0,bottom: 10.0),
+                          child: new Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              new Container(
+                                padding: EdgeInsets.only(bottom: 5.0),
+                                child: Row(
+                                  children: <Widget>[
+                                    Expanded( child: new Text(
+                                      "教练评价：",
+                                      style: TextStyle(
+                                          fontSize: 15.0,
+                                          color: Color.fromRGBO(0, 0, 0, 0.7),
+                                          fontWeight: FontWeight.w600),
+                                    ),),
+                                    new Text(
+                                      "2019.07.08",
+                                      style: TextStyle(fontSize: 15.0, color: Color(0xFF999999)),
+                                    )
+                                  ],
                                 ),
-                                new Expanded(
-                                    child: new Text(
-                                      "基本动作掌握扎实牢固基本动作掌握扎实牢基本动作掌握扎实牢固基本动作掌握扎实牢基本动作掌握扎实牢固基本动作掌握扎实牢基本动作掌握扎实牢固基本动作掌握扎实牢"
-                                          "基本动作掌握扎实牢固基本动作掌握扎实牢基本动作掌握扎实牢固基本动作掌握扎实牢固基本动作掌握扎实牢固",
-                                      style: TextStyle(fontSize: 14.0, color: Color(0xFF999999)),
-                                    ))
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                      decoration: BoxDecoration(
-                          border: Border(
-                              bottom: BorderSide(
-                                  width: 1,
-                                  color: Color.fromRGBO(0, 0, 0, 0.1)))),
-                    ),
-                    new Container(
-                      padding: EdgeInsets.only(top: 10.0,bottom: 10.0),
-                      child: new Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          new Container(
-                            padding: EdgeInsets.only(bottom: 5.0),
-                            child: Row(
-                              children: <Widget>[
-                                Expanded( child: new Text(
-                                  "教练评价：",
-                                  style: TextStyle(
-                                      fontSize: 15.0,
-                                      color: Color.fromRGBO(0, 0, 0, 0.7),
-                                      fontWeight: FontWeight.w600),
-                                ),),
-                                new Text(
-                                  "2019.07.08",
-                                  style: TextStyle(fontSize: 15.0, color: Color(0xFF999999)),
-                                )
-                              ],
-                            ),
-                          ),
-                          new Container(
-                            padding: EdgeInsets.only(bottom: 10.0, right: 15.0),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                new Text(
-                                  "教练：",
-                                  style: TextStyle(
-                                      fontSize: 17.0,
-                                      color: Color.fromRGBO(0, 0, 0, 0),
-                                      fontWeight: FontWeight.w600),
+                              ),
+                              new Container(
+                                padding: EdgeInsets.only(bottom: 10.0, right: 15.0),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    new Text(
+                                      "教练：",
+                                      style: TextStyle(
+                                          fontSize: 17.0,
+                                          color: Color.fromRGBO(0, 0, 0, 0),
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                    new Expanded(
+                                        child: new Text(
+                                          "基本动作掌握扎实牢固基本动作掌握扎实牢基本动作掌握扎实牢固基本动作掌握扎实牢基本动作掌握扎实牢固基本动作掌握扎实牢基本动作掌握扎实牢固基本动作掌握扎实牢"
+                                              "基本动作掌握扎实牢固基本动作掌握扎实牢基本动作掌握扎实牢固基本动作掌握扎实牢固基本动作掌握扎实牢固",
+                                          style: TextStyle(fontSize: 14.0, color: Color(0xFF999999)),
+                                        ))
+                                  ],
                                 ),
-                                new Expanded(
-                                    child: new Text(
-                                      "基本动作掌握扎实牢固基本动作掌握扎实牢 固基本动作掌握扎实牢固",
-                                      style: TextStyle(fontSize: 14.0, color: Color(0xFF999999)),
-                                    ))
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                      decoration: BoxDecoration(
-                          border: Border(
-                              bottom: BorderSide(
-                                  width: 1,
-                                  color: Color.fromRGBO(0, 0, 0, 0.1)))),
-                    ),
-                    new Container(
-                      padding: EdgeInsets.only(top: 10.0,bottom: 10.0),
-                      child: new Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          new Container(
-                            padding: EdgeInsets.only(bottom: 5.0),
-                            child: Row(
-                              children: <Widget>[
-                                Expanded( child: new Text(
-                                  "教练评价：",
-                                  style: TextStyle(
-                                      fontSize: 15.0,
-                                      color: Color.fromRGBO(0, 0, 0, 0.7),
-                                      fontWeight: FontWeight.w600),
-                                ),),
-                                new Text(
-                                  "2019.07.08",
-                                  style: TextStyle(fontSize: 15.0, color: Color(0xFF999999)),
-                                )
-                              ],
-                            ),
-                          ),
-                          new Container(
-                            padding: EdgeInsets.only(bottom: 10.0, right: 15.0),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                new Text(
-                                  "教练：",
-                                  style: TextStyle(
-                                      fontSize: 17.0,
-                                      color: Color.fromRGBO(0, 0, 0, 0),
-                                      fontWeight: FontWeight.w600),
+                          decoration: BoxDecoration(
+                              border: Border(
+                                  bottom: BorderSide(
+                                      width: 1,
+                                      color: Color.fromRGBO(0, 0, 0, 0.1)))),
+                        ),
+                        new Container(
+                          padding: EdgeInsets.only(top: 10.0,bottom: 10.0),
+                          child: new Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              new Container(
+                                padding: EdgeInsets.only(bottom: 5.0),
+                                child: Row(
+                                  children: <Widget>[
+                                    Expanded( child: new Text(
+                                      "教练评价：",
+                                      style: TextStyle(
+                                          fontSize: 15.0,
+                                          color: Color.fromRGBO(0, 0, 0, 0.7),
+                                          fontWeight: FontWeight.w600),
+                                    ),),
+                                    new Text(
+                                      "2019.07.08",
+                                      style: TextStyle(fontSize: 15.0, color: Color(0xFF999999)),
+                                    )
+                                  ],
                                 ),
-                                new Expanded(
-                                    child: new Text(
-                                      "基本动作掌握扎实牢固基本动作掌握扎实牢 固基本动作掌握扎实牢固",
-                                      style: TextStyle(fontSize: 14.0, color: Color(0xFF999999)),
-                                    ))
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                      decoration: BoxDecoration(
-                          border: Border(
-                              bottom: BorderSide(
-                                  width: 1,
-                                  color: Color.fromRGBO(0, 0, 0, 0.1)))),
-                    ),
-                    new Container(
-                      padding: EdgeInsets.only(top: 10.0,bottom: 10.0),
-                      child: new Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          new Container(
-                            padding: EdgeInsets.only(bottom: 5.0),
-                            child: Row(
-                              children: <Widget>[
-                                Expanded( child: new Text(
-                                  "教练评价：",
-                                  style: TextStyle(
-                                      fontSize: 15.0,
-                                      color: Color.fromRGBO(0, 0, 0, 0.7),
-                                      fontWeight: FontWeight.w600),
-                                ),),
-                                new Text(
-                                  "2019.07.08",
-                                  style: TextStyle(fontSize: 15.0, color: Color(0xFF999999)),
-                                )
-                              ],
-                            ),
-                          ),
-                          new Container(
-                            padding: EdgeInsets.only(bottom: 10.0, right: 15.0),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                new Text(
-                                  "教练：",
-                                  style: TextStyle(
-                                      fontSize: 17.0,
-                                      color: Color.fromRGBO(0, 0, 0, 0),
-                                      fontWeight: FontWeight.w600),
+                              ),
+                              new Container(
+                                padding: EdgeInsets.only(bottom: 10.0, right: 15.0),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    new Text(
+                                      "教练：",
+                                      style: TextStyle(
+                                          fontSize: 17.0,
+                                          color: Color.fromRGBO(0, 0, 0, 0),
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                    new Expanded(
+                                        child: new Text(
+                                          "基本动作掌握扎实牢固基本动作掌握扎实牢 固基本动作掌握扎实牢固",
+                                          style: TextStyle(fontSize: 14.0, color: Color(0xFF999999)),
+                                        ))
+                                  ],
                                 ),
-                                new Expanded(
-                                    child: new Text(
-                                      "基本动作掌握扎实牢固基本动作掌握扎实牢 固基本动作掌握扎实牢固",
-                                      style: TextStyle(fontSize: 14.0, color: Color(0xFF999999)),
-                                    ))
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                      decoration: BoxDecoration(
-                          border: Border(
-                              bottom: BorderSide(
-                                  width: 1,
-                                  color: Color.fromRGBO(0, 0, 0, 0.1)))),
+                          decoration: BoxDecoration(
+                              border: Border(
+                                  bottom: BorderSide(
+                                      width: 1,
+                                      color: Color.fromRGBO(0, 0, 0, 0.1)))),
+                        ),
+                        new Container(
+                          padding: EdgeInsets.only(top: 10.0,bottom: 10.0),
+                          child: new Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              new Container(
+                                padding: EdgeInsets.only(bottom: 5.0),
+                                child: Row(
+                                  children: <Widget>[
+                                    Expanded( child: new Text(
+                                      "教练评价：",
+                                      style: TextStyle(
+                                          fontSize: 15.0,
+                                          color: Color.fromRGBO(0, 0, 0, 0.7),
+                                          fontWeight: FontWeight.w600),
+                                    ),),
+                                    new Text(
+                                      "2019.07.08",
+                                      style: TextStyle(fontSize: 15.0, color: Color(0xFF999999)),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              new Container(
+                                padding: EdgeInsets.only(bottom: 10.0, right: 15.0),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    new Text(
+                                      "教练：",
+                                      style: TextStyle(
+                                          fontSize: 17.0,
+                                          color: Color.fromRGBO(0, 0, 0, 0),
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                    new Expanded(
+                                        child: new Text(
+                                          "基本动作掌握扎实牢固基本动作掌握扎实牢 固基本动作掌握扎实牢固",
+                                          style: TextStyle(fontSize: 14.0, color: Color(0xFF999999)),
+                                        ))
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                          decoration: BoxDecoration(
+                              border: Border(
+                                  bottom: BorderSide(
+                                      width: 1,
+                                      color: Color.fromRGBO(0, 0, 0, 0.1)))),
+                        ),
+                        new Container(
+                          padding: EdgeInsets.only(top: 10.0,bottom: 10.0),
+                          child: new Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              new Container(
+                                padding: EdgeInsets.only(bottom: 5.0),
+                                child: Row(
+                                  children: <Widget>[
+                                    Expanded( child: new Text(
+                                      "教练评价：",
+                                      style: TextStyle(
+                                          fontSize: 15.0,
+                                          color: Color.fromRGBO(0, 0, 0, 0.7),
+                                          fontWeight: FontWeight.w600),
+                                    ),),
+                                    new Text(
+                                      "2019.07.08",
+                                      style: TextStyle(fontSize: 15.0, color: Color(0xFF999999)),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              new Container(
+                                padding: EdgeInsets.only(bottom: 10.0, right: 15.0),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    new Text(
+                                      "教练：",
+                                      style: TextStyle(
+                                          fontSize: 17.0,
+                                          color: Color.fromRGBO(0, 0, 0, 0),
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                    new Expanded(
+                                        child: new Text(
+                                          "基本动作掌握扎实牢固基本动作掌握扎实牢 固基本动作掌握扎实牢固",
+                                          style: TextStyle(fontSize: 14.0, color: Color(0xFF999999)),
+                                        ))
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                          decoration: BoxDecoration(
+                              border: Border(
+                                  bottom: BorderSide(
+                                      width: 1,
+                                      color: Color.fromRGBO(0, 0, 0, 0.1)))),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                    onRefresh: _refresh,
+                    color: Color(0xFF29CCCC)),
               )
             ],
           ),
         ),
       ),
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    this._getStuInfoData();
+  }
+
+  /// 请求课程信息
+  _getStuInfoData(){
+    setState(() {
+      isLoading = true;
+    });
+
+    StudentsService.stuInfo(currentStuId).then((StuProgress v){
+      print(v);
+      setState(() {
+        stuName=v.stuName;
+        stuGender=v.stuGender;
+        className=v.className;
+        packageName=v.packageName;
+        isLoading = false;
+      });
+    });
+
+  }
+  Future<Null> _refresh() async {
+//    await _getListDate();
+    return;
   }
 }

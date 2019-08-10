@@ -96,9 +96,9 @@ class Router {
         case myNews: //我的消息
           return MyNews();
         case stuDetail: //学员进度详情
-          return StuDetail();
+          return StuDetail(params);
         case stuProgress: //学员进度更新
-          return StuProgress();
+          return StuProgress(params);
       }
     }
     return null;

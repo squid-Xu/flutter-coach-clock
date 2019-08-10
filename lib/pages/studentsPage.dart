@@ -41,202 +41,205 @@ class _StudentsPageState extends State<StudentsPage> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      body: CustomScrollView(
-        slivers: <Widget>[
-          SliverAppBar(
-            elevation: 15.0,
-            automaticallyImplyLeading: false,
-            //设置没有返回按钮
-            title: new Text("我的学员"),
-            centerTitle: true,
-            backgroundColor: Color(0xFF29CCCC),
-            expandedHeight: 100.0,
-            flexibleSpace: FlexibleSpaceBar(
-                background: new Container(
-              child: new Column(
-                children: <Widget>[
-                  new Container(
-                    padding: EdgeInsets.only(top: 70, left: 20, right: 20),
-                    child: new MaterialButton(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30.0)),
-                      height: 35,
-                      color: Colors.white,
-                      child: Row(
+      body: RefreshIndicator(
+          child:  CustomScrollView(
+            slivers: <Widget>[
+              SliverAppBar(
+                elevation: 15.0,
+                automaticallyImplyLeading: false,
+                //设置没有返回按钮
+                title: new Text("我的学员"),
+                centerTitle: true,
+                backgroundColor: Color(0xFF29CCCC),
+                expandedHeight: 100.0,
+                flexibleSpace: FlexibleSpaceBar(
+                    background: new Container(
+                      child: new Column(
                         children: <Widget>[
-                          new Expanded(
-                            child: new Container(
-                              child: new Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: <Widget>[
-                                  SizedBox(
-                                    width: 10.0,
-                                  ),
-                                  Expanded(
-                                    child: Container(
-                                      child: TextField(
-                                        controller: controller,
-                                        //控制键盘的功能键 指enter键，比如此处设置为next时，enter键
-                                        //显示的文字内容为 下一步
-                                        textInputAction: TextInputAction.search,
-                                        decoration: new InputDecoration(
-                                            contentPadding: EdgeInsets.only(top: 0.0),
-                                            hintText: '搜索',
-                                            hintStyle: TextStyle(fontSize: 15.0),
-                                            border: InputBorder.none),
-                                        onChanged: (text) {
-                                          //内容改变的回调
-                                          _getstuList(text);
-                                          print('change $text');
-                                        },
-                                        onSubmitted: (text) {
-                                          //内容提交(按回车)的回调
-                                          _getstuList(text);
-                                          print('submit $text');
-                                        },
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            flex: 5,
-                          ),
-                          new Icon(
-                            IconFont.icon_sousuo_copy,
-                            color: Color(0xFF29CCCC),
-                            size: 25.0,
-                          ),
-                        ],
-                      ),
-                      onPressed: () {
-//                  Router.pushNoParams(context, Router.clubSearch);
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            )),
-            floating: floating,
-            snap: snap,
-            pinned: pinned,
-          ),
-          new SliverList(
-              delegate: new SliverChildListDelegate(<Widget>[
-                isLoading
-                    ? Container(
-                  padding: EdgeInsets.only(top: 180.0),
-                  child: Center(
-                    child: CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation(Color(0xFF29CCCC))),
-                  ),
-                ): new ModalProgressHUD(
-                    inAsyncCall: _isInAsyncCall,
-                    child:new GestureDetector(
-                      child: _StuState ? new Container(
-                          padding: EdgeInsets.only(top: 180.0),
-                          child: Center(
-                            child: new Column(
-                              children: <Widget>[
-                                new Icon(
-                                  Icons.lock,
-                                  color: Color(0xFF29CCCC),
-                                ),
-                                new Text("你目前还没有学员，请前往俱乐部合作！"),
-                              ],
-                            ),
-                          )
-                      ):
-                      new Card(
-                        elevation: 10,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0)),
-                        margin: const EdgeInsets.fromLTRB(15, 15, 15, 20),
-                        child: new Container(
-                          padding: const EdgeInsets.fromLTRB(12, 15, 12, 20),
-                          child: new Column(children: <Widget>[
-                            new Container(
+                          new Container(
+                            padding: EdgeInsets.only(top: 70, left: 20, right: 20),
+                            child: new MaterialButton(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30.0)),
+                              height: 35,
+                              color: Colors.white,
                               child: Row(
                                 children: <Widget>[
                                   new Expanded(
                                     child: new Container(
-                                      height: 40.0,
-                                      padding: EdgeInsets.all(10),
-                                      child: new Text(
-                                        "编号",
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            color: Color(0xFF29CCCC), fontSize: 15.0),
+                                      child: new Row(
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        children: <Widget>[
+                                          SizedBox(
+                                            width: 10.0,
+                                          ),
+                                          Expanded(
+                                            child: Container(
+                                              child: TextField(
+                                                controller: controller,
+                                                //控制键盘的功能键 指enter键，比如此处设置为next时，enter键
+                                                //显示的文字内容为 下一步
+                                                textInputAction: TextInputAction.search,
+                                                decoration: new InputDecoration(
+                                                    contentPadding: EdgeInsets.only(top: 0.0),
+                                                    hintText: '搜索',
+                                                    hintStyle: TextStyle(fontSize: 15.0),
+                                                    border: InputBorder.none),
+                                                onChanged: (text) {
+                                                  //内容改变的回调
+                                                  _getstuList(text);
+                                                  print('change $text');
+                                                },
+                                                onSubmitted: (text) {
+                                                  //内容提交(按回车)的回调
+                                                  _getstuList(text);
+                                                  print('submit $text');
+                                                },
+                                              ),
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                      decoration: BoxDecoration(
-                                          border: Border(
-                                              right: BorderSide(
-                                                  width: 1,
-                                                  color: Color.fromRGBO(0, 0, 0, 0.1)))),
                                     ),
+                                    flex: 5,
                                   ),
-                                  new Expanded(
-                                    child: new Container(
-                                      height: 40.0,
-                                      padding: EdgeInsets.all(10),
-                                      child: new Text(
-                                        "学员姓名",
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            color: Color(0xFF29CCCC), fontSize: 15.0),
-                                      ),
-                                      decoration: BoxDecoration(
-                                          border: Border(
-                                              right: BorderSide(
-                                                  width: 1,
-                                                  color: Color.fromRGBO(0, 0, 0, 0.1)))),
-                                    ),
+                                  new Icon(
+                                    IconFont.icon_sousuo_copy,
+                                    color: Color(0xFF29CCCC),
+                                    size: 25.0,
                                   ),
-                                  new Expanded(
-                                    child: new Container(
-                                      height: 40.0,
-                                      padding: EdgeInsets.all(10),
-                                      child: new Text(
-                                        "剩余课时",
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            color: Color(0xFF29CCCC), fontSize: 15.0),
-                                      ),
-                                      decoration: BoxDecoration(
-                                          border: Border(
-                                              right: BorderSide(
-                                                  width: 1,
-                                                  color: Color.fromRGBO(0, 0, 0, 0.1)))),
-                                    ),
-                                  ),
-                                  new Expanded(
-                                      child: new Text(
-                                        "学习进度",
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            color: Color(0xFF29CCCC), fontSize: 15.0),
-                                      )),
                                 ],
                               ),
-                              decoration: BoxDecoration(
-                                  border: Border(
-                                      bottom: BorderSide(
-                                          width: 1,
-                                          color: Color.fromRGBO(0, 0, 0, 0.1)))),
+                              onPressed: () {
+//                  Router.pushNoParams(context, Router.clubSearch);
+                              },
                             ),
-                            _content()
-                          ]),
-                        ),
+                          ),
+                        ],
                       ),
-                      behavior: HitTestBehavior.translucent,
-                      onTap: () {
-                        // 触摸收起键盘
-                        FocusScope.of(context).requestFocus(FocusNode());
-                      },
-                    ))
-          ]))
-        ],
-      ),
+                    )),
+                floating: floating,
+                snap: snap,
+                pinned: pinned,
+              ),
+              new SliverList(
+                  delegate: new SliverChildListDelegate(<Widget>[
+                    isLoading
+                        ? Container(
+                      padding: EdgeInsets.only(top: 180.0),
+                      child: Center(
+                        child: CircularProgressIndicator(
+                            valueColor: AlwaysStoppedAnimation(Color(0xFF29CCCC))),
+                      ),
+                    ): new ModalProgressHUD(
+                        inAsyncCall: _isInAsyncCall,
+                        child: new GestureDetector(
+                          child: _StuState ? new Container(
+                              padding: EdgeInsets.only(top: 180.0),
+                              child: Center(
+                                child: new Column(
+                                  children: <Widget>[
+                                    new Icon(
+                                      Icons.lock,
+                                      color: Color(0xFF29CCCC),
+                                    ),
+                                    new Text("你目前还没有学员，请前往俱乐部合作！"),
+                                  ],
+                                ),
+                              )
+                          ):
+                          new Card(
+                            elevation: 10,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0)),
+                            margin: const EdgeInsets.fromLTRB(15, 15, 15, 20),
+                            child: new Container(
+                              padding: const EdgeInsets.fromLTRB(12, 15, 12, 20),
+                              child: new Column(children: <Widget>[
+                                new Container(
+                                  child: Row(
+                                    children: <Widget>[
+                                      new Expanded(
+                                        child: new Container(
+                                          height: 40.0,
+                                          padding: EdgeInsets.all(10),
+                                          child: new Text(
+                                            "编号",
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                                color: Color(0xFF29CCCC), fontSize: 15.0),
+                                          ),
+                                          decoration: BoxDecoration(
+                                              border: Border(
+                                                  right: BorderSide(
+                                                      width: 1,
+                                                      color: Color.fromRGBO(0, 0, 0, 0.1)))),
+                                        ),
+                                      ),
+                                      new Expanded(
+                                        child: new Container(
+                                          height: 40.0,
+                                          padding: EdgeInsets.all(10),
+                                          child: new Text(
+                                            "学员姓名",
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                                color: Color(0xFF29CCCC), fontSize: 15.0),
+                                          ),
+                                          decoration: BoxDecoration(
+                                              border: Border(
+                                                  right: BorderSide(
+                                                      width: 1,
+                                                      color: Color.fromRGBO(0, 0, 0, 0.1)))),
+                                        ),
+                                      ),
+                                      new Expanded(
+                                        child: new Container(
+                                          height: 40.0,
+                                          padding: EdgeInsets.all(10),
+                                          child: new Text(
+                                            "剩余课时",
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                                color: Color(0xFF29CCCC), fontSize: 15.0),
+                                          ),
+                                          decoration: BoxDecoration(
+                                              border: Border(
+                                                  right: BorderSide(
+                                                      width: 1,
+                                                      color: Color.fromRGBO(0, 0, 0, 0.1)))),
+                                        ),
+                                      ),
+                                      new Expanded(
+                                          child: new Text(
+                                            "学习进度",
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                                color: Color(0xFF29CCCC), fontSize: 15.0),
+                                          )),
+                                    ],
+                                  ),
+                                  decoration: BoxDecoration(
+                                      border: Border(
+                                          bottom: BorderSide(
+                                              width: 1,
+                                              color: Color.fromRGBO(0, 0, 0, 0.1)))),
+                                ),
+                                _content()
+                              ]),
+                            ),
+                          ),
+                          behavior: HitTestBehavior.translucent,
+                          onTap: () {
+                            // 触摸收起键盘
+                            FocusScope.of(context).requestFocus(FocusNode());
+                          },
+                        ))
+                  ]))
+            ],
+          ),
+          onRefresh: _refresh,
+          color: Color(0xFF29CCCC)),
     );
   }
   @override
@@ -369,7 +372,7 @@ class _StudentsPageState extends State<StudentsPage> {
                     '查看',
                     style: TextStyle(fontSize: 13.0),
                   ),
-                  onPressed: () {Router.push(context, Router.stuDetail, null);},
+                  onPressed: () {Router.push(context, Router.stuDetail, v.stuId);},
                 ),
               ),
             )
@@ -382,5 +385,11 @@ class _StudentsPageState extends State<StudentsPage> {
       ),);
     }
     return new Column(children: listWidget);
+  }
+
+  //下拉刷新
+  Future<Null> _refresh() async {
+    await _getstuList("");
+    return;
   }
 }

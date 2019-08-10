@@ -204,7 +204,7 @@ class _MyNewsState extends State<MyNews> {
                 ],
               ),
                   onRefresh: _refresh,
-//                backgroundColor: Color(0xFF29CCCC),
+                  color: Color(0xFF29CCCC),
               )),
     );
   }
