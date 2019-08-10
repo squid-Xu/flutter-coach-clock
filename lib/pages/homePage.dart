@@ -28,7 +28,7 @@ class HomePageState extends State<HomePage> {
             length: 2,
             child:isLoading ? Center(
               child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation(Color(0xFFFFFFFF))),
+                  valueColor: AlwaysStoppedAnimation(Color(0xFF29CCCC))),
             ): new Scaffold(
               backgroundColor: Colors.transparent,
               appBar: AppBar(
