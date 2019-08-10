@@ -1,3 +1,5 @@
+import 'package:coach/common/service/UserRule.dart';
+import 'package:coach/model/rule.dart';
 import 'package:flutter/material.dart';
 
 class UserAgreement extends StatefulWidget {
@@ -6,6 +8,8 @@ class UserAgreement extends StatefulWidget {
 }
 
 class _UserAgreementState extends State<UserAgreement> {
+  String userRule;
+  bool isLoading = true; // 是否正在请求数据中
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -25,7 +29,12 @@ class _UserAgreementState extends State<UserAgreement> {
         backgroundColor: Color(0xFF29CCCC),
       ),
       backgroundColor: Color(0xFFE8F0FE),
-      body: new SingleChildScrollView(
+      body:isLoading
+          ? Center(
+        child: CircularProgressIndicator(
+            valueColor: AlwaysStoppedAnimation(Color(0xFF29CCCC))),
+      )
+          :  new SingleChildScrollView(
           child: new ConstrainedBox(
               constraints: new BoxConstraints(
                 minHeight: 120.0,
@@ -43,24 +52,13 @@ class _UserAgreementState extends State<UserAgreement> {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: <Widget>[
                           new Text(
-                            "         6月23日，“2018年全国中学生越野滑轮锦标赛暨小学生越野滑轮夏令营”在首都体育学院成功举办。本次比赛是继2017"
-                            "2018年全国中学生越野滑轮锦标赛暨小学生越野滑轮夏令营2018年全国中学生越野滑轮锦标赛暨小学生越野滑轮夏令营"
-                            "2018年全国中学生越野滑轮锦标赛暨小学生越野滑轮夏令营2018年全国中学生越野滑轮锦标赛暨小学生越野滑轮夏令营"
-                            "2018年全国中学生越野滑轮锦标赛暨小学生越野滑轮夏令营2018年全国中学生越野滑轮锦标赛暨小学生越野滑轮夏令营"
-                            "2018年全国中学生越野滑轮锦标赛暨小学生越野滑轮夏令营2018年全国中学生越野滑轮锦标赛暨小学生越野滑轮夏令营"
-                            "2018年全国中学生越野滑轮锦标赛暨小学生越野滑轮夏令营2018年全国中学生越野滑轮锦标赛暨小学生越野滑轮夏令营2018年全国中学生越野滑轮锦标赛暨小学生越野滑轮夏令营2018年全国中学生越野滑轮锦标赛暨小学生越野滑轮夏令营"
-                            "2018年全国中学生越野滑轮锦标赛暨小学生越野滑轮夏令营2018年全国中学生越野滑轮锦标赛暨小学生越野滑轮夏令营"
-                            "2018年全国中学生越野滑轮锦标赛暨小学生越野滑轮夏令营2018年全国中学生越野滑轮锦标赛暨小学生越野滑轮夏令营"
-                            "2018年全国中学生越野滑轮锦标赛暨小学生越野滑轮夏令营2018年全国中学生越野滑轮锦标赛暨小学生越野滑轮夏令营"
-                            "2018年全国中学生越野滑轮锦标赛暨小学生越野滑轮夏令营2018年全国中学生越野滑轮锦标赛暨小学生越野滑轮夏令营"
-                            "2018年全国中学生越野滑轮锦标赛暨小学生越野滑轮夏令营2018年全国中学生越野滑轮锦标赛暨小学生越野滑轮夏令营"
-                            "2018年全国中学生越野滑轮锦标赛暨小学生越野滑轮夏令营2018年全国中学生越野滑轮锦标赛暨小学生越野滑轮夏令营",
+                            userRule,
                             style: TextStyle(
                                 color: Color(0xFF333333), fontSize: 18.0),
                             textAlign: TextAlign.justify,
                           ),
                           new Text(
-                            "2019年7月1日",
+                            "2019年8月10日",
                             textAlign: TextAlign.right,
                             style: TextStyle(fontSize: 16.0),
                           )
@@ -69,5 +67,26 @@ class _UserAgreementState extends State<UserAgreement> {
                 ),
               ))),
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _getrule();
+  }
+
+  //获取规则信息
+  _getrule() async {
+    setState(() {
+      isLoading = true;
+    });
+    await RuleService.decodePerson().then((RuleEntity v) {
+      if(v.rule!=null){
+        setState(() {
+          userRule=v.rule;
+          isLoading=false;
+        });
+      }
+    });
   }
 }

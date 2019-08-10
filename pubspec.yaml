@@ -85,6 +85,7 @@ flutter:
     - images/mine.jpg
     - images/mobile.png
     - images/my-vip.png
+    - images/rule.json
   fonts:
     - family: iconfont
       fonts:

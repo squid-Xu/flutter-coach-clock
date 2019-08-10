@@ -553,55 +553,78 @@ class MyInfoPageState extends State<MyInfoPage> {
           ),
           body: ModalProgressHUD(
               inAsyncCall: _isInAsyncCall,
-              child: new SingleChildScrollView(
-                child: new ConstrainedBox(
-                  constraints: new BoxConstraints(
-                    minHeight: 120.0,
-                  ),
-                  child: Consumer<UserInfoProvider>(
-                    builder: (context, userInfo, _) => new Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        new Padding(
-                          padding: const EdgeInsets.only(
-                              top: 20.0, left: 15.0, right: 15.0),
-                          child: new Card(
-                            margin: const EdgeInsets.only(
-                                top: 0.0,
-                                left: 10.0,
-                                right: 10.0,
-                                bottom: 10.0),
-                            elevation: 4.0,
-                            shape: const RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(15)),
-                            ),
-                            child: new Column(
-                              children: <Widget>[
-                                _avatar(userInfo.userInfo.avatar),
-                                _gender(userInfo.userInfo.gender),
-                                _nickname(userInfo.userInfo.nickName),
-                                _signature(
-                                    context, userInfo.userInfo.signature),
-                                _city(
-                                    userInfo.userInfo.province,
-                                    userInfo.userInfo.city,
-                                    userInfo.userInfo.region),
-                                _mobile(context, userInfo.userInfo.mobile),
-//                                _password()
-                              ],
-                            ),
-                          ),
+              child: new Consumer<UserInfoProvider>(
+                builder: (context, userInfo, _) => new Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    new Container(
+                      padding: const EdgeInsets.only(
+                          top: 20.0, left: 15.0, right: 15.0),
+                      child: new Card(
+                        margin: const EdgeInsets.only(
+                            top: 0.0,
+                            left: 10.0,
+                            right: 10.0,
+                            bottom: 10.0),
+                        elevation: 4.0,
+                        shape: const RoundedRectangleBorder(
+                          borderRadius:
+                          BorderRadius.all(Radius.circular(15)),
                         ),
-                        new Padding(
-                          padding: const EdgeInsets.only(left: 25.0, top: 30.0),
-                          child: _logoutBtn(context),
-                        )
-                      ],
+                        child: new Column(
+                          children: <Widget>[
+                            _avatar(userInfo.userInfo.avatar),
+                            _gender(userInfo.userInfo.gender),
+                            _nickname(userInfo.userInfo.nickName),
+                            _signature(
+                                context, userInfo.userInfo.signature),
+                            _city(
+                                userInfo.userInfo.province,
+                                userInfo.userInfo.city,
+                                userInfo.userInfo.region),
+                            _mobile(context, userInfo.userInfo.mobile),
+//                                _password()
+                          ],
+                        ),
+                      ),
                     ),
-                  ),
+                    new Container(
+                      padding: const EdgeInsets.only(left: 25.0, top: 30.0),
+                      child: _logoutBtn(context),
+                    )
+                  ],
                 ),
-              ))),
+              )),
+        bottomNavigationBar: Container(
+          padding: EdgeInsets.only(bottom: 20.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              GestureDetector(
+                child: Text(
+                  '用户协议',
+                  style: TextStyle(color: Color(0xFF29CCCC), fontSize: 14.0),
+                ),
+                onTap: () {
+                  Router.pushNoParams(context, Router.userAgreement);
+                },
+              ),
+              Text(
+                '和',
+                style: TextStyle(fontSize: 14.0, color: Color(0xFF999999)),
+              ),
+              GestureDetector(
+                child: Text(
+                  '隐私条款',
+                  style: TextStyle(color: Color(0xFF29CCCC), fontSize: 14.0),
+                ),
+                onTap: () {
+                  Router.pushNoParams(context, Router.privacyAgreement);
+                },
+              ),
+            ],
+          ),
+        ),),
     );
   }
 
