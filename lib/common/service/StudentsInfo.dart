@@ -27,7 +27,7 @@ class StudentsService {
         return stuList;
       }
     } else {
-      GlobalToast.globalToast(res['msg']);
+//      GlobalToast.globalToast(res['msg']);
       return null;
     }
   }

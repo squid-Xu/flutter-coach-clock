@@ -456,7 +456,7 @@ class MyInfoPageState extends State<MyInfoPage> {
     Widget btn = new FlatButton(
       color: Color(0xFF29CCCC),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25.0)),
-      child: new Padding(
+      child: new Container(
         padding: new EdgeInsets.fromLTRB(100.0, 10.0, 100.0, 10.0),
         child: new Text(
           '退出登录',
@@ -589,8 +589,10 @@ class MyInfoPageState extends State<MyInfoPage> {
                       ),
                     ),
                     new Container(
-                      padding: const EdgeInsets.only(left: 25.0, top: 30.0),
-                      child: _logoutBtn(context),
+                      padding: EdgeInsets.only(top: 30.0),
+                      child:new Center(
+                        child: _logoutBtn(context),
+                      ),
                     )
                   ],
                 ),

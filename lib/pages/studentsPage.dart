@@ -254,7 +254,16 @@ class _StudentsPageState extends State<StudentsPage> {
       isLoading = true;
     });
     await StudentsService.getStudentList(stuname).then((List<StudentInfoList> v) {
+      if(v==null){
+        setState(() {
+          isLoading = false;
+        });
+      }
+      print("1111111111111111111111111111111111111111");
+      print(v);
+      print("1111111111111111111111111111111111111111");
       if (mounted) {
+        print("44444444444444444444444444");
         if (v.length==0) {
           setState(() {
             _StuState = true;
@@ -267,7 +276,13 @@ class _StudentsPageState extends State<StudentsPage> {
             isLoading = false;
           });
         }
-  }
+  }else{
+        print("33333333333333333333333333");
+        setState(() {
+          isLoading = false;
+        });
+      }
+      print("22222222222222222222222");
 
     });
   }
