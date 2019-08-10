@@ -255,14 +255,14 @@ class _StudentsPageState extends State<StudentsPage> {
     });
     await StudentsService.getStudentList(stuname).then((List<StudentInfoList> v) {
       if (mounted) {
-        if (v == null) {
+        if (v.length==0) {
           setState(() {
             _StuState = true;
             isLoading = false;
           });
         } else {
           setState(() {
-            list = v;
+            list = v ?? "";
             _StuState = false;
             isLoading = false;
           });

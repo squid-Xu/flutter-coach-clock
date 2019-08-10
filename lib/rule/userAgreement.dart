@@ -8,7 +8,7 @@ class UserAgreement extends StatefulWidget {
 }
 
 class _UserAgreementState extends State<UserAgreement> {
-  String userRule;
+  String userRule='';
   bool isLoading = true; // 是否正在请求数据中
   @override
   Widget build(BuildContext context) {
@@ -54,7 +54,7 @@ class _UserAgreementState extends State<UserAgreement> {
                           new Text(
                             userRule,
                             style: TextStyle(
-                                color: Color(0xFF333333), fontSize: 18.0),
+                                color: Color(0xFF333333), fontSize: 15.0),
                             textAlign: TextAlign.justify,
                           ),
                           new Text(
@@ -83,7 +83,7 @@ class _UserAgreementState extends State<UserAgreement> {
     await RuleService.decodePerson().then((RuleEntity v) {
       if(v.rule!=null){
         setState(() {
-          userRule=v.rule;
+          userRule=v.rule ?? "";
           isLoading=false;
         });
       }

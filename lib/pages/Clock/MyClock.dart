@@ -1042,11 +1042,11 @@ class MyClockState extends State<MyClock> {
     await CoachClubService.getCoachClub().then((CoachClubEntity v) {
       if (v != null) {
         setState(() {
-          coachNmae = v.coachName;
-          coachlogo = v.showImg;
+          coachNmae = v.coachName ?? "";
+          coachlogo = v.showImg ?? "";
         });
       }
-      print(v.coachName);
+      print(v);
     });
   }
 

@@ -9,7 +9,7 @@ class PrivacyAgreement extends StatefulWidget {
 
 class _PrivacyAgreementState extends State<PrivacyAgreement> {
 
-  String privacyRule;
+  String privacyRule='';
   bool isLoading = true; // 是否正在请求数据中
   @override
   Widget build(BuildContext context) {
@@ -55,7 +55,7 @@ class _PrivacyAgreementState extends State<PrivacyAgreement> {
                           new Text(
                             privacyRule,
                             style: TextStyle(
-                                color: Color(0xFF333333), fontSize: 18.0),
+                                color: Color(0xFF333333), fontSize: 15.0),
                             textAlign: TextAlign.justify,
                           ),
                           new Text(
@@ -83,7 +83,7 @@ class _PrivacyAgreementState extends State<PrivacyAgreement> {
     await RuleService.decodePerson().then((RuleEntity v) {
       if(v.rule!=null){
         setState(() {
-          privacyRule=v.privacy;
+          privacyRule=v.privacy ?? "";
           isLoading=false;
         });
       }

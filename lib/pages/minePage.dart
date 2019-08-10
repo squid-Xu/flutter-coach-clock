@@ -313,17 +313,11 @@ class _MinePageState extends State<MinePage> {
       } else {
         setState(() {
           _ClubState = false;
-          coachNmae = v.coachName;
-          clubName = v.clubInfoEntity.clubName;
-          if (v.clubInfoEntity.clubAccount != null) {
-            student = v.clubInfoEntity.clubAccount;
-          }
+          coachNmae = v.coachName ?? "";
+          clubName = v.clubInfoEntity.clubName ?? "";
           isLoading = false;
         });
       }
-      print("=============================================");
-      print(v.coachName);
-      print("=============================================");
     });
   }
 }

@@ -39,7 +39,7 @@ class _MyNewsState extends State<MyNews> {
       if (this.mounted) {
         setState(() {
           print("list:${v.length}");
-          this.list = v;
+          this.list = v ?? "";
           isLoading = false;
         });
       }

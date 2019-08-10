@@ -282,11 +282,11 @@ class _StuDetailState extends State<StuDetail> {
     StudentsService.stuInfo(currentStuId).then((StuProgress v){
       print(v);
       setState(() {
-        stuName=v.stuName;
-        stuGender=v.stuGender;
-        className=v.className;
-        packageName=v.packageName;
-        list = v.progresses;
+        stuName=v.stuName ?? "";
+        stuGender=v.stuGender ?? "";
+        className=v.className ?? "";
+        packageName=v.packageName ?? "";
+        list = v.progresses ?? "";
         isLoading = false;
       });
     });
