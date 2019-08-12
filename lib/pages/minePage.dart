@@ -1,7 +1,9 @@
 import 'package:coach/common/providers/UserInfoProvider.dart';
+import 'package:coach/common/service/StudentsInfo.dart';
 import 'package:coach/common/service/coachClub.dart';
 import 'package:coach/fonts/iconfont.dart';
 import 'package:coach/model/CoachClubEntity.dart';
+import 'package:coach/model/students.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../Router.dart';
@@ -297,6 +299,7 @@ class _MinePageState extends State<MinePage> {
   void initState() {
     super.initState();
     _getcoachClub();
+    _getstuList();
   }
 
   //获取教练在俱乐部的信息
@@ -318,6 +321,15 @@ class _MinePageState extends State<MinePage> {
           isLoading = false;
         });
       }
+    });
+  }
+
+  //获取学员数量
+  _getstuList() async {
+    await StudentsService.getStudentList('').then((StudentEntity v) {
+      setState(() {
+        student=v.data.length ?? 0;
+      });
     });
   }
 }

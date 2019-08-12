@@ -1,3 +1,4 @@
+//学员打卡列表
 class StuClockEntity {
   int stuId;
   String stuName;

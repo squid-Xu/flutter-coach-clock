@@ -2,7 +2,7 @@ import 'package:coach/common/config/base_config.dart';
 import 'package:coach/common/net/api.dart';
 import 'package:coach/common/utils/global_toast.dart';
 import 'package:coach/model/StuProgress.dart';
-import 'package:coach/model/studentInfo.dart';
+import 'package:coach/model/students.dart';
 import 'package:dio/dio.dart';
 
 
@@ -10,8 +10,8 @@ import 'package:dio/dio.dart';
 class StudentsService {
 
   //全部学员
-  static Future<List<StudentInfoList>> getStudentList(String stuname) async {
-    Map<String, dynamic> requestMap = {"stuName": stuname!=null ? stuname: null};
+  static Future<StudentEntity> getStudentList(String stuname) async {
+    Map<String, dynamic> requestMap = {"stuName": stuname!=null ? stuname: ''};
 
     Map<String, dynamic> res = await httpManager.netFetch(
         BaseConfig.BASE_URL + '/stu/list', requestMap, null);
@@ -19,15 +19,11 @@ class StudentsService {
       if (res['data'] == null) {
         return null;
       }else{
-        List<StudentInfoList> stuList = new List();
-        for( var entity in res['data']){
-          stuList.add(StudentInfoList.fromJson(entity));
-        }
-        print("map:${stuList}");
-        return stuList;
+        StudentEntity studentEntity = StudentEntity.fromJson(res);
+        return studentEntity;
       }
     } else {
-//      GlobalToast.globalToast(res['msg']);
+      GlobalToast.globalToast(res['msg']);
       return null;
     }
   }

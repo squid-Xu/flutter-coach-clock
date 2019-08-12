@@ -1,6 +1,7 @@
 import 'package:coach/common/service/StudentsInfo.dart';
 import 'package:coach/fonts/iconfont.dart';
 import 'package:coach/model/studentInfo.dart';
+import 'package:coach/model/students.dart';
 import 'package:flutter/material.dart';
 import '../Router.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
@@ -24,6 +25,13 @@ class _StudentsPageState extends State<StudentsPage> {
 
   bool isLoading = true; // 是否正在请求数据中
   List<StudentInfoList> list;
+  //俱乐部设置教练更新次数
+  int count=0;
+  //打卡次数
+  int stuPunchCount=0;
+  //更新次数
+  int stuProgressCount=0;
+
   // 显示加载的圈圈
   showLoading() {
     setState(() {
@@ -245,7 +253,7 @@ class _StudentsPageState extends State<StudentsPage> {
   @override
   void initState() {
     super.initState();
-    _getstuList(null);
+    _getstuList('');
   }
 
   //获取教练在俱乐部的信息
@@ -253,35 +261,23 @@ class _StudentsPageState extends State<StudentsPage> {
     setState(() {
       isLoading = true;
     });
-    await StudentsService.getStudentList(stuname).then((List<StudentInfoList> v) {
-      if(v==null){
-        setState(() {
+    await StudentsService.getStudentList(stuname).then((StudentEntity v) {
+    if(v.data.length==0){
+      setState(() {
+        _StuState = true;
           isLoading = false;
         });
-      }else{
-        if (mounted) {
-          print("44444444444444444444444444");
-          if (v.length==0) {
-            setState(() {
-              _StuState = true;
-              isLoading = false;
-            });
-          } else {
-            setState(() {
-              list = v ?? "";
+    }else{
+                  setState(() {
+              list = v.data ?? "";
+              count=v.count ?? 0;
               _StuState = false;
               isLoading = false;
             });
-          }
-        }else{
-          print("33333333333333333333333333");
-          setState(() {
-            isLoading = false;
-          });
-        }
-      }
+    }
       print("1111111111111111111111111111111111111111");
-      print(v);
+      print(v.count);
+      print(v.data);
       print("1111111111111111111111111111111111111111");
 
       print("22222222222222222222222");
@@ -380,13 +376,13 @@ class _StudentsPageState extends State<StudentsPage> {
                 height: 28,
                 child: new RaisedButton(
 //                  color: Color(0xFF29CCCC),
-                  color: Color(0xFFE31313),
+                  color:((v.stuPunchCount ?? 0) - (v.stuProgressCount?? 0)>count)?  Color(0xFFE31313):Color(0xFF29CCCC),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(36),
                   ),
                   textColor: Colors.white,
                   child: new Text(
-                    '查看',
+                    ((v.stuPunchCount ?? 0) - (v.stuProgressCount?? 0)>count)? "更新" :'查看',
                     style: TextStyle(fontSize: 13.0),
                   ),
                   onPressed: () {Router.push(context, Router.stuDetail, v.stuId);},
