@@ -1,6 +1,7 @@
 import 'package:coach/common/config/base_config.dart';
 import 'package:coach/common/net/api.dart';
 import 'package:coach/common/utils/global_toast.dart';
+import 'package:coach/model/coachRecord.dart';
 import 'package:coach/model/coachTodayClock.dart';
 import 'package:dio/dio.dart';
 
@@ -37,4 +38,24 @@ class CoachClockService {
     }
   }
 
+  //全部打卡记录
+  static Future<List<CoachRecordEntity>> getCoachRecordList(int page,int limit) async {
+    Map<String, dynamic> requestMap = {"limit": limit, "page": page};
+    Map<String, dynamic> res = await httpManager.netFetch(
+        BaseConfig.BASE_URL + '/punch/list', requestMap, null);
+    if (res['code'] == 0) {
+        if (res["page"]["list"] == null) {
+          return null;
+        } else {
+          List<CoachRecordEntity> coachRecordList = new List();
+          for (var entity in res["page"]["list"]) {
+            coachRecordList.add(CoachRecordEntity.fromJson(entity));
+          }
+          return coachRecordList;
+        }
+    }else{
+      GlobalToast.globalToast(res['msg']);
+      return null;
+    }
+  }
 }

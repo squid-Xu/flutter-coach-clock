@@ -245,7 +245,7 @@ class _StudentsPageState extends State<StudentsPage> {
   @override
   void initState() {
     super.initState();
-    _getstuList("");
+    _getstuList(null);
   }
 
   //获取教练在俱乐部的信息
@@ -258,30 +258,32 @@ class _StudentsPageState extends State<StudentsPage> {
         setState(() {
           isLoading = false;
         });
+      }else{
+        if (mounted) {
+          print("44444444444444444444444444");
+          if (v.length==0) {
+            setState(() {
+              _StuState = true;
+              isLoading = false;
+            });
+          } else {
+            setState(() {
+              list = v ?? "";
+              _StuState = false;
+              isLoading = false;
+            });
+          }
+        }else{
+          print("33333333333333333333333333");
+          setState(() {
+            isLoading = false;
+          });
+        }
       }
       print("1111111111111111111111111111111111111111");
       print(v);
       print("1111111111111111111111111111111111111111");
-      if (mounted) {
-        print("44444444444444444444444444");
-        if (v.length==0) {
-          setState(() {
-            _StuState = true;
-            isLoading = false;
-          });
-        } else {
-          setState(() {
-            list = v ?? "";
-            _StuState = false;
-            isLoading = false;
-          });
-        }
-  }else{
-        print("33333333333333333333333333");
-        setState(() {
-          isLoading = false;
-        });
-      }
+
       print("22222222222222222222222");
 
     });

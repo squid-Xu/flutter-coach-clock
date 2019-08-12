@@ -11,7 +11,7 @@ class StudentsService {
 
   //全部学员
   static Future<List<StudentInfoList>> getStudentList(String stuname) async {
-    Map<String, dynamic> requestMap = {"stuName": stuname!=null ? stuname: ""};
+    Map<String, dynamic> requestMap = {"stuName": stuname!=null ? stuname: null};
 
     Map<String, dynamic> res = await httpManager.netFetch(
         BaseConfig.BASE_URL + '/stu/list', requestMap, null);
