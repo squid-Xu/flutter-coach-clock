@@ -18,7 +18,7 @@ class _CirclePageState extends State<CirclePage> {
       body: new Center(
         child: new Container(
           color: Color(0xFFFFFFFF),
-          padding: EdgeInsets.only(top: 120.0),
+          padding: EdgeInsets.only(top: 100.0),
           child: Column(
             children: <Widget>[
               new Text(

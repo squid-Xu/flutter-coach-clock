@@ -32,8 +32,7 @@ class MyClockState extends State<MyClock> {
 
   //教练俱乐部信息
   String coachNmae = '';
-  String coachlogo =
-      "https://qiniu.langjukeji.com/roller/20190808/49bcefabe7bc4d3083d3c534c6a818e0.jpg";
+  String coachlogo ='';
   //打卡和查看记录切换
   bool _ClockState = true;
 
@@ -88,9 +87,9 @@ class MyClockState extends State<MyClock> {
                         margin: EdgeInsets.only(right: 10.0),
                         decoration: new BoxDecoration(
                             shape: BoxShape.circle,
-                            color: Colors.transparent,
+                            color: Colors.white,
                             image: new DecorationImage(
-                                image: new NetworkImage(coachlogo),
+                                image:coachlogo==null ? new AssetImage("images/coachnan.png"): new NetworkImage(coachlogo),
                                 fit: BoxFit.cover),
                             border: new Border.all(
                                 color: Colors.white, width: 1.0)),

@@ -23,7 +23,7 @@ class StudentsService {
         return studentEntity;
       }
     } else {
-      GlobalToast.globalToast(res['msg']);
+//      GlobalToast.globalToast(res['msg']);
       return null;
     }
   }

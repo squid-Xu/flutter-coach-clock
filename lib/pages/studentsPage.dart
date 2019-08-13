@@ -262,25 +262,26 @@ class _StudentsPageState extends State<StudentsPage> {
       isLoading = true;
     });
     await StudentsService.getStudentList(stuname).then((StudentEntity v) {
-    if(v.data.length==0){
-      setState(() {
-        _StuState = true;
+      if(v!=null){
+        if(v.data.length==0){
+          setState(() {
+            _StuState = true;
+            isLoading = false;
+          });
+        }else{
+          setState(() {
+            list = v.data ?? "";
+            count=v.count ?? 0;
+            _StuState = false;
+            isLoading = false;
+          });
+        }
+      }else{
+        setState(() {
+          _StuState = true;
           isLoading = false;
         });
-    }else{
-                  setState(() {
-              list = v.data ?? "";
-              count=v.count ?? 0;
-              _StuState = false;
-              isLoading = false;
-            });
-    }
-      print("1111111111111111111111111111111111111111");
-      print(v.count);
-      print(v.data);
-      print("1111111111111111111111111111111111111111");
-
-      print("22222222222222222222222");
+      }
 
     });
   }

@@ -459,6 +459,8 @@ class StuClockListState extends State<StuClockList> {
           this._color1 = this._color;
           this._color2 = this._colorgray;
           this._color3 = this._colorgray;
+         _isCheck = false;
+          _isEnter = false;
           isLoading = false;
         });
       }else{

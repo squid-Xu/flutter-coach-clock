@@ -310,7 +310,7 @@ class MyInfoPageState extends State<MyInfoPage> {
           new Container(
             padding: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20.0),
             child: new Text(
-              "如果更换手机号，需要使用 新手机号才能登录",
+              "如果更换手机号，需要使用新手机号才能登录",
               textAlign: TextAlign.center,
               style: TextStyle(color: Color(0xFF666666), fontSize: 16.0),
             ),

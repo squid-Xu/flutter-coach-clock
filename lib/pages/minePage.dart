@@ -16,7 +16,7 @@ class MinePage extends StatefulWidget {
 class _MinePageState extends State<MinePage> {
   bool isLoading = true; // 是否正在请求数据中
   bool _ClubState = true;
-  String coachNmae = '';
+  String coachNmae = '暂无姓名';
   String clubName = '';
   int student = 0;
 
@@ -316,7 +316,7 @@ class _MinePageState extends State<MinePage> {
       } else {
         setState(() {
           _ClubState = false;
-          coachNmae = v.coachName ?? "";
+          coachNmae = v.coachName ?? "暂无姓名";
           clubName = v.clubInfoEntity.clubName ?? "";
           isLoading = false;
         });
@@ -328,7 +328,7 @@ class _MinePageState extends State<MinePage> {
   _getstuList() async {
     await StudentsService.getStudentList('').then((StudentEntity v) {
       setState(() {
-        student=v.data.length ?? 0;
+        student = v.data.length ?? 0;
       });
     });
   }
