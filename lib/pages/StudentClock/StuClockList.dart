@@ -56,7 +56,7 @@ class StuClockListState extends State<StuClockList> {
         count++;
       }
     }
-    if (clickcount == isChecks.length) {
+    if (clickcount == notClock) {
       _isCheck = true;
     }
     if (count == isChecks.length) {
@@ -196,33 +196,35 @@ class StuClockListState extends State<StuClockList> {
                               ),
                               Expanded(
                                 child: Container(
-                                  child: TextField(
-                                    controller: controller,
-                                    autofocus: false, //是否自动对焦
-                                    //键盘类型
-                                    keyboardType: TextInputType.text,
-
-                                    //控制键盘的功能键 指enter键，比如此处设置为next时，enter键
-                                    //显示的文字内容为 下一步
-                                    textInputAction: TextInputAction.search,
-                                    decoration: new InputDecoration(
-                                        contentPadding:
-                                        EdgeInsets.only(top: 0.0),
-                                        hintText: '搜索',
-                                        hintStyle: TextStyle(fontSize: 15.0),
-                                        border: InputBorder.none),
-                                    onChanged: (text) {
-                                      //内容改变的回调
-                                      print('change $text');
-                                    },
-                                    onSubmitted: (text) {
-                                      //内容提交(按回车)的回调
-                                      print('submit $text');
-                                    },
-                                  ),
+                                  child: new Text("搜索",style: TextStyle(color: Color(0xffe5e5e5),))
+//                                  child: TextField(
+//                                    controller: controller,
+//                                    autofocus: false, //是否自动对焦
+//                                    enabled: true,//是否禁用
+//                                    //键盘类型
+//                                    keyboardType: TextInputType.text,
+//
+//                                    //控制键盘的功能键 指enter键，比如此处设置为next时，enter键
+//                                    //显示的文字内容为 下一步
+//                                    textInputAction: TextInputAction.search,
+//                                    decoration: new InputDecoration(
+//                                        contentPadding:
+//                                        EdgeInsets.only(top: 0.0),
+//                                        hintText: '搜索',
+//                                        hintStyle: TextStyle(fontSize: 15.0),
+//                                        border: InputBorder.none),
+////                                    onChanged: (text) {
+////                                      //内容改变的回调
+////                                      print('change $text');
+////                                    },
+////                                    onSubmitted: (text) {
+////                                      //内容提交(按回车)的回调
+////                                      print('submit $text');
+////                                    },
+//                                  ),
                                 ),
                               ),
-                            ],
+                            ]
                           ),
                         ),
                         flex: 5,
@@ -308,379 +310,6 @@ class StuClockListState extends State<StuClockList> {
                     itemBuilder: _renderRow,
                     itemCount: list.length,
                   ),
-//                  child: ListView(
-//                    children: <Widget>[
-//                      new Container(
-//                        child: Row(
-//                          mainAxisAlignment: MainAxisAlignment.center,
-//                          crossAxisAlignment: CrossAxisAlignment.center,
-//                          children: <Widget>[
-//                            new Expanded(
-//                              child: new Container(
-//                                height: 40.0,
-//                                child: new Column(
-//                                  mainAxisAlignment: MainAxisAlignment.center,
-//                                  children: <Widget>[
-//                                    new Text(
-//                                      "001",
-//                                      maxLines: 2,
-//                                      overflow: TextOverflow.ellipsis,
-//                                      textAlign: TextAlign.justify,
-//                                      style: TextStyle(
-//                                          color: Color(0xFF000000),
-//                                          fontSize: 14.0),
-//                                    ),
-//                                  ],
-//                                ),
-//                                decoration: BoxDecoration(
-//                                    border: Border(
-//                                        right: BorderSide(
-//                                            width: 1,
-//                                            color:
-//                                            Color.fromRGBO(0, 0, 0, 0.1)))),
-//                              ),
-//                            ),
-//                            new Expanded(
-//                                child: new InkWell(
-//                                  child: new Container(
-//                                    height: 40.0,
-//                                    padding: EdgeInsets.only(left: 5, right: 5),
-//                                    child: new Column(
-//                                      mainAxisAlignment: MainAxisAlignment.center,
-//                                      children: <Widget>[
-//                                        new Text(
-//                                          "李鑫一",
-//                                          maxLines: 2,
-//                                          overflow: TextOverflow.ellipsis,
-//                                          textAlign: TextAlign.justify,
-//                                          style: TextStyle(
-//                                              color: Color(0xFF000000),
-//                                              fontSize: 14.0),
-//                                        ),
-//                                      ],
-//                                    ),
-//                                    decoration: BoxDecoration(
-//                                        border: Border(
-//                                            right: BorderSide(
-//                                                width: 1,
-//                                                color:
-//                                                Color.fromRGBO(0, 0, 0, 0.1)))),
-//                                  ),
-//                                  onTap: () {
-//                                    setState(() {
-//                                      _StuDetail=false;
-//                                    });
-////                                    Navigator.of(context).pushNamed('part/part2');
-//                                  },
-//                                )),
-//                            new Expanded(
-//                              child: new Container(
-//                                padding: EdgeInsets.only(left: 5, right: 5),
-//                                child: new Text(
-//                                  "未打卡",
-//                                  textAlign: TextAlign.center,
-//                                  style: TextStyle(
-//                                      color: Color(0xFF000000), fontSize: 14.0),
-//                                ),
-//                              ),
-//                            ),
-//                            new Container(
-//                              height: 40.0,
-//                              child: new Checkbox(
-//                                  value: isChecks[0],
-//                                  activeColor: Color(0xFF29CCCC),
-//                                  onChanged: (bool) {
-//                                    setState(() {
-//                                      isChecks[0] = bool;
-//                                      _isBoolCheck();
-//                                      print(isChecks[0]);
-//                                    });
-//                                  }),
-//                            )
-//                          ],
-//                        ),
-//                        decoration: BoxDecoration(
-//                            border: Border(
-//                                bottom: BorderSide(
-//                                    width: 1, color: Color(0xffe5e5e5)))),
-//                      ),
-//                      new Container(
-//                        child: Row(
-//                          mainAxisAlignment: MainAxisAlignment.center,
-//                          crossAxisAlignment: CrossAxisAlignment.center,
-//                          children: <Widget>[
-//                            new Expanded(
-//                              child: new Container(
-//                                height: 40.0,
-//                                child: new Column(
-//                                  mainAxisAlignment: MainAxisAlignment.center,
-//                                  children: <Widget>[
-//                                    new Text(
-//                                      "001",
-//                                      maxLines: 2,
-//                                      overflow: TextOverflow.ellipsis,
-//                                      textAlign: TextAlign.justify,
-//                                      style: TextStyle(
-//                                          color: Color(0xFF000000),
-//                                          fontSize: 14.0),
-//                                    ),
-//                                  ],
-//                                ),
-//                                decoration: BoxDecoration(
-//                                    border: Border(
-//                                        right: BorderSide(
-//                                            width: 1,
-//                                            color:
-//                                            Color.fromRGBO(0, 0, 0, 0.1)))),
-//                              ),
-//                            ),
-//                            new Expanded(
-//                              child: new InkWell(
-//                                child: new Container(
-//                                  height: 40.0,
-//                                  padding: EdgeInsets.only(left: 5, right: 5),
-//                                  child: new Column(
-//                                    mainAxisAlignment: MainAxisAlignment.center,
-//                                    children: <Widget>[
-//                                      new Text(
-//                                        "李鑫一",
-//                                        maxLines: 2,
-//                                        overflow: TextOverflow.ellipsis,
-//                                        textAlign: TextAlign.justify,
-//                                        style: TextStyle(
-//                                            color: Color(0xFF000000),
-//                                            fontSize: 14.0),
-//                                      ),
-//                                    ],
-//                                  ),
-//                                  decoration: BoxDecoration(
-//                                      border: Border(
-//                                          right: BorderSide(
-//                                              width: 1,
-//                                              color: Color.fromRGBO(
-//                                                  0, 0, 0, 0.1)))),
-//                                ),
-//                                onTap: () {
-////                                  Navigator.of(context).pushNamed('part/part2');
-//                                },
-//                              ),
-//                            ),
-//                            new Expanded(
-//                              child: new Container(
-//                                padding: EdgeInsets.only(left: 5, right: 5),
-//                                child: new Text(
-//                                  "未打卡",
-//                                  textAlign: TextAlign.center,
-//                                  style: TextStyle(
-//                                      color: Color(0xFF000000), fontSize: 14.0),
-//                                ),
-//                              ),
-//                            ),
-//                            new Container(
-//                              height: 40.0,
-//                              child: new Checkbox(
-//                                  value: isChecks[1],
-//                                  activeColor: Color(0xFF29CCCC),
-//                                  onChanged: (bool) {
-//                                    setState(() {
-//                                      isChecks[1] = bool;
-//                                      _isBoolCheck();
-//                                      print(isChecks[1]);
-//                                    });
-//                                  }),
-//                            )
-//                          ],
-//                        ),
-//                        decoration: BoxDecoration(
-//                            border: Border(
-//                                bottom: BorderSide(
-//                                    width: 1, color: Color(0xffe5e5e5)))),
-//                      ),
-//                      new Container(
-//                        child: Row(
-//                          mainAxisAlignment: MainAxisAlignment.center,
-//                          crossAxisAlignment: CrossAxisAlignment.center,
-//                          children: <Widget>[
-//                            new Expanded(
-//                              child: new Container(
-//                                height: 40.0,
-//                                child: new Column(
-//                                  mainAxisAlignment: MainAxisAlignment.center,
-//                                  children: <Widget>[
-//                                    new Text(
-//                                      "001",
-//                                      maxLines: 2,
-//                                      overflow: TextOverflow.ellipsis,
-//                                      textAlign: TextAlign.justify,
-//                                      style: TextStyle(
-//                                          color: Color(0xFF000000),
-//                                          fontSize: 14.0),
-//                                    ),
-//                                  ],
-//                                ),
-//                                decoration: BoxDecoration(
-//                                    border: Border(
-//                                        right: BorderSide(
-//                                            width: 1,
-//                                            color:
-//                                            Color.fromRGBO(0, 0, 0, 0.1)))),
-//                              ),
-//                            ),
-//                            new Expanded(
-//                              child: new InkWell(
-//                                child: new Container(
-//                                  height: 40.0,
-//                                  padding: EdgeInsets.only(left: 5, right: 5),
-//                                  child: new Column(
-//                                    mainAxisAlignment: MainAxisAlignment.center,
-//                                    children: <Widget>[
-//                                      new Text(
-//                                        "李鑫一",
-//                                        maxLines: 2,
-//                                        overflow: TextOverflow.ellipsis,
-//                                        textAlign: TextAlign.justify,
-//                                        style: TextStyle(
-//                                            color: Color(0xFF000000),
-//                                            fontSize: 14.0),
-//                                      ),
-//                                    ],
-//                                  ),
-//                                  decoration: BoxDecoration(
-//                                      border: Border(
-//                                          right: BorderSide(
-//                                              width: 1,
-//                                              color: Color.fromRGBO(
-//                                                  0, 0, 0, 0.1)))),
-//                                ),
-//                                onTap: () {
-////                                  Navigator.of(context).pushNamed('part/part2');
-//                                },
-//                              ),
-//                            ),
-//                            new Expanded(
-//                              child: new Container(
-//                                padding: EdgeInsets.only(left: 5, right: 5),
-//                                child: new Text(
-//                                  "未打卡",
-//                                  textAlign: TextAlign.center,
-//                                  style: TextStyle(
-//                                      color: Color(0xFF000000), fontSize: 14.0),
-//                                ),
-//                              ),
-//                            ),
-//                            new Container(
-//                              height: 40.0,
-//                              child: new Checkbox(
-//                                  value: isChecks[2],
-//                                  activeColor: Color(0xFF29CCCC),
-//                                  onChanged: (bool) {
-//                                    setState(() {
-//                                      isChecks[2] = bool;
-//                                      _isBoolCheck();
-//                                      print(isChecks[2]);
-//                                    });
-//                                  }),
-//                            )
-//                          ],
-//                        ),
-//                        decoration: BoxDecoration(
-//                            border: Border(
-//                                bottom: BorderSide(
-//                                    width: 1, color: Color(0xffe5e5e5)))),
-//                      ),
-//                      new Container(
-//                        child: Row(
-//                          mainAxisAlignment: MainAxisAlignment.center,
-//                          crossAxisAlignment: CrossAxisAlignment.center,
-//                          children: <Widget>[
-//                            new Expanded(
-//                              child: new Container(
-//                                height: 40.0,
-//                                child: new Column(
-//                                  mainAxisAlignment: MainAxisAlignment.center,
-//                                  children: <Widget>[
-//                                    new Text(
-//                                      "001",
-//                                      maxLines: 2,
-//                                      overflow: TextOverflow.ellipsis,
-//                                      textAlign: TextAlign.justify,
-//                                      style: TextStyle(
-//                                          color: Color(0xFF000000),
-//                                          fontSize: 14.0),
-//                                    ),
-//                                  ],
-//                                ),
-//                                decoration: BoxDecoration(
-//                                    border: Border(
-//                                        right: BorderSide(
-//                                            width: 1,
-//                                            color:
-//                                            Color.fromRGBO(0, 0, 0, 0.1)))),
-//                              ),
-//                            ),
-//                            new Expanded(
-//                                child: new InkWell(
-//                                  child: new Container(
-//                                    height: 40.0,
-//                                    padding: EdgeInsets.only(left: 5, right: 5),
-//                                    child: new Column(
-//                                      mainAxisAlignment: MainAxisAlignment.center,
-//                                      children: <Widget>[
-//                                        new Text(
-//                                          "李鑫一",
-//                                          maxLines: 2,
-//                                          overflow: TextOverflow.ellipsis,
-//                                          textAlign: TextAlign.justify,
-//                                          style: TextStyle(
-//                                              color: Color(0xFF000000),
-//                                              fontSize: 14.0),
-//                                        ),
-//                                      ],
-//                                    ),
-//                                    decoration: BoxDecoration(
-//                                        border: Border(
-//                                            right: BorderSide(
-//                                                width: 1,
-//                                                color:
-//                                                Color.fromRGBO(0, 0, 0, 0.1)))),
-//                                  ),
-//                                  onTap: () {
-////                                    Navigator.of(context).pushNamed('part/part2');
-//                                  },
-//                                )),
-//                            new Expanded(
-//                              child: new Container(
-//                                padding: EdgeInsets.only(left: 5, right: 5),
-//                                child: new Text(
-//                                  "未打卡",
-//                                  textAlign: TextAlign.center,
-//                                  style: TextStyle(
-//                                      color: Color(0xFF000000), fontSize: 14.0),
-//                                ),
-//                              ),
-//                            ),
-//                            new Container(
-//                              height: 40.0,
-//                              child: new Checkbox(
-//                                  value: isChecks[3],
-//                                  activeColor: Color(0xFF29CCCC),
-//                                  onChanged: (bool) {
-//                                    setState(() {
-//                                      isChecks[3] = bool;
-//                                      _isBoolCheck();
-//                                      print(isChecks[3]);
-//                                    });
-//                                  }),
-//                            )
-//                          ],
-//                        ),
-//                        decoration: BoxDecoration(
-//                            border: Border(
-//                                bottom: BorderSide(
-//                                    width: 1, color: Color(0xffe5e5e5)))),
-//                      ),
-//                    ],
-//                  ),
                 )
               ]),
             ),
@@ -823,8 +452,13 @@ class StuClockListState extends State<StuClockList> {
     print(stateList);
     await StuClockService.stuClock(address:_loationResult == null ? "未知地点" : listlocalal[listlocalal.length - 1],stuIds:stateList).then((bool b){
       if(b){
+        getStuClockList('');
+        getNotClock();
         GlobalToast.globalToast('打卡成功');
         setState(() {
+          this._color1 = this._color;
+          this._color2 = this._colorgray;
+          this._color3 = this._colorgray;
           isLoading = false;
         });
       }else{
@@ -906,14 +540,25 @@ class StuClockListState extends State<StuClockList> {
   Future getMiddleList(state) async{
     setState(() {
       isLoadingMiddle = true;
+    _isCheck = false;
+   _isEnter = false;
     });
     await  StuClockService.getStuClockList(state).then((List<StuClockEntity> v) {
       if (this.mounted) {
         setState(() {
           print("list:${v.length}");
           this.list = v ?? "";
+          this.isChecks.length=v.length;
           isLoadingMiddle = false;
         });
+        for(int i=0;i<list.length;i++){
+          print("00000000000000000000000000000000000");
+          setState(() {
+            isChecks[i]=false;
+          });
+          print("00000000000000000000000000000000000");
+        }
+        print(isChecks);
       }
       print("11111111111111111111111111111111111111111111122222222222222");
       print(v);

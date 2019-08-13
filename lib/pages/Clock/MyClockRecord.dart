@@ -148,6 +148,11 @@ class _MyClockRecordState extends State<MyClockRecord> {
           this.list = v ?? "";
           isLoading = false;
         });
+        if(v.length<=10){
+          setState(() {
+            moreText="- 没有更多数据了 -";
+          });
+        }
       }
       print("11111111111111111111111111111111111111111111122222222222222");
       print(list);
@@ -170,7 +175,7 @@ class _MyClockRecordState extends State<MyClockRecord> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     new Text(
-                      list[index].punchDate,
+                      list[index].punchDate.substring(0,10),
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: Color(0xFF000000),
@@ -265,7 +270,7 @@ class _MyClockRecordState extends State<MyClockRecord> {
         print(v.length);
         if(v.length==0){
 setState(() {
-  moreText="没有更多数据了";
+  moreText="- 没有更多数据了 -";
 });
         }else{
           setState(() {

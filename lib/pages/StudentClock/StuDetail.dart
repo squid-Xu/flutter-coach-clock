@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:coach/common/service/StudentsInfo.dart';
 import 'package:coach/model/Progress.dart';
 import 'package:coach/model/StuProgress.dart';
@@ -33,6 +32,7 @@ class _StuDetailState extends State<StuDetail> {
   int  stuGender=1;
   String className="";
   String packageName="";
+  int stuAge=0;
 
   @override
   Widget build(BuildContext context) {
@@ -154,7 +154,7 @@ class _StuDetailState extends State<StuDetail> {
                     ),
                     new Expanded(
                       child: new Text(
-                        "9岁",
+                          (int.parse( _Date.substring(0,4))-stuAge).toString()+"岁",
                         style: TextStyle(
                             color: Color.fromRGBO(0, 0, 0, 0.7),
                             fontSize: 16.0,
@@ -282,6 +282,7 @@ class _StuDetailState extends State<StuDetail> {
     StudentsService.stuInfo(currentStuId).then((StuProgress v){
       print(v);
       setState(() {
+        stuAge=v.stuBirthYear?? 0;
         stuName=v.stuName ?? "";
         stuGender=v.stuGender ?? "";
         className=v.className ?? "";
