@@ -385,7 +385,7 @@ class MyClockState extends State<MyClock> {
                                       new Expanded(
                                           child: new Text(
                                         _loationResult == null
-                                            ? "定位失败"
+                                            ? "定位中..."
                                             : list[list.length - 1],
                                         maxLines: 2,
                                         overflow: TextOverflow.ellipsis,

@@ -64,8 +64,7 @@ class _MyNewsState extends State<MyNews> {
                 borderRadius: new BorderRadius.circular((5.0)), // 圆
                 color: Colors.transparent,
                 image: new DecorationImage(
-                    image: new NetworkImage(
-                        "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1562820531441&di=f0d0c516dce27b363a6e9b8736ac6cc5&imgtype=0&src=http%3A%2F%2Fpic1.win4000.com%2Fpic%2F3%2F42%2F684db2d82e_250_350.jpg"),
+                    image: new AssetImage("images/coachnan.png"),
                     fit: BoxFit.cover),
                 border: new Border.all(color: Colors.white, width: 1.0),
               ),
