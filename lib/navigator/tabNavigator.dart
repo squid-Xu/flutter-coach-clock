@@ -32,7 +32,7 @@ class _TabNavitagorState extends State<TabNavigator> {
         children: <Widget>[
           new HomePage(),
           new StudentsPage(),
-          new CirclePage(),
+//          new CirclePage(),
           new MinePage()
         ],
       ),
@@ -61,12 +61,12 @@ class _TabNavitagorState extends State<TabNavigator> {
                     '学员',style: TextStyle(color: _currentInndex !=1 ? _defaultColor : null),
                   ),
                   icon: Icon(IconFont.icon_rg),),
-                BottomNavigationBarItem(
-                  title: Text(
-                    '圈子',style: TextStyle(color: _currentInndex !=2 ? _defaultColor : null),
-                  ),
-                  icon: Icon(IconFont.icon_quanzi,
-                  ),),
+//                BottomNavigationBarItem(
+//                  title: Text(
+//                    '圈子',style: TextStyle(color: _currentInndex !=2 ? _defaultColor : null),
+//                  ),
+//                  icon: Icon(IconFont.icon_quanzi,
+//                  ),),
                 BottomNavigationBarItem(
                     title: Text(
                       '我的',style: TextStyle(color: _currentInndex !=3 ? _defaultColor : null),
