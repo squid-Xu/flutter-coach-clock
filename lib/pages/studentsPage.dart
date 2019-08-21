@@ -377,13 +377,13 @@ class _StudentsPageState extends State<StudentsPage> {
                 height: 28,
                 child: new RaisedButton(
 //                  color: Color(0xFF29CCCC),
-                  color:((v.stuPunchCount ?? 0) - (v.stuProgressCount?? 0)>count)?  Color(0xFFE31313):Color(0xFF29CCCC),
+                  color:((v.stuPunchCount ?? 0) - (v.stuProgressCount?? 0)>=count)?  Color(0xFFE31313):Color(0xFF29CCCC),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(36),
                   ),
                   textColor: Colors.white,
                   child: new Text(
-                    ((v.stuPunchCount ?? 0) - (v.stuProgressCount?? 0)>count)? "更新" :'查看',
+                    ((v.stuPunchCount ?? 0) - (v.stuProgressCount?? 0)>=count)? "更新" :'查看',
                     style: TextStyle(fontSize: 13.0),
                   ),
                   onPressed: () {Router.push(context, Router.stuDetail, v.stuId);},
