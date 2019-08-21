@@ -11,6 +11,7 @@ class InvitationEntity {
   String mobile;
   String nickName;
   String clubName;
+  String clubLogo;
 
   InvitationEntity(
       {this.applyId,
@@ -23,7 +24,8 @@ class InvitationEntity {
         this.replyMsg,
         this.mobile,
         this.nickName,
-        this.clubName});
+        this.clubName,
+        this.clubLogo});
 
   InvitationEntity.fromJson(Map<String, dynamic> json) {
     applyId = json['applyId'];
@@ -37,6 +39,7 @@ class InvitationEntity {
     mobile = json['mobile'];
     nickName = json['nickName'];
     clubName = json['clubName'];
+    clubLogo = json['clubLogo'];
   }
 
   Map<String, dynamic> toJson() {
@@ -52,6 +55,7 @@ class InvitationEntity {
     data['mobile'] = this.mobile;
     data['nickName'] = this.nickName;
     data['clubName'] = this.clubName;
+    data['clubLogo'] = this.clubLogo;
     return data;
   }
   @override
@@ -59,6 +63,6 @@ class InvitationEntity {
     return 'InvitationEntity{applyId: $applyId, clubId: $clubId, userId: $userId, '
         'applyState: $applyState, applyTime: $applyTime, applyMsg: $applyMsg, replyTime: $replyTime, '
         'replyMsg: $replyMsg, mobile: $mobile, nickName: $nickName, '
-        'clubName: $clubName}';
+        'clubName: $clubName,clubLogo:$clubLogo}';
   }
 }

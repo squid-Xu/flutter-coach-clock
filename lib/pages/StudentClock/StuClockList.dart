@@ -519,6 +519,7 @@ class StuClockListState extends State<StuClockList> {
         setState(() {
           stuTotal=v.length;
           print("list:${v.length}");
+          print(v);
           this.list = v ?? "";
           this.isChecks.length=v.length;
           isLoading = false;

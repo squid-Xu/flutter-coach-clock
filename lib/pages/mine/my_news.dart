@@ -64,8 +64,8 @@ class _MyNewsState extends State<MyNews> {
                 borderRadius: new BorderRadius.circular((5.0)), // 圆
                 color: Colors.transparent,
                 image: new DecorationImage(
-                    image: new AssetImage("images/coachnan.png"),
-                    fit: BoxFit.cover),
+                    image:(v.clubLogo!=null) ? new NetworkImage(v.clubLogo): new AssetImage("images/coachnan.png"),
+                    fit: BoxFit.fitWidth),
                 border: new Border.all(color: Colors.white, width: 1.0),
               ),
             ),
@@ -80,7 +80,7 @@ class _MyNewsState extends State<MyNews> {
                   style: TextStyle(color: Color(0xFF000000), fontSize: 17.0),
                 ),
                 new Text(
-                  v.applyTime,
+                  v.applyMsg,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(color: Color(0xFF666666), fontSize: 14.0),
