@@ -49,7 +49,7 @@ class MyAbout extends StatelessWidget{
                             ),
                             new Padding(
                               padding: const EdgeInsets.only(top: 5.0),
-                              child: Text('v1.0',style: TextStyle(color: _c,fontSize: 17.0),),
+                              child: Text('v1.0.0',style: TextStyle(color: _c,fontSize: 17.0),),
                             ),
                             new Row(
                               mainAxisAlignment: MainAxisAlignment.start,
@@ -75,7 +75,7 @@ class MyAbout extends StatelessWidget{
                               children: <Widget>[
                                 new Padding(
                                   padding: const EdgeInsets.only(top: 5.0,left: 32.0),
-                                  child: Text('邮箱： 15612345678@163.com',
+                                  child: Text('邮箱： langjukj@163.com',
                                     style: TextStyle(color: _cc,fontSize: 14.0),),
                                 )
                               ],
@@ -90,7 +90,7 @@ class MyAbout extends StatelessWidget{
                                 ),
                                 new Container(
                                   padding: EdgeInsets.only(top: 10),
-                                  child: new Image(image: new AssetImage("images/weixin.png"),fit: BoxFit.cover,width: 120,height: 120,),
+                                  child: new Image(image: new AssetImage("images/weixin.png"),fit: BoxFit.cover,width: 140,height: 140,),
                                 )
                               ],
                             ),
@@ -107,5 +107,6 @@ class MyAbout extends StatelessWidget{
         )
     );
   }
+
 
 }
