@@ -97,7 +97,7 @@ class MyInfoNicknameState extends State<MyInfoNickname> {
                   autofocus: true,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(borderSide: BorderSide.none),
-                    hintText: '请输入您的个性签名',
+                    hintText: '请输入您的昵称',
                   ),
                   maxLength: 15,
                   maxLines: 3,

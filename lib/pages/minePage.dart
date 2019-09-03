@@ -190,7 +190,7 @@ class _MinePageState extends State<MinePage> {
                                   ),
                                   new Expanded(
                                     child: new Text(
-                                      "个人动态",
+                                      "个人通知",
                                       style: new TextStyle(
                                           color: Color(0xFF333333),
                                           fontSize: 17.0),

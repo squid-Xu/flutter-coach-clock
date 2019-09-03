@@ -40,7 +40,7 @@ class _StuDetailState extends State<StuDetail> {
     return new Scaffold(
       appBar: new AppBar(
         backgroundColor: Color(0xFF29CCCC),
-        title: new Text("学员详情"),
+        title: new Text("进度详情"),
         leading: IconButton(
             icon: Icon(
               Icons.keyboard_arrow_left,
@@ -269,8 +269,9 @@ class _StuDetailState extends State<StuDetail> {
 
   @override
   void initState() {
-    super.initState();
     this._getStuInfoData();
+    this._getStuInfoPro();
+    super.initState();
   }
 
   /// 请求课程信息

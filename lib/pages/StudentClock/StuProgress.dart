@@ -3,6 +3,8 @@ import 'package:coach/common/utils/global_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
+import '../../Router.dart';
+
 class StuProgress extends StatefulWidget{
   final currentStuId;
   StuProgress(this.currentStuId, {Key key}) : super(key: key);
@@ -97,6 +99,7 @@ class StuProgressState extends State<StuProgress>{
           this.shutdownLoading();
           GlobalToast.globalToast('评价成功');
           Navigator.pop(context);
+          Router.push(context, Router.stuDetail, currentStuId);
         } else {
           this.shutdownLoading();
         }
