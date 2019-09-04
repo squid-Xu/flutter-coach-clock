@@ -1,3 +1,4 @@
+import 'package:coach/pages/sweep/scan.dart' as prefix0;
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 //路由重定向
@@ -14,6 +15,8 @@ import 'package:coach/pages/StudentClock/StuClock.dart'; //学员打卡
 import 'package:coach/pages/StudentClock/StuClockList.dart'; //学员打卡列表
 import 'package:coach/pages/StudentClock/StuClockRecord.dart'; //学员打卡记录
 import 'package:coach/pages/homePage.dart'; //首页
+import 'package:coach/pages/Sweep/scan.dart'; //扫一扫页面
+import 'package:coach/pages/Sweep/punch.dart'; //扫一扫页面
 
 //我的页面路由
 import 'package:coach/pages/mine/my_info_page.dart'; //个人信息
@@ -51,6 +54,8 @@ class Router {
   static const myNews = 'app://page/mine/mynews'; //我的消息
   static const stuDetail = 'app://page/studentclock/studetail'; //学员进度详情
   static const stuProgress = 'app://page/studentclock/stuprogress'; //学员进度更新
+  static const scan = 'app://page/Sweep/scan'; //扫一扫页面
+  static const punch = 'app://page/Sweep/punch'; //扫一扫页面
 
   Widget _getPage(String url, dynamic params) {
     if (url.startsWith('https://') || url.startsWith('http://')) {
@@ -99,6 +104,10 @@ class Router {
           return StuDetail(params);
         case stuProgress: //学员进度更新
           return StuProgress(params);
+        case scan:   //扫一扫页面
+          return Scan();
+        case punch:
+          return Punch();
       }
     }
     return null;

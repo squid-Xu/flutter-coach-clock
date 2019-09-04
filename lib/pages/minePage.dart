@@ -196,10 +196,21 @@ class _MinePageState extends State<MinePage> {
                                           fontSize: 17.0),
                                     ),
                                   ),
-                                  new Icon(
-                                    Icons.chevron_right,
-                                    color: Colors.grey,
-                                  )
+                                 new Container(
+                                   padding: EdgeInsets.only(right: 3),
+                                   child:  new CircleAvatar(
+                                     radius: 11.0,
+                                     child: new Text('3',style: TextStyle(
+                                       color: Colors.white,
+                                       fontSize: 15.0,
+                                     ),),
+                                     backgroundColor: Colors.red,
+                                   ),
+                                 )
+//                                  new Icon(
+//                                    Icons.chevron_right,
+//                                    color: Colors.grey,
+//                                  )
                                 ],
                               ),
                               decoration: BoxDecoration(
