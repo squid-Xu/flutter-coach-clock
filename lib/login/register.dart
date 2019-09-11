@@ -412,6 +412,7 @@ class _RegisterPageState extends State<Register> {
                     ),
                     new GestureDetector(
                       child: new Container(
+                        margin: EdgeInsets.only(bottom: 10.0),
                         padding: EdgeInsets.fromLTRB(10, 4, 10, 5),
                         decoration: new BoxDecoration(
                           color: Color(0xFFDDDDDD), // 底色

@@ -565,10 +565,8 @@ class MyClockState extends State<MyClock> {
   //重新获取位置
   Future onceLocation() async {
 //    //获取位置信息
-//    startLocation();
     _locationPlugin.startLocation();
-//    new Future.delayed(
-//        const Duration(seconds: 30), () => _locationPlugin.stopLocation());
+
   }
 
   //获取时间
@@ -621,9 +619,6 @@ class MyClockState extends State<MyClock> {
       print("66666666666666666666666666666666666666666");
       _locationPlugin.stopLocation();
     }
-//    _locationPlugin.startLocation();
-//    new Future.delayed(
-//        const Duration(seconds: 30), () => _locationPlugin.stopLocation());
     //获取教练今日打卡记录
     _getCoachTodayClock();
   }
@@ -644,20 +639,4 @@ Future requestPermission() async {
 
   Map<PermissionGroup, PermissionStatus> permissions = await PermissionHandler()
       .requestPermissions([PermissionGroup.locationWhenInUse]);
-
-  // 申请结果
-
-//  PermissionStatus permission =
-//
-//  await PermissionHandler().checkPermissionStatus(PermissionGroup.locationWhenInUse);
-//
-//  if (permission == PermissionStatus.granted) {
-//
-//    Fluttertoast.showToast(msg: "权限申请通过");
-//
-//  } else {
-//
-//    Fluttertoast.showToast(msg: "权限申请被拒绝");
-//
-//  }
 }

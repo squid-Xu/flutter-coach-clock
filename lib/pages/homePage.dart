@@ -15,31 +15,6 @@ class HomePageState extends State<HomePage> {
   bool _ClubState = true;
   bool isLoading = true; // 是否正在请求数据中
 
-  ///
-  /// 菜单按钮点击的事件
-  ///
-  ///
-
-  startMenuButton(int value, BuildContext context) {
-    switch (value) {
-      case 0:
-        Router.pushNoParams(context, Router.scan);
-        print("扫一扫功能");
-        break;
-      case 1:
-        Router.pushNoParams(context, Router.punch);
-        print("打卡记录功能");
-        break;
-      case 2:
-//        _generateBarCode();
-        print("俱乐部二维码功能");
-//        print(bytes);
-        break;
-      case 3:
-        print("帮助功能");
-        break;
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,20 +45,15 @@ class HomePageState extends State<HomePage> {
                         labelStyle: TextStyle(fontSize: 18.0),
                       ),
                       actions: <Widget>[
-                        new PopupMenuButton(
-                          offset: const Offset(0.0, 60.0),
-                          icon: new Icon(Icons.add, color: Colors.white),
-                          onSelected: (int value) {
-                            startMenuButton(value, context);
+                        new IconButton(
+                          icon: new Icon(
+                            Icons.center_focus_strong,
+                            color: Colors.white,
+                          ),
+                          onPressed: () async {
+                            Router.pushNoParams(context, Router.scan);
                           },
-                          itemBuilder: (BuildContext context) =>
-                              <PopupMenuItem<int>>[
-                            new PopupMenuItem<int>(
-                                child: new Text('扫一扫'), value: 0),
-                            new PopupMenuItem<int>(
-                                child: new Text('打卡记录'), value: 1),
-                          ],
-                        ),
+                        )
                       ],
                     ),
                     body: _ClubState

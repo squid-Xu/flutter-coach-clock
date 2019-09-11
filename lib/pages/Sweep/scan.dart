@@ -1,116 +1,410 @@
+import 'package:coach/common/service/StuClock.dart';
+import 'package:coach/common/utils/global_toast.dart';
+import 'package:coach/model/SweepRecode.dart';
+import 'package:coach/model/Sweepscan.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
 import 'dart:async';
 import 'dart:typed_data';
+import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:audioplayers/audioplayers.dart';
+import 'package:audioplayers/audio_cache.dart';
+import 'package:amap_location_flutter_plugin/amap_location_flutter_plugin.dart';
 
 class Scan extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => new _ScanState();
+  ScanState createState() => ScanState();
 }
 
-class _ScanState extends State<Scan> {
+class ScanState extends State<Scan> {
+  //初始化位置信息
+  Map<String, Object> _loationResult;
+  StreamSubscription<Map<String, Object>> _locationListener;
+  AmapLocationFlutterPlugin _locationPlugin = new AmapLocationFlutterPlugin();
+  List<String> listlocalal = new List<String>();
+
+  String _Date = new DateFormat('yyyy-MM-dd').format(DateTime.now());
+
   String barcode = '';
   Uint8List bytes = Uint8List(200);
+  AudioPlayer audioPlayer = AudioPlayer();
+
+  AudioCache audioCache = AudioCache();
+  bool _isInAsyncCall = false;
+  List<SweepRecodeEntivity> list;
+  bool isLoading = true; // 是否正在请求数据中
+
+  // 显示加载的圈圈
+  showLoading() {
+    setState(() {
+      _isInAsyncCall = true;
+    });
+  }
+
+  // 关闭加载的圈圈
+  shutdownLoading() {
+    setState(() {
+      _isInAsyncCall = false;
+    });
+  }
 
   @override
   initState() {
+    _getTodayRecode(_Date);
     super.initState();
+    //获取位置信息
+    startLocation();
+    if (listlocalal != null) {
+      print("55555555555555555555555555555555555555555");
+      _locationPlugin.startLocation();
+    } else {
+      print("66666666666666666666666666666666666666666");
+      _locationPlugin.stopLocation();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      backgroundColor: Color(0xFFF8F8F8),
-      appBar: new AppBar(
-        backgroundColor: Color(0xFF29CCCC),
-        title: new Text(
-          '扫码打卡',
-          style: TextStyle(color: Colors.white),
+        backgroundColor: Color(0xFFF8F8F8),
+        appBar: new AppBar(
+          backgroundColor: Color(0xFF29CCCC),
+          title: new Text(
+            '扫码打卡',
+            style: TextStyle(color: Colors.white),
+          ),
+          centerTitle: true,
+          leading: IconButton(
+              icon: Icon(
+                Icons.keyboard_arrow_left,
+                size: 30,
+              ),
+              onPressed: () {
+                Navigator.pop(context);
+              }),
         ),
-        centerTitle: true,
-        leading: IconButton(
-            icon: Icon(
-              Icons.keyboard_arrow_left,
-              size: 30,
-            ),
-            onPressed: () {
-              Navigator.pop(context);
-            }),
-      ),
-      body: new Card(
-        child: new Container(
-          child: new Column(
-            children: <Widget>[
-              new Expanded(
-                child: new Container(
-                  padding: EdgeInsets.all(15.0),
-                  child: new ListView(
-                    children: <Widget>[
-                      new Text(
-                        "结果:安思维打卡成功",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 18.0),
-                      ),
-                      new SizedBox(
-                        width: 200,
-                        height: 200,
-                        child: Image.memory(bytes),
-                      ),
-                      new Text(
-                        '测试扫码结果:  $barcode',
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
+        body: isLoading
+            ? Center(
+                child: CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation(Color(0xFF29CCCC))),
+              )
+            : new ModalProgressHUD(
+                inAsyncCall: _isInAsyncCall,
+                child: new Card(
+                  child: new Container(
+                    child: new Column(
+                      children: <Widget>[
+                        new Container(
+                            padding: EdgeInsets.only(top: 10.0),
+                            child: new Center(
+                              child: new Text(
+                                "今日打卡记录",
+                                style: TextStyle(
+                                  fontSize: 20.0,
+                                  color: Color(0xFF29CCCC),
+                                ),
+                              ),
+                            )),
+                        new Expanded(
+                          child: new Container(
+                            padding: EdgeInsets.fromLTRB(20, 10, 20, 30),
+                            child: new ListView(
+                              children: <Widget>[
+                                _content(),
+                              ],
+                            ),
+                          ),
+                        ),
+                        new Container(
+                          margin: EdgeInsets.only(bottom: 50.0),
+                          child: new Row(
+                            children: <Widget>[
+                              Expanded(
+                                  child: new Container(
+                                height: 45.0,
+                                margin: EdgeInsets.only(
+                                    left: 40, right: 40, bottom: 20),
+                                child: new RaisedButton(
+                                  color: Color(0xFF29CCCC),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(36),
+                                  ),
+                                  textColor: Colors.white,
+                                  child: new Text(
+                                    '扫码',
+                                    style: TextStyle(fontSize: 18.0),
+                                  ),
+                                  onPressed: () {
+                                    _scan();
+                                  },
+                                ),
+                              ))
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              new Container(
-                margin: EdgeInsets.only(bottom: 50.0),
-                child: new Row(
-                  children: <Widget>[
-                    Expanded(
-                        child: new Container(
-                      height: 45.0,
-                      margin: EdgeInsets.only(left: 40, right: 40, bottom: 20),
-                      child: new RaisedButton(
-                        color: Color(0xFF29CCCC),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(36),
-                        ),
-                        textColor: Colors.white,
-                        child: new Text(
-                          '扫码',
-                          style: TextStyle(fontSize: 18.0),
-                        ),
-                        onPressed: () {
-                          _scan();
-                        },
-                      ),
-                    ))
-                  ],
+              ));
+  }
+
+  Widget _content() {
+    List<Widget> listWidget = [];
+    for (var v in list) {
+      listWidget.add(
+        new Padding(
+            padding: EdgeInsets.only(top: 5.0),
+            child: new Center(
+                child: Row(
+              children: <Widget>[
+                new Expanded(
+                  child: new Text("学员：${v.stuName}",
+                      style:
+                          TextStyle(color: Color(0xFF666666), fontSize: 15.0)),
+                  flex: 5,
                 ),
-              )
-            ],
+                new Expanded(
+                  child: new Text("打卡时间：${v.punchTime}",
+                      textAlign: TextAlign.right,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style:
+                          TextStyle(color: Color(0xFF666666), fontSize: 15.0)),
+                  flex: 9,
+                )
+              ],
+            ))),
+      );
+      listWidget.add(
+        new Padding(
+          padding: const EdgeInsets.only(left: 2.0, right: 2.0, top: 2.0),
+          child: new Divider(
+            color: Colors.grey,
           ),
         ),
-      ),
-    );
+      );
+    }
+    return new Column(children: listWidget);
+  }
+
+  //获取位置
+  Future startLocation() async {
+    _locationListener = _locationPlugin
+        .onLocationChanged()
+        .listen((Map<String, Object> result) {
+      print("333333333333333333333333333333333");
+      print(result);
+      print("333333333333333333333333333333333");
+      if (listlocalal != null) {
+        _locationPlugin.stopLocation();
+      }
+      setState(() {
+        _loationResult = result;
+        _loationResult.forEach((key, value) {
+          listlocalal.add('$value');
+        });
+      });
+    });
   }
 
   Future _scan() async {
     String barcode = await scanner.scan();
-    setState(() => this.barcode = barcode);
+    if (barcode != null) {
+      print(barcode);
+      print("121222222222222222222222222222222222");
+      _getCoachTodayClock(barcode);
+    } else {
+      GlobalToast.globalToast("请重新扫码");
+    }
   }
 
-  Future _scanPhoto() async {
-    String barcode = await scanner.scanPhoto();
-    setState(() => this.barcode = barcode);
+  //获取打卡信息
+  _getCoachTodayClock(code) async {
+    await StuClockService.getsweepCode(code).then((SweepEntivity v) {
+      if (v != null) {
+        if (v.havePunch == 1) {
+          Alert(
+              context: context,
+              title: "上课打卡",
+              style: AlertStyle(
+                  isCloseButton: false,
+                  isOverlayTapDismiss: false,
+                  titleStyle: TextStyle(
+                    color: Color(0xFF29CCCC),
+                  )),
+              content: Container(
+                padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
+                child: new Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    new Container(
+                        child: new Text(
+                      "学员姓名：${v.stuName}",
+                      style:
+                          TextStyle(color: Color(0xFF666666), fontSize: 20.0),
+                    )),
+                    new Padding(
+                        padding: EdgeInsets.only(top: 5.0),
+                        child: new Text("课程名称：${v.className}",
+                            style: TextStyle(
+                                color: Color(0xFF666666), fontSize: 20.0))),
+                    new Padding(
+                        padding: EdgeInsets.only(top: 5.0),
+                        child: new Text("剩余课时：${v.leftClassTimes}课时",
+                            style: TextStyle(
+                                color: Color(0xFF666666), fontSize: 20.0))),
+                    new Padding(
+                        padding: EdgeInsets.only(top: 5.0),
+                        child: new Text("学员编号：${v.stuNumber}号",
+                            style: TextStyle(
+                                color: Color(0xFF666666), fontSize: 20.0))),
+                    new Padding(
+                      padding: const EdgeInsets.only(
+                          left: 2.0, right: 2.0, top: 2.0),
+                      child: new Divider(
+                        color: Colors.grey,
+                      ),
+                    ),
+                    new Center(
+                      child: new Text(
+                        "${v.stuName}学员已打卡",
+                        textAlign: TextAlign.center,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              buttons: [
+                DialogButton(
+                  child: Text(
+                    "取消",
+                    style: TextStyle(color: Colors.white, fontSize: 18),
+                  ),
+                  onPressed: () => Navigator.pop(context),
+                  color: Color(0xFF29CCCC),
+                  radius: BorderRadius.circular(30.0),
+                )
+              ]).show();
+        } else {
+          Alert(
+              context: context,
+              title: "上课打卡",
+              style: AlertStyle(
+                  isCloseButton: false,
+                  isOverlayTapDismiss: false,
+                  titleStyle: TextStyle(
+                    color: Color(0xFF29CCCC),
+                  )),
+              content: Container(
+                padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
+                child: new Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    new Container(
+                        child: new Text(
+                      "学员姓名：${v.stuName}",
+                      style:
+                          TextStyle(color: Color(0xFF666666), fontSize: 20.0),
+                    )),
+                    new Padding(
+                        padding: EdgeInsets.only(top: 5.0),
+                        child: new Text("课程名称：${v.className}",
+                            style: TextStyle(
+                                color: Color(0xFF666666), fontSize: 20.0))),
+                    new Padding(
+                        padding: EdgeInsets.only(top: 5.0),
+                        child: new Text("剩余课时：${v.leftClassTimes}课时",
+                            style: TextStyle(
+                                color: Color(0xFF666666), fontSize: 20.0))),
+                    new Padding(
+                        padding: EdgeInsets.only(top: 5.0),
+                        child: new Text("学员编号：${v.stuNumber}号",
+                            style: TextStyle(
+                                color: Color(0xFF666666), fontSize: 20.0))),
+                    new Padding(
+                      padding: const EdgeInsets.only(
+                          left: 2.0, right: 2.0, top: 2.0),
+                      child: new Divider(
+                        color: Colors.grey,
+                      ),
+                    ),
+                    new Center(
+                      child: new Text(
+                        "确定为学员 ${v.stuName} 打卡吗？",
+                        textAlign: TextAlign.center,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              buttons: [
+                DialogButton(
+                  child: Text(
+                    "取消",
+                    style: TextStyle(color: Color(0xFF666666), fontSize: 18),
+                  ),
+                  onPressed: () => Navigator.pop(context),
+                  color: Color(0xFFF8F8F8),
+                  radius: BorderRadius.circular(30.0),
+                ),
+                DialogButton(
+                  child: Text(
+                    "确定",
+                    style: TextStyle(color: Colors.white, fontSize: 18),
+                  ),
+                  onPressed: () => {
+                    _submitSweeoClock(code),
+                    Navigator.pop(context),
+                  },
+                  color: Color(0xFF29CCCC),
+                  radius: BorderRadius.circular(30.0),
+                )
+              ]).show();
+        }
+      } else {
+//        GlobalToast.globalToast("无效二维码");
+      }
+    });
   }
 
-  Future _generateBarCode() async {
-    Uint8List result = await scanner
-        .generateBarCode('https://github.com/leyan95/qrcode_scanner');
-    this.setState(() => this.bytes = result);
+//教练打卡
+  _submitSweeoClock(code) async {
+    print(
+        _loationResult == null ? "未知地点" : listlocalal[listlocalal.length - 1]);
+    this.showLoading();
+    await StuClockService.sweepClock(
+            address: _loationResult == null
+                ? "未知地点"
+                : listlocalal[listlocalal.length - 1],
+            code: code)
+        .then((bool b) {
+      if (b) {
+        this.shutdownLoading();
+        audioCache.play('yuyin.mp3');
+        GlobalToast.globalToast('打卡成功');
+        _getTodayRecode(_Date);
+      } else {
+        this.shutdownLoading();
+      }
+    });
+  }
+
+  _getTodayRecode(date) async {
+    setState(() {
+      isLoading = true;
+    });
+    await StuClockService.getSweepRecode(date)
+        .then((List<SweepRecodeEntivity> v) {
+      setState(() {
+        print("list:${v.length}");
+        this.list = v ?? "";
+        isLoading = false;
+      });
+    });
   }
 }
