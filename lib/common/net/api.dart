@@ -24,7 +24,7 @@ class HttpManager{
 
     _dio.interceptors.add(_tokenInterceptors);
 
-    _dio.interceptors.add(new LogsInterceptor());
+//    _dio.interceptors.add(new LogsInterceptor());
 
     _dio.interceptors.add(new ErrorInterceptor(_dio));
 

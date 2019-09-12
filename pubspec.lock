@@ -106,6 +106,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_datetime_picker:
+    dependency: "direct main"
+    description:
+      name: flutter_datetime_picker
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "1.2.6"
   flutter_localizations:
     dependency: "direct main"
     description: flutter

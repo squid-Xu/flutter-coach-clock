@@ -7,13 +7,10 @@ import 'package:coach/model/UserInfo.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:image_picker/image_picker.dart';
-
 import '../../Router.dart';
-import 'BottonSheet/bottonSheet.dart';
 import 'MyInfo/my_info_edit_mobile.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:city_pickers/city_pickers.dart';
@@ -31,6 +28,7 @@ class MyInfoPageState extends State<MyInfoPage> {
   bool _havePassword = true;
   Color back_color = const Color(0xFFECF2FE);
 
+  String localCity = "410000";
 
   // 显示加载的圈圈
   showLoading() {
@@ -45,7 +43,6 @@ class MyInfoPageState extends State<MyInfoPage> {
       _isInAsyncCall = false;
     });
   }
-
 
   // 头像
   Widget _avatar(String avatar) {
@@ -73,31 +70,46 @@ class MyInfoPageState extends State<MyInfoPage> {
           ],
         ),
         onTap: () => {
-          showDialog(
-              barrierDismissible: true, //是否点击空白区域关闭对话框,默认为true，可以关闭
-              context: context,
-              builder: (BuildContext context) {
-                var list = List();
-                list.add('拍照');
-                list.add('从手机相册选择');
-                return CommonBottomSheet(
-                  list: list,
-                  onItemClickListener: (index) async {
-                    if (index == 0) {
+          showCupertinoModalPopup(
+            context: context,
+            builder: (context) {
+              return CupertinoActionSheet(
+                actions: <Widget>[
+                  //操作按钮集合
+                  CupertinoActionSheetAction(
+                    onPressed: () {
+                      Navigator.pop(context);
                       _takePhoto();
-                      print("拍照");
+                    },
+                    child: Text(
+                      '拍照',
+                      style: TextStyle(color: Color(0xFF29CCCC)),
+                    ),
+                  ),
+                  CupertinoActionSheetAction(
+                    onPressed: () {
                       Navigator.pop(context);
-                    } else if (index == 2) {
                       _openGallery();
-                      print("相册");
-                      Navigator.pop(context);
-                    } else {
-                      Navigator.pop(context);
-                    }
+                    },
+                    child: Text(
+                      '从手机相册选择',
+                      style: TextStyle(color: Color(0xFF29CCCC)),
+                    ),
+                  ),
+                ],
+                cancelButton: CupertinoActionSheetAction(
+                  //取消按钮
+                  onPressed: () {
+                    Navigator.pop(context);
                   },
-                );
-              })
-//                getImage()
+                  child: Text(
+                    '取消',
+                    style: TextStyle(color: Color(0xFF999999)),
+                  ),
+                ),
+              );
+            },
+          )
         },
       ),
       decoration: BoxDecoration(
@@ -277,7 +289,7 @@ class MyInfoPageState extends State<MyInfoPage> {
     var alertStyle = AlertStyle(
       animationType: AnimationType.fromTop,
       isCloseButton: false,
-      isOverlayTapDismiss: true,
+      isOverlayTapDismiss: false,
       animationDuration: Duration(milliseconds: 400),
       alertBorder: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),
@@ -348,28 +360,6 @@ class MyInfoPageState extends State<MyInfoPage> {
     ).show();
   }
 
-  // 修改密码
-  Widget _password() {
-    return new Container(
-      height: 55.0,
-      margin: EdgeInsets.only(left: 10.0, right: 10.0),
-      child: new InkWell(
-        child: new Row(
-          children: <Widget>[
-            new Expanded(child: new Text('修改密码')),
-            new Icon(Icons.arrow_forward_ios,
-                color: Color(0xFF999999), size: 16.0),
-          ],
-        ),
-        onTap: () {
-          debugPrint('修改密码');
-          Router.pushWithAnimation(
-              context, Router.myInfoPwd, this._havePassword);
-        },
-      ),
-    );
-  }
-
 //地区
   Widget _city(String province, String city, String region) {
     return new Container(
@@ -404,15 +394,15 @@ class MyInfoPageState extends State<MyInfoPage> {
         onTap: () async {
           Result tempResult = await CityPickers.showCityPicker(
               context: context,
-              locationCode: "410000",
+              locationCode: localCity,
               showType: ShowType.pca,
               cancelWidget: Text(
                 '取消',
-                style: TextStyle(fontSize: 15.0, color: Color(0xFF29CCCC)),
+                style: TextStyle(fontSize: 18.0, color: Colors.black54),
               ),
               confirmWidget: Text(
                 '确定',
-                style: TextStyle(fontSize: 15.0, color: Color(0xFF29CCCC)),
+                style: TextStyle(fontSize: 18.0, color: Color(0xFF29CCCC)),
               ),
               height: 280.0);
           print("___________________");
@@ -420,6 +410,9 @@ class MyInfoPageState extends State<MyInfoPage> {
           if (tempResult != null) {
             this.updateRegionEdit(tempResult.provinceName, tempResult.cityName,
                 tempResult.areaName);
+            setState(() {
+              localCity = tempResult.areaId;
+            });
           }
           print("___________________");
         },
@@ -443,7 +436,7 @@ class MyInfoPageState extends State<MyInfoPage> {
         LoginService.getUserInfo().then((UserInfo user) {
           Provider.of<UserInfoProvider>(context).setUserInfo(user);
           this.shutdownLoading();
-          GlobalToast.globalToast('位置修改成功');
+          GlobalToast.globalToast('地区修改成功');
         });
       } else {
         this.shutdownLoading();
@@ -503,24 +496,20 @@ class MyInfoPageState extends State<MyInfoPage> {
     return btn;
   }
 
-  submitLogout(){
+  submitLogout() {
     setState(() {
       this._isInAsyncCall = true;
     });
     LoginService.logout().then((bool b) async {
-      if(b){
+      if (b) {
 //        await SystemChannels.platform.invokeMethod('SystemNavigator.pop');
-        Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-                builder: (BuildContext context) => Register()));
-
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (BuildContext context) => Register()));
       } else {
         GlobalToast.globalToast("操作失败");
       }
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -533,70 +522,63 @@ class MyInfoPageState extends State<MyInfoPage> {
         ),
       ),
       child: new Scaffold(
-          backgroundColor: Colors.transparent,
-          appBar: new AppBar(
-            backgroundColor: Colors.transparent, //把
-            elevation: 0, //appbar的阴影/**/
-            title: new Text(
-              '个人信息',
-              style: TextStyle(color: Colors.white),
-            ),
-            leading: IconButton(
-                icon: Icon(
-                  Icons.keyboard_arrow_left,
-                  size: 30,
-                ),
-                onPressed: () {
-                  Navigator.pop(context);
-                }),
-            centerTitle: true,
+        backgroundColor: Colors.transparent,
+        appBar: new AppBar(
+          backgroundColor: Colors.transparent, //把
+          elevation: 0, //appbar的阴影/**/
+          title: new Text(
+            '个人信息',
+            style: TextStyle(color: Colors.white),
           ),
-          body: ModalProgressHUD(
-              inAsyncCall: _isInAsyncCall,
-              child: new Consumer<UserInfoProvider>(
-                builder: (context, userInfo, _) => new Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    new Container(
-                      padding: const EdgeInsets.only(
-                          top: 20.0, left: 15.0, right: 15.0),
-                      child: new Card(
-                        margin: const EdgeInsets.only(
-                            top: 0.0,
-                            left: 10.0,
-                            right: 10.0,
-                            bottom: 10.0),
-                        elevation: 4.0,
-                        shape: const RoundedRectangleBorder(
-                          borderRadius:
-                          BorderRadius.all(Radius.circular(15)),
-                        ),
-                        child: new Column(
-                          children: <Widget>[
-                            _avatar(userInfo.userInfo.avatar),
-                            _gender(userInfo.userInfo.gender),
-                            _nickname(userInfo.userInfo.nickName),
-                            _signature(
-                                context, userInfo.userInfo.signature),
-                            _city(
-                                userInfo.userInfo.province,
-                                userInfo.userInfo.city,
-                                userInfo.userInfo.region),
-                            _mobile(context, userInfo.userInfo.mobile),
+          leading: IconButton(
+              icon: Icon(
+                Icons.keyboard_arrow_left,
+                size: 30,
+              ),
+              onPressed: () {
+                Navigator.pop(context);
+              }),
+          centerTitle: true,
+        ),
+        body: ModalProgressHUD(
+            inAsyncCall: _isInAsyncCall,
+            child: new Consumer<UserInfoProvider>(
+              builder: (context, userInfo, _) => new Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  new Container(
+                    padding: const EdgeInsets.only(
+                        top: 20.0, left: 15.0, right: 15.0),
+                    child: new Card(
+                      margin: const EdgeInsets.only(
+                          top: 0.0, left: 10.0, right: 10.0, bottom: 10.0),
+                      elevation: 4.0,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(15)),
+                      ),
+                      child: new Column(
+                        children: <Widget>[
+                          _avatar(userInfo.userInfo.avatar),
+                          _gender(userInfo.userInfo.gender),
+                          _nickname(userInfo.userInfo.nickName),
+                          _signature(context, userInfo.userInfo.signature),
+                          _city(userInfo.userInfo.province,
+                              userInfo.userInfo.city, userInfo.userInfo.region),
+                          _mobile(context, userInfo.userInfo.mobile),
 //                                _password()
-                          ],
-                        ),
+                        ],
                       ),
                     ),
-                    new Container(
-                      padding: EdgeInsets.only(top: 30.0),
-                      child:new Center(
-                        child: _logoutBtn(context),
-                      ),
-                    )
-                  ],
-                ),
-              )),
+                  ),
+                  new Container(
+                    padding: EdgeInsets.only(top: 30.0),
+                    child: new Center(
+                      child: _logoutBtn(context),
+                    ),
+                  )
+                ],
+              ),
+            )),
         bottomNavigationBar: Container(
           padding: EdgeInsets.only(bottom: 20.0),
           child: Row(
@@ -626,63 +608,51 @@ class MyInfoPageState extends State<MyInfoPage> {
               ),
             ],
           ),
-        ),),
+        ),
+      ),
     );
   }
-
 
   /*拍照*/
   _takePhoto() async {
     var image = await ImagePicker.pickImage(source: ImageSource.camera);
-
-    setState(() {
-      _imgPath = image;
-      updateVavtar();
-    });
+    if (image != null) {
+      setState(() {
+        _imgPath = image;
+        updateVavtar();
+      });
+    }
   }
 
   /*相册*/
   _openGallery() async {
     var image = await ImagePicker.pickImage(source: ImageSource.gallery);
-    setState(() {
-      _imgPath = image;
-      updateVavtar();
-    });
+    if (image != null) {
+      setState(() {
+        _imgPath = image;
+        updateVavtar();
+      });
+    }
   }
 
   // 更换头像
-  updateVavtar(){
-
-//    this.showLoading();
+  updateVavtar() {
+    this.showLoading();
     String path = _imgPath.path;
     var name = path.substring(path.lastIndexOf("/") + 1, path.length);
     var suffix = name.substring(name.lastIndexOf(".") + 1, name.length);
-    print("+++++++++++++++++++++++++++++");
-    print(name);
-    print(suffix);
-    print(path);
-    print("+++++++++++++++++++++++++++++");
     UploadFileInfo uploadFileInfo = new UploadFileInfo(new File(path), name,
         contentType: ContentType.parse("image/$suffix"));
-    print("______________________________________");
-    print(uploadFileInfo.file);
-    print(uploadFileInfo.bytes);
-    print(uploadFileInfo.contentType);
-    print(uploadFileInfo.fileName);
-    print(uploadFileInfo.hashCode);
-    print(uploadFileInfo.runtimeType);
-    print("______________________________________");
-if(uploadFileInfo.file!=null){
-  LoginService.uploadAvatar(uploadFileInfo).then((String url){
-    print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-    print(url);
-    print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-    LoginService.getUserInfo().then((UserInfo user){
-      Provider.of<UserInfoProvider>(context).setUserInfo(user);
-//      this.shutdownLoading();
-      GlobalToast.globalToast('头像更新成功');
-    });
-  });
-}
+    if (uploadFileInfo.file != null) {
+      LoginService.uploadAvatar(uploadFileInfo).then((String url) {
+        LoginService.getUserInfo().then((UserInfo user) {
+          Provider.of<UserInfoProvider>(context).setUserInfo(user);
+          this.shutdownLoading();
+          GlobalToast.globalToast('头像更新成功');
+        });
+      });
+    } else {
+      this.shutdownLoading();
+    }
   }
 }

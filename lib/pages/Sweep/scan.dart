@@ -13,6 +13,7 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:audioplayers/audio_cache.dart';
 import 'package:amap_location_flutter_plugin/amap_location_flutter_plugin.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
 class Scan extends StatefulWidget {
   @override
@@ -28,6 +29,8 @@ class ScanState extends State<Scan> {
 
   String _Date = new DateFormat('yyyy-MM-dd').format(DateTime.now());
 
+  dynamic current = DateTime.now();
+
   String barcode = '';
   Uint8List bytes = Uint8List(200);
   AudioPlayer audioPlayer = AudioPlayer();
@@ -36,6 +39,8 @@ class ScanState extends State<Scan> {
   bool _isInAsyncCall = false;
   List<SweepRecodeEntivity> list;
   bool isLoading = true; // 是否正在请求数据中
+
+  String todayRecode = '';
 
   // 显示加载的圈圈
   showLoading() {
@@ -86,6 +91,45 @@ class ScanState extends State<Scan> {
               onPressed: () {
                 Navigator.pop(context);
               }),
+          actions: <Widget>[
+            new RaisedButton(
+              onPressed: () {
+                DatePicker.showDatePicker(context,
+                    showTitleActions: true,
+                    minTime: DateTime(2019, 9, 1),
+                    theme: DatePickerTheme(
+                        cancelStyle: TextStyle(
+                          fontSize: 18.0,
+                          color: Colors.black54,
+                        ),
+                        doneStyle: TextStyle(
+                            color: Color(0xFF29CCCC),
+                            fontSize: 18.0)), onConfirm: (date) {
+                  setState(() {
+                    current = date;
+                  });
+                  String _Date1 = new DateFormat('yyyy-MM-dd').format(date);
+                  String _Date2 = new DateFormat('yyyy年MM月dd日').format(date);
+                  if (_Date1 != _Date) {
+                    setState(() {
+                      todayRecode = _Date2;
+                    });
+                  } else {
+                    setState(() {
+                      todayRecode = '';
+                    });
+                  }
+                  _getTodayRecode(_Date1);
+                }, currentTime: current, locale: LocaleType.zh);
+              },
+              child: new Text(
+                "历史记录",
+                style: TextStyle(color: Color(0xFFFFFFFF), fontSize: 18.0),
+              ),
+              color: Color(0xFF29CCCC),
+              elevation: 0,
+            )
+          ],
         ),
         body: isLoading
             ? Center(
@@ -101,20 +145,38 @@ class ScanState extends State<Scan> {
                         new Container(
                             padding: EdgeInsets.only(top: 10.0),
                             child: new Center(
-                              child: new Text(
-                                "今日打卡记录",
-                                style: TextStyle(
-                                  fontSize: 20.0,
-                                  color: Color(0xFF29CCCC),
-                                ),
-                              ),
+                              child: todayRecode == ''
+                                  ? new Text(
+                                      "今日打卡记录",
+                                      style: TextStyle(
+                                        fontSize: 20.0,
+                                        color: Color(0xFF29CCCC),
+                                      ),
+                                    )
+                                  : new Text(
+                                      "${todayRecode}打卡记录",
+                                      style: TextStyle(
+                                        fontSize: 20.0,
+                                        color: Color(0xFF29CCCC),
+                                      ),
+                                    ),
                             )),
                         new Expanded(
                           child: new Container(
                             padding: EdgeInsets.fromLTRB(20, 10, 20, 30),
                             child: new ListView(
                               children: <Widget>[
-                                _content(),
+                                list.length == 0
+                                    ? new Container(
+                                        padding: EdgeInsets.only(top: 100.0),
+                                        child: new Text(
+                                          "暂无记录",
+                                          textAlign: TextAlign.center,
+                                          style:
+                                              TextStyle(color: Colors.black54),
+                                        ),
+                                      )
+                                    : _content(),
                               ],
                             ),
                           ),

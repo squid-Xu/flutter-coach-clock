@@ -46,7 +46,7 @@ class MyComplaintState extends State<MyComplaint> {
     return btn;
   }
 
-  _submitSuggest(){
+  _submitSuggest() {
     print(_suggestController.text.trim());
     String suggestUpdate = _suggestController.text.trim();
     print(suggestUpdate);
@@ -107,7 +107,8 @@ class MyComplaintState extends State<MyComplaint> {
                         child: TextField(
                           controller: _suggestController,
                           decoration: InputDecoration(
-                            border: OutlineInputBorder(borderSide: BorderSide.none),
+                            border:
+                                OutlineInputBorder(borderSide: BorderSide.none),
                             hintText: '请输入您的投诉建议',
                           ),
                           maxLength: 300,

@@ -8,8 +8,7 @@ class PrivacyAgreement extends StatefulWidget {
 }
 
 class _PrivacyAgreementState extends State<PrivacyAgreement> {
-
-  String privacyRule='';
+  String privacyRule = '';
   bool isLoading = true; // 是否正在请求数据中
   @override
   Widget build(BuildContext context) {
@@ -30,45 +29,46 @@ class _PrivacyAgreementState extends State<PrivacyAgreement> {
         backgroundColor: Color(0xFF29CCCC),
       ),
       backgroundColor: Color(0xFFE8F0FE),
-      body:isLoading
-    ? Center(
-    child: CircularProgressIndicator(
-    valueColor: AlwaysStoppedAnimation(Color(0xFF29CCCC))),
-    )
-        : new SingleChildScrollView(
-          child: new ConstrainedBox(
-              constraints: new BoxConstraints(
-                minHeight: 120.0,
-              ),
-              child: Card(
-                elevation: 10,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0)),
-                margin: const EdgeInsets.fromLTRB(15, 15, 15, 20),
-                child: new Container(
-                  padding: const EdgeInsets.fromLTRB(12, 10, 12, 20),
-                  child: new Container(
-                      padding: EdgeInsets.only(top: 10),
-                      child: new Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: <Widget>[
-                          new Text(
-                            privacyRule,
-                            style: TextStyle(
-                                color: Color(0xFF333333), fontSize: 15.0),
-                            textAlign: TextAlign.justify,
-                          ),
-                          new Text(
-                            "2019年8月10日",
-                            textAlign: TextAlign.right,
-                            style: TextStyle(fontSize: 16.0),
-                          )
-                        ],
-                      )),
-                ),
-              ))),
+      body: isLoading
+          ? Center(
+              child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation(Color(0xFF29CCCC))),
+            )
+          : new SingleChildScrollView(
+              child: new ConstrainedBox(
+                  constraints: new BoxConstraints(
+                    minHeight: 120.0,
+                  ),
+                  child: Card(
+                    elevation: 10,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0)),
+                    margin: const EdgeInsets.fromLTRB(15, 15, 15, 20),
+                    child: new Container(
+                      padding: const EdgeInsets.fromLTRB(12, 10, 12, 20),
+                      child: new Container(
+                          padding: EdgeInsets.only(top: 10),
+                          child: new Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: <Widget>[
+                              new Text(
+                                privacyRule,
+                                style: TextStyle(
+                                    color: Color(0xFF333333), fontSize: 15.0),
+                                textAlign: TextAlign.justify,
+                              ),
+                              new Text(
+                                "2019年8月10日",
+                                textAlign: TextAlign.right,
+                                style: TextStyle(fontSize: 16.0),
+                              )
+                            ],
+                          )),
+                    ),
+                  ))),
     );
   }
+
   @override
   void initState() {
     super.initState();
@@ -81,10 +81,10 @@ class _PrivacyAgreementState extends State<PrivacyAgreement> {
       isLoading = true;
     });
     await RuleService.decodePerson().then((RuleEntity v) {
-      if(v.rule!=null){
+      if (v.rule != null) {
         setState(() {
-          privacyRule=v.privacy ?? "";
-          isLoading=false;
+          privacyRule = v.privacy ?? "";
+          isLoading = false;
         });
       }
     });

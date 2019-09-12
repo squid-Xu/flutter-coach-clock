@@ -40,6 +40,7 @@ dependencies:
   permission_handler: ^3.2.0 #权限
   qrscan: ^0.2.15  #扫码功能
   audioplayers: ^0.13.2 #  音频播放
+  flutter_datetime_picker: ^1.2.6 #日历
 
 dev_dependencies:
   flutter_test:

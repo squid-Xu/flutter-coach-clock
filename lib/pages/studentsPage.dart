@@ -74,81 +74,81 @@ class _StudentsPageState extends State<StudentsPage> {
                 pinned: false,
                 //可折叠的应用栏
                 backgroundColor: Color(0xFF29CCCC),
+                automaticallyImplyLeading: false,
                 flexibleSpace: FlexibleSpaceBar(
                     background: new Container(
-                      child: new Column(
-                        children: <Widget>[
-                          new Container(
-                            // padding: EdgeInsets.only(top: 10),
-                            padding: EdgeInsets.only(left: 20, right: 20),
-                            child: new MaterialButton(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30.0)),
-                              height: 30,
-                              color: Colors.white,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment:
-                                CrossAxisAlignment.center,
-                                children: <Widget>[
-                                  new Expanded(
-                                    child: new Container(
-                                      child: new Row(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        crossAxisAlignment:
+                  child: new Column(
+                    children: <Widget>[
+                      new Container(
+                        // padding: EdgeInsets.only(top: 10),
+                        padding: EdgeInsets.only(left: 20, right: 20),
+                        child: new MaterialButton(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30.0)),
+                          height: 30,
+                          color: Colors.white,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              new Expanded(
+                                child: new Container(
+                                  child: new Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
                                         CrossAxisAlignment.center,
-                                        children: <Widget>[
-                                          SizedBox(
-                                            width: 10.0,
-                                          ),
-                                          Expanded(
-                                            child: Container(
-                                              child: TextField(
-                                                controller: controller,
-                                                //控制键盘的功能键 指enter键，比如此处设置为next时，enter键
-                                                //显示的文字内容为 下一步
-                                                textInputAction:
-                                                TextInputAction.search,
-                                                decoration: new InputDecoration(
-                                                    contentPadding:
-                                                    EdgeInsets.only(top: -2.0),
-                                                    hintText: '搜索',
-                                                    // hintStyle:
-                                                    //TextStyle(fontSize: 15.0),
-                                                    border: InputBorder.none),
-                                                onChanged: (text) {
-                                                  //内容改变的回调
-                                                  _getstuList(text);
-                                                  print('change $text');
-                                                },
-                                                onSubmitted: (text) {
-                                                  //内容提交(按回车)的回调
-                                                  _getstuList(text);
-                                                  print('submit $text');
-                                                },
-                                              ),
-                                            ),
-                                          ),
-                                        ],
+                                    children: <Widget>[
+                                      SizedBox(
+                                        width: 10.0,
                                       ),
-                                    ),
-                                    flex: 5,
+                                      Expanded(
+                                        child: Container(
+                                          child: TextField(
+                                            controller: controller,
+                                            //控制键盘的功能键 指enter键，比如此处设置为next时，enter键
+                                            //显示的文字内容为 下一步
+                                            textInputAction:
+                                                TextInputAction.search,
+                                            decoration: new InputDecoration(
+                                                contentPadding:
+                                                    EdgeInsets.only(top: -2.0),
+                                                hintText: '搜索',
+                                                // hintStyle:
+                                                //TextStyle(fontSize: 15.0),
+                                                border: InputBorder.none),
+                                            onChanged: (text) {
+                                              //内容改变的回调
+                                              _getstuList(text);
+                                              print('change $text');
+                                            },
+                                            onSubmitted: (text) {
+                                              //内容提交(按回车)的回调
+                                              _getstuList(text);
+                                              print('submit $text');
+                                            },
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                  new Icon(
-                                    IconFont.icon_sousuo_copy,
-                                    color: Color(0xFF29CCCC),
-                                    size: 25.0,
-                                  ),
-                                ],
+                                ),
+                                flex: 5,
                               ),
-                              onPressed: () {
-//                  Router.pushNoParams(context, Router.clubSearch);
-                              },
-                            ),
+                              new Icon(
+                                IconFont.icon_sousuo_copy,
+                                color: Color(0xFF29CCCC),
+                                size: 25.0,
+                              ),
+                            ],
                           ),
-                        ],
+                          onPressed: () {
+//                  Router.pushNoParams(context, Router.clubSearch);
+                          },
+                        ),
                       ),
-                    )),
+                    ],
+                  ),
+                )),
               ),
             ];
           },
@@ -157,142 +157,146 @@ class _StudentsPageState extends State<StudentsPage> {
                 slivers: <Widget>[
                   new SliverList(
                       delegate: new SliverChildListDelegate(<Widget>[
-                        isLoading
-                            ? Container(
-                          padding: EdgeInsets.only(top: 180.0),
-                          child: Center(
-                            child: CircularProgressIndicator(
-                                valueColor: AlwaysStoppedAnimation(
-                                    Color(0xFF29CCCC))),
-                          ),
-                        )
-                            : new ModalProgressHUD(
+                    isLoading
+                        ? Container(
+                            padding: EdgeInsets.only(top: 180.0),
+                            child: Center(
+                              child: CircularProgressIndicator(
+                                  valueColor: AlwaysStoppedAnimation(
+                                      Color(0xFF29CCCC))),
+                            ),
+                          )
+                        : new ModalProgressHUD(
                             inAsyncCall: _isInAsyncCall,
                             child: new GestureDetector(
                               child: _StuState
                                   ? new Container(
-                                  padding: EdgeInsets.only(top: 180.0),
-                                  child: Center(
-                                    child: new Column(
-                                      children: <Widget>[
-                                        new Icon(
-                                          Icons.lock,
-                                          color: Color(0xFF29CCCC),
+                                      padding: EdgeInsets.only(top: 100.0),
+                                      child: Center(
+                                        child: new Column(
+                                          children: <Widget>[
+                                            new Icon(
+                                              Icons.lock,
+                                              color: Color(0xFF29CCCC),
+                                            ),
+                                            new Text("暂无学员"),
+                                          ],
                                         ),
-                                        new Text("暂无学员"),
-                                      ],
-                                    ),
-                                  ))
+                                      ))
                                   : new Card(
-                                elevation: 10,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius:
-                                    BorderRadius.circular(10.0)),
-                                margin: const EdgeInsets.fromLTRB(
-                                    15, 15, 15, 20),
-                                child: new Container(
-                                  padding: const EdgeInsets.fromLTRB(
-                                      12, 15, 12, 20),
-                                  child: new Column(children: <Widget>[
-                                    new Container(
-                                      child: Row(
-                                        children: <Widget>[
-                                          new Expanded(
-                                            child: new Container(
-                                              height: 40.0,
-                                              padding: EdgeInsets.all(10),
-                                              child: new Text(
-                                                "编号",
-                                                textAlign:
-                                                TextAlign.center,
-                                                style: TextStyle(
-                                                    color:
-                                                    Color(0xFF29CCCC),
-                                                    fontSize: 15.0),
-                                              ),
-                                              decoration: BoxDecoration(
-                                                  border: Border(
-                                                      right: BorderSide(
-                                                          width: 1,
-                                                          color: Color
-                                                              .fromRGBO(
-                                                              0,
-                                                              0,
-                                                              0,
-                                                              0.1)))),
+                                      elevation: 10,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10.0)),
+                                      margin: const EdgeInsets.fromLTRB(
+                                          15, 15, 15, 20),
+                                      child: new Container(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            12, 15, 12, 20),
+                                        child: new Column(children: <Widget>[
+                                          new Container(
+                                            child: Row(
+                                              children: <Widget>[
+                                                new Expanded(
+                                                  child: new Container(
+                                                    height: 40.0,
+                                                    padding: EdgeInsets.all(10),
+                                                    child: new Text(
+                                                      "编号",
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style: TextStyle(
+                                                          color:
+                                                              Color(0xFF29CCCC),
+                                                          fontSize: 15.0),
+                                                    ),
+                                                    decoration: BoxDecoration(
+                                                        border: Border(
+                                                            right: BorderSide(
+                                                                width: 1,
+                                                                color: Color
+                                                                    .fromRGBO(
+                                                                        0,
+                                                                        0,
+                                                                        0,
+                                                                        0.1)))),
+                                                  ),
+                                                ),
+                                                new Expanded(
+                                                  child: new Container(
+                                                    height: 40.0,
+                                                    padding:
+                                                        EdgeInsets.fromLTRB(
+                                                            0, 10, 0, 10),
+                                                    child: new Text(
+                                                      "学员姓名",
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style: TextStyle(
+                                                          color:
+                                                              Color(0xFF29CCCC),
+                                                          fontSize: 15.0),
+                                                    ),
+                                                    decoration: BoxDecoration(
+                                                        border: Border(
+                                                            right: BorderSide(
+                                                                width: 1,
+                                                                color: Color
+                                                                    .fromRGBO(
+                                                                        0,
+                                                                        0,
+                                                                        0,
+                                                                        0.1)))),
+                                                  ),
+                                                ),
+                                                new Expanded(
+                                                  child: new Container(
+                                                    height: 40.0,
+                                                    padding:
+                                                        EdgeInsets.fromLTRB(
+                                                            0, 10, 0, 10),
+                                                    child: new Text(
+                                                      "剩余课时",
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style: TextStyle(
+                                                          color:
+                                                              Color(0xFF29CCCC),
+                                                          fontSize: 15.0),
+                                                    ),
+                                                    decoration: BoxDecoration(
+                                                        border: Border(
+                                                            right: BorderSide(
+                                                                width: 1,
+                                                                color: Color
+                                                                    .fromRGBO(
+                                                                        0,
+                                                                        0,
+                                                                        0,
+                                                                        0.1)))),
+                                                  ),
+                                                ),
+                                                new Expanded(
+                                                    child: new Text(
+                                                  "学习进度",
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                      color: Color(0xFF29CCCC),
+                                                      fontSize: 15.0),
+                                                )),
+                                              ],
                                             ),
+                                            decoration: BoxDecoration(
+                                                border: Border(
+                                                    bottom: BorderSide(
+                                                        width: 1,
+                                                        color: Color.fromRGBO(
+                                                            0, 0, 0, 0.1)))),
                                           ),
-                                          new Expanded(
-                                            child: new Container(
-                                              height: 40.0,
-                                              padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                                              child: new Text(
-                                                "学员姓名",
-                                                textAlign:
-                                                TextAlign.center,
-                                                style: TextStyle(
-                                                    color:
-                                                    Color(0xFF29CCCC),
-                                                    fontSize: 15.0),
-                                              ),
-                                              decoration: BoxDecoration(
-                                                  border: Border(
-                                                      right: BorderSide(
-                                                          width: 1,
-                                                          color: Color
-                                                              .fromRGBO(
-                                                              0,
-                                                              0,
-                                                              0,
-                                                              0.1)))),
-                                            ),
-                                          ),
-                                          new Expanded(
-                                            child: new Container(
-                                              height: 40.0,
-                                              padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                                              child: new Text(
-                                                "剩余课时",
-                                                textAlign:
-                                                TextAlign.center,
-                                                style: TextStyle(
-                                                    color:
-                                                    Color(0xFF29CCCC),
-                                                    fontSize: 15.0),
-                                              ),
-                                              decoration: BoxDecoration(
-                                                  border: Border(
-                                                      right: BorderSide(
-                                                          width: 1,
-                                                          color: Color
-                                                              .fromRGBO(
-                                                              0,
-                                                              0,
-                                                              0,
-                                                              0.1)))),
-                                            ),
-                                          ),
-                                          new Expanded(
-                                              child: new Text(
-                                                "学习进度",
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                    color: Color(0xFF29CCCC),
-                                                    fontSize: 15.0),
-                                              )),
-                                        ],
+                                          _content()
+                                        ]),
                                       ),
-                                      decoration: BoxDecoration(
-                                          border: Border(
-                                              bottom: BorderSide(
-                                                  width: 1,
-                                                  color: Color.fromRGBO(
-                                                      0, 0, 0, 0.1)))),
                                     ),
-                                    _content()
-                                  ]),
-                                ),
-                              ),
                               behavior: HitTestBehavior.translucent,
                               onTap: () {
                                 // 触摸收起键盘
@@ -300,7 +304,7 @@ class _StudentsPageState extends State<StudentsPage> {
                                     .requestFocus(FocusNode());
                               },
                             ))
-                      ]))
+                  ]))
                 ],
               ),
               onRefresh: _refresh,
@@ -366,7 +370,7 @@ class _StudentsPageState extends State<StudentsPage> {
                         overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.justify,
                         style:
-                        TextStyle(color: Color(0xFF000000), fontSize: 14.0),
+                            TextStyle(color: Color(0xFF000000), fontSize: 14.0),
                       ),
                     ],
                   ),
@@ -378,54 +382,54 @@ class _StudentsPageState extends State<StudentsPage> {
               ),
               new Expanded(
                   child: new InkWell(
-                    child: new Container(
-                      height: 40.0,
-                      padding: EdgeInsets.only(left: 5, right: 5),
-                      child: new Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          new Text(
-                            v.stuName,
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            textAlign: TextAlign.justify,
-                            style:
+                child: new Container(
+                  height: 40.0,
+                  padding: EdgeInsets.only(left: 5, right: 5),
+                  child: new Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      new Text(
+                        v.stuName,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.justify,
+                        style:
                             TextStyle(color: Color(0xFF000000), fontSize: 14.0),
-                          ),
-                        ],
                       ),
-                      decoration: BoxDecoration(
-                          border: Border(
-                              right: BorderSide(
-                                  width: 1, color: Color.fromRGBO(0, 0, 0, 0.1)))),
-                    ),
-                    onTap: () {},
-                  )),
+                    ],
+                  ),
+                  decoration: BoxDecoration(
+                      border: Border(
+                          right: BorderSide(
+                              width: 1, color: Color.fromRGBO(0, 0, 0, 0.1)))),
+                ),
+                onTap: () {},
+              )),
               new Expanded(
                   child: new InkWell(
-                    child: new Container(
-                      height: 40.0,
-                      padding: EdgeInsets.only(left: 5, right: 5),
-                      child: new Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          new Text(
-                            v.leftClassTimes.toString() + "课时",
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            textAlign: TextAlign.justify,
-                            style:
+                child: new Container(
+                  height: 40.0,
+                  padding: EdgeInsets.only(left: 5, right: 5),
+                  child: new Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      new Text(
+                        v.leftClassTimes.toString() + "课时",
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.justify,
+                        style:
                             TextStyle(color: Color(0xFF000000), fontSize: 14.0),
-                          ),
-                        ],
                       ),
-                      decoration: BoxDecoration(
-                          border: Border(
-                              right: BorderSide(
-                                  width: 1, color: Color.fromRGBO(0, 0, 0, 0.1)))),
-                    ),
-                    onTap: () {},
-                  )),
+                    ],
+                  ),
+                  decoration: BoxDecoration(
+                      border: Border(
+                          right: BorderSide(
+                              width: 1, color: Color.fromRGBO(0, 0, 0, 0.1)))),
+                ),
+                onTap: () {},
+              )),
               new Expanded(
                 child: new Container(
                   padding: EdgeInsets.only(left: 10, right: 5),
@@ -433,17 +437,17 @@ class _StudentsPageState extends State<StudentsPage> {
                   child: new RaisedButton(
 //                  color: Color(0xFF29CCCC),
                     color:
-                    ((v.stuPunchCount ?? 0) - (v.stuProgressCount ?? 0) >=
-                        count)
-                        ? Color(0xFFE31313)
-                        : Color(0xFF29CCCC),
+                        ((v.stuPunchCount ?? 0) - (v.stuProgressCount ?? 0) >=
+                                count)
+                            ? Color(0xFFE31313)
+                            : Color(0xFF29CCCC),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(36),
                     ),
                     textColor: Colors.white,
                     child: new Text(
                       ((v.stuPunchCount ?? 0) - (v.stuProgressCount ?? 0) >=
-                          count)
+                              count)
                           ? "更新"
                           : '查看',
                       style: TextStyle(fontSize: 13.0),

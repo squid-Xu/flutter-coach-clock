@@ -5,15 +5,14 @@ import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 import '../../Router.dart';
 
-class StuProgress extends StatefulWidget{
+class StuProgress extends StatefulWidget {
   final currentStuId;
   StuProgress(this.currentStuId, {Key key}) : super(key: key);
   @override
   StuProgressState createState() => StuProgressState(currentStuId);
-
 }
 
-class StuProgressState extends State<StuProgress>{
+class StuProgressState extends State<StuProgress> {
   final currentStuId;
   StuProgressState(this.currentStuId);
 
@@ -43,20 +42,32 @@ class StuProgressState extends State<StuProgress>{
       backgroundColor: Color(0xFFF8F8F8),
       appBar: new AppBar(
         backgroundColor: Color(0xFF29CCCC),
-        title: new Text('更新学员进度',style: TextStyle(color: Colors.white),),
+        title: new Text(
+          '更新学员进度',
+          style: TextStyle(color: Colors.white),
+        ),
         centerTitle: true,
-        leading: IconButton(icon: Icon(Icons.keyboard_arrow_left,size: 30,), onPressed: (){Navigator.pop(context);}),
+        leading: IconButton(
+            icon: Icon(
+              Icons.keyboard_arrow_left,
+              size: 30,
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            }),
         actions: <Widget>[
           new RaisedButton(
-            onPressed: (){
+            onPressed: () {
               this.showLoading();
               _stuUpdate();
             },
-            child: new Text("保存",style: TextStyle(
-                color: Color(0xFFFFFFFF),
-                fontSize: 18.0
-            ),),
-            color: Color(0xFF29CCCC),elevation: 0,)
+            child: new Text(
+              "保存",
+              style: TextStyle(color: Color(0xFFFFFFFF), fontSize: 18.0),
+            ),
+            color: Color(0xFF29CCCC),
+            elevation: 0,
+          )
         ],
       ),
       body: new ModalProgressHUD(
@@ -68,25 +79,24 @@ class StuProgressState extends State<StuProgress>{
               borderRadius: BorderRadius.all(Radius.circular(15)),
             ),
             margin: EdgeInsets.fromLTRB(15, 15, 15, 0),
-            child: new Padding(
+            child: new Container(
+              // padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
               padding: const EdgeInsets.all(10.0),
               child: TextField(
                 controller: _stuController,
                 decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                      borderSide: BorderSide.none
-                  ),
+                  border: OutlineInputBorder(borderSide: BorderSide.none),
                   hintText: '请输入你的评价',
                 ),
-                maxLength: 100,
-                maxLines: 8,
+                maxLength: 150,
+                maxLines: 10,
               ),
             ),
           )),
     );
   }
 
-   //提交学员评价
+  //提交学员评价
   _stuUpdate() {
     String stuUpdate = _stuController.text.trim();
     print(stuUpdate);
@@ -94,7 +104,8 @@ class StuProgressState extends State<StuProgress>{
       this.shutdownLoading();
       GlobalToast.globalToast('评价不能为空');
     } else {
-      StudentsService.stuUpdate(stuId:currentStuId,content: stuUpdate).then((bool b) {
+      StudentsService.stuUpdate(stuId: currentStuId, content: stuUpdate)
+          .then((bool b) {
         if (b) {
           this.shutdownLoading();
           GlobalToast.globalToast('评价成功');
@@ -106,5 +117,4 @@ class StuProgressState extends State<StuProgress>{
       });
     }
   }
-
 }

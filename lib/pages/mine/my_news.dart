@@ -1,9 +1,8 @@
 import 'package:coach/common/service/invitation.dart';
 import 'package:coach/common/utils/global_toast.dart';
 import 'package:coach/model/InvitationEntity.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import 'BottonSheet/bottonSheet.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 class MyNews extends StatefulWidget {
@@ -31,7 +30,7 @@ class _MyNewsState extends State<MyNews> {
     });
   }
 
-   _getListDate() {
+  _getListDate() {
     setState(() {
       isLoading = true;
     });
@@ -43,9 +42,6 @@ class _MyNewsState extends State<MyNews> {
           isLoading = false;
         });
       }
-      print("11111111111111111111111111111111111111111111122222222222222");
-      print(list);
-      print("11111111111111111111111111111111111111111111122222222222222");
     });
   }
 
@@ -64,7 +60,9 @@ class _MyNewsState extends State<MyNews> {
                 borderRadius: new BorderRadius.circular((5.0)), // 圆
                 color: Colors.transparent,
                 image: new DecorationImage(
-                    image:(v.clubLogo!=null) ? new NetworkImage(v.clubLogo): new AssetImage("images/coachnan.png"),
+                    image: (v.clubLogo != null)
+                        ? new NetworkImage(v.clubLogo)
+                        : new AssetImage("images/coachnan.png"),
                     fit: BoxFit.fitWidth),
                 border: new Border.all(color: Colors.white, width: 1.0),
               ),
@@ -80,7 +78,7 @@ class _MyNewsState extends State<MyNews> {
                   style: TextStyle(color: Color(0xFF000000), fontSize: 17.0),
                 ),
                 new Text(
-                  v.applyMsg,
+                  v.applyMsg == '' ? v.applyTime : v.applyMsg,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(color: Color(0xFF666666), fontSize: 14.0),
@@ -98,32 +96,53 @@ class _MyNewsState extends State<MyNews> {
                 ),
                 onTap: v.applyState == 0
                     ? () => {
-                          showDialog(
-                              barrierDismissible:
-                                  true, //是否点击空白区域关闭对话框,默认为true，可以关闭
-                              context: context,
-                              builder: (BuildContext context) {
-                                var list = List();
-                                list.add('同意');
-                                list.add('拒绝');
-                                return CommonBottomSheet(
-                                  list: list,
-                                  onItemClickListener: (index) async {
-                                    if (index == 0) {
+                          showCupertinoModalPopup(
+                            context: context,
+                            builder: (context) {
+                              return CupertinoActionSheet(
+                                title: Text(
+                                  '提示',
+                                  style: TextStyle(fontSize: 22),
+                                ), //标题
+                                message: Text('拒绝后将不能加入该俱乐部，请您谨慎操作！'), //提示内容
+                                actions: <Widget>[
+                                  //操作按钮集合
+                                  CupertinoActionSheetAction(
+                                    onPressed: () {
                                       _agreeHandle(v.applyId, 1, "你已同意");
                                       Navigator.pop(context);
-                                      print("同意");
-                                    } else if (index == 2) {
+                                    },
+                                    child: Text(
+                                      '同意',
+                                      style:
+                                          TextStyle(color: Color(0xFF29CCCC)),
+                                    ),
+                                  ),
+                                  CupertinoActionSheetAction(
+                                    onPressed: () {
                                       _agreeHandle(v.applyId, 2, "你已拒绝");
                                       Navigator.pop(context);
-                                      print("拒绝");
-                                    } else {
-                                      Navigator.pop(context);
-                                    }
+                                    },
+                                    child: Text(
+                                      '拒绝',
+                                      style:
+                                          TextStyle(color: Color(0xFFDC143C)),
+                                    ),
+                                  ),
+                                ],
+                                cancelButton: CupertinoActionSheetAction(
+                                  //取消按钮
+                                  onPressed: () {
+                                    Navigator.pop(context);
                                   },
-                                );
-                              })
-//                getImage()
+                                  child: Text(
+                                    '取消',
+                                    style: TextStyle(color: Color(0xFF999999)),
+                                  ),
+                                ),
+                              );
+                            },
+                          )
                         }
                     : null,
               ),
@@ -143,9 +162,6 @@ class _MyNewsState extends State<MyNews> {
     this.showLoading();
     InvitationService.AagreeHandle(applyId: _applyId, state: _state)
         .then((bool b) {
-      print("+++++++++++++++++++++++++++++++++++");
-      print(b);
-      print("+++++++++++++++++++++++++++++++++++");
       if (b) {
         _getListDate();
         this.shutdownLoading();
@@ -183,27 +199,25 @@ class _MyNewsState extends State<MyNews> {
           : new ModalProgressHUD(
               inAsyncCall: _isInAsyncCall,
               child: RefreshIndicator(
-                  child: ListView(
-                children: <Widget>[
-                  new Container(
-                    padding: EdgeInsets.only(left: 15, top: 5, bottom: 5),
-                    child: list.length==0 ? null: new Text("最近三天"),
-                  ),
-                  _content(),
-                  new Container(
-                    child: new Text(
-                      "没有更多了",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: Color(0xFFCCCCCC),
-                          fontSize: 14.0
-                      ),
+                child: ListView(
+                  children: <Widget>[
+                    new Container(
+                      padding: EdgeInsets.only(left: 15, top: 5, bottom: 5),
+                      child: list.length == 0 ? null : new Text("最近三天"),
                     ),
-                  )
-                ],
-              ),
-                  onRefresh: _refresh,
-                  color: Color(0xFF29CCCC),
+                    _content(),
+                    new Container(
+                      child: new Text(
+                        "没有更多了",
+                        textAlign: TextAlign.center,
+                        style:
+                            TextStyle(color: Color(0xFFCCCCCC), fontSize: 14.0),
+                      ),
+                    )
+                  ],
+                ),
+                onRefresh: _refresh,
+                color: Color(0xFF29CCCC),
               )),
     );
   }
@@ -219,4 +233,3 @@ class _MyNewsState extends State<MyNews> {
     return;
   }
 }
-

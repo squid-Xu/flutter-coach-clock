@@ -15,7 +15,6 @@ class HomePageState extends State<HomePage> {
   bool _ClubState = true;
   bool isLoading = true; // 是否正在请求数据中
 
-
   @override
   Widget build(BuildContext context) {
     return new Container(

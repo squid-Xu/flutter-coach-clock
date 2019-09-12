@@ -16,14 +16,7 @@ import 'navigator/tabNavigator.dart';
 
 void main() {
   isLogin().then((bool b) {
-    print("_______________________________________");
-    print("是否有用户信息");
-    print("b:${b}");
-    print("_______________________________________");
     if (b) {
-      print("++++++++++++++++++++++++++++++++");
-      print("有用户信息");
-      print("++++++++++++++++++++++++++++++++++");
       // 已经登陆
       getUserInfo().then((UserInfo user) {
         runApp(MultiProvider(
@@ -37,9 +30,6 @@ void main() {
         ));
       });
     } else {
-      print("++++++++++++++++++++++++++++++++");
-      print("没有用户信息");
-      print("++++++++++++++++++++++++++++++++++");
       runApp(MultiProvider(
         providers: [
           // 用户信息状态管理
@@ -61,18 +51,11 @@ void main() {
 
 Future<bool> isLogin() async {
   bool res = await DataUtil.getIsLogin();
-  print("__________________________________________");
-  print("拉取用户信息");
-  print("isLogin:${res}");
-  print("__________________________________________");
   return res;
 }
 
 Future<UserInfo> getUserInfo() async {
   UserInfo userInfo = await DataUtil.getUserInfo();
-  print("------------------------------------------");
-  print("当前用户信息:${userInfo}");
-  print("-------------------------------------------");
   return userInfo;
 }
 

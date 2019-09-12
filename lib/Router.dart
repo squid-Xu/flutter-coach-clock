@@ -1,4 +1,3 @@
-import 'package:coach/pages/sweep/scan.dart' as prefix0;
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 //路由重定向
@@ -11,23 +10,20 @@ import 'package:coach/rule/userAgreement.dart'; //用户协议
 import 'package:coach/rule/privacyAgreement.dart'; //隐私协议
 //首页的页面路由
 import 'package:coach/pages/Clock/MyClockRecord.dart'; //我的打卡记录
-import 'package:coach/pages/StudentClock/StuClock.dart'; //学员打卡
 import 'package:coach/pages/StudentClock/StuClockList.dart'; //学员打卡列表
-import 'package:coach/pages/StudentClock/StuClockRecord.dart'; //学员打卡记录
 import 'package:coach/pages/homePage.dart'; //首页
 import 'package:coach/pages/Sweep/scan.dart'; //扫一扫页面
-import 'package:coach/pages/Sweep/punch.dart'; //扫一扫页面
 
 //我的页面路由
 import 'package:coach/pages/mine/my_info_page.dart'; //个人信息
 import 'package:coach/pages/mine/MyInfo/my_info_signature.dart'; //个人签名
 import 'package:coach/pages/mine/MyInfo/my_info_nickname.dart'; //个人昵称
 import 'package:coach/pages/mine/MyInfo/my_info_edit_mobile.dart'; //修改手机号
-import 'package:coach/pages/mine/MyInfo/my_info_pwd.dart'; //修改密码
 import 'package:coach/pages/mine/my_complaint.dart'; //投诉建议
 import 'package:coach/pages/mine/my_about.dart'; //关于我们
 import 'package:coach/pages/mine/my_news.dart'; //我的消息
 //学员页面路由
+import 'package:coach/pages/studentsPage.dart'; //学员页面
 import 'package:coach/pages/StudentClock/StuDetail.dart'; //学员进度详情
 import 'package:coach/pages/StudentClock/StuProgress.dart'; //学员进度更新
 
@@ -52,6 +48,7 @@ class Router {
   static const myComplaint = 'app://page/mine/mycomplaint'; //投诉建议
   static const myAbout = 'app://page/mine/myabout'; //关于我们
   static const myNews = 'app://page/mine/mynews'; //我的消息
+  static const stuPage = 'app://page/stupage'; //学员页面
   static const stuDetail = 'app://page/studentclock/studetail'; //学员进度详情
   static const stuProgress = 'app://page/studentclock/stuprogress'; //学员进度更新
   static const scan = 'app://page/Sweep/scan'; //扫一扫页面
@@ -73,15 +70,11 @@ class Router {
         case privacyAgreement: //隐私协议
           return PrivacyAgreement();
         case tabNavigator: //路由到首页
-          return TabNavigator();
+          return TabNavigator(index: params);
         case myClockRecord: //我的打卡记录
           return MyClockRecord();
-        case stuClock: //学员打卡
-          return StuClock();
         case stuClockList: //学员打卡列表
           return StuClockList();
-        case stuClockRecord: //学员打卡记录
-          return StuClockRecord();
         case homePage: //首页
           return HomePage();
         case myInfoPage: //个人信息
@@ -92,8 +85,6 @@ class Router {
           return MyInfoNickname(params);
         case myInfoMobile: //修改手机号
           return MyInfoEditMobile(params);
-        case myInfoPwd: //修改密码
-          return MyInfoPwd();
         case myComplaint: //投诉建议
           return MyComplaint();
         case myAbout: //关于我们
@@ -104,10 +95,10 @@ class Router {
           return StuDetail(params);
         case stuProgress: //学员进度更新
           return StuProgress(params);
-        case scan:   //扫一扫页面
+        case stuPage: //学员页面
+          return StudentsPage();
+        case scan: //扫一扫页面
           return Scan();
-        case punch:
-          return Punch();
       }
     }
     return null;
