@@ -310,7 +310,6 @@ class _MinePageState extends State<MinePage> {
   void initState() {
     super.initState();
     _getcoachClub();
-    _getstuList();
   }
 
   //获取教练在俱乐部的信息
@@ -325,6 +324,7 @@ class _MinePageState extends State<MinePage> {
           isLoading = false;
         });
       } else {
+            _getstuList();
         setState(() {
           _ClubState = false;
           coachNmae = v.coachName ?? "暂无姓名";

@@ -1,4 +1,5 @@
 import 'package:coach/common/service/coachClub.dart';
+import 'package:coach/common/utils/global_toast.dart';
 import 'package:coach/model/CoachClubEntity.dart';
 import 'package:flutter/material.dart';
 import '../Router.dart';
@@ -49,7 +50,9 @@ class HomePageState extends State<HomePage> {
                             Icons.center_focus_strong,
                             color: Colors.white,
                           ),
-                          onPressed: () async {
+                          onPressed: _ClubState ? (){
+                            GlobalToast.globalToast('未加入俱乐部');
+                          }:() {
                             Router.pushNoParams(context, Router.scan);
                           },
                         )

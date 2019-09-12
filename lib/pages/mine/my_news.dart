@@ -166,6 +166,8 @@ class _MyNewsState extends State<MyNews> {
         _getListDate();
         this.shutdownLoading();
         GlobalToast.globalToast(mag);
+      }else{
+        this.shutdownLoading();
       }
     });
   }
