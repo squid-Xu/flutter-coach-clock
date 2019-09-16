@@ -63,7 +63,7 @@ class _MyNewsState extends State<MyNews> {
                     image: (v.clubLogo != null)
                         ? new NetworkImage(v.clubLogo)
                         : new AssetImage("images/coachnan.png"),
-                    fit: BoxFit.fitWidth),
+                    fit: BoxFit.cover),
                 border: new Border.all(color: Colors.white, width: 1.0),
               ),
             ),

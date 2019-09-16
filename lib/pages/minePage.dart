@@ -126,7 +126,7 @@ class _MinePageState extends State<MinePage> {
                                     Icons.lock,
                                     color: Color(0xFF29CCCC),
                                   ),
-                                  new Text("你目前还没有俱乐部，请前往俱乐部合作！"),
+                                  new Text("你目前还没有俱乐部，请前往俱乐部进行邀请！"),
                                 ],
                               ),
                             )

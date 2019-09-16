@@ -112,9 +112,9 @@ class _StudentsPageState extends State<StudentsPage> {
                                             decoration: new InputDecoration(
                                                 contentPadding:
                                                     EdgeInsets.only(top: -2.0),
-                                                hintText: '搜索',
-                                                // hintStyle:
-                                                //TextStyle(fontSize: 15.0),
+                                                hintText: '你想查谁？',
+                                                 hintStyle:
+                                                TextStyle(fontSize: 14.0),
                                                 border: InputBorder.none),
                                             onChanged: (text) {
                                               //内容改变的回调

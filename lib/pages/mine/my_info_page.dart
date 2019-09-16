@@ -265,7 +265,7 @@ class MyInfoPageState extends State<MyInfoPage> {
       child: new InkWell(
         child: new Row(
           children: <Widget>[
-            new Expanded(child: new Text('绑定手机号')),
+            new Expanded(child: new Text('绑定手机号', style: TextStyle(color: Color(0xFF333333), fontSize: 16.0),)),
             new Container(
               padding: const EdgeInsets.only(right: 7.0),
               child: new Text(
@@ -350,7 +350,7 @@ class MyInfoPageState extends State<MyInfoPage> {
                 context,
                 MaterialPageRoute(
                     builder: (BuildContext context) =>
-                        MyInfoEditMobile(mobile))),
+                        MyInfoEditMobile())),
 //            Router.pushWithAnimation(context, Router.myInfoMobile, _mobileStr),
           },
           color: Color(0xFF29CCCC),
@@ -370,10 +370,7 @@ class MyInfoPageState extends State<MyInfoPage> {
           children: <Widget>[
             new Text(
               "地区",
-              style: TextStyle(
-                  color: Color(0xFF000000),
-                  fontSize: 16.0,
-                  fontWeight: FontWeight.w500),
+              style: TextStyle(color: Color(0xFF333333), fontSize: 16.0),
             ),
             new Expanded(
               child: new Container(

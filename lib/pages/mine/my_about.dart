@@ -60,21 +60,8 @@ class MyAbout extends StatelessWidget {
                     new Container(
                       padding: const EdgeInsets.only(top: 5.0),
                       child: Text(
-                        "v1.0.2",
+                        "v1.0.3",
                         style: TextStyle(color: _c, fontSize: 17.0),
-                      ),
-                    ),
-                    new Container(
-                      child: new Row(
-                        children: <Widget>[
-                          new Padding(
-                            padding: const EdgeInsets.only(top: 25.0),
-                            child: Text(
-                              '郑州浪聚软件科技有限公司',
-                              style: TextStyle(fontSize: 16.0),
-                            ),
-                          )
-                        ],
                       ),
                     ),
                     new Container(

@@ -1,28 +1,26 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:coach/common/providers/UserInfoProvider.dart';
+import 'dart:async';
+
 import 'package:coach/common/service/login_service.dart';
 import 'package:coach/common/utils/global_toast.dart';
 import 'package:coach/common/utils/verification_code_type.dart';
-import 'package:coach/login/register.dart';
 import 'package:coach/model/UserInfo.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'dart:async';
-
+import 'package:coach/login/register.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:provider/provider.dart';
 
 class MyInfoEditMobile extends StatefulWidget {
-  final current_mobile;
-  MyInfoEditMobile(this.current_mobile, {Key key}) : super(key: key);
-
   @override
   State<StatefulWidget> createState() {
-    return _myInfoEditMobileState(current_mobile);
+    return _myInfoEditMobileState();
   }
 }
 
 class _myInfoEditMobileState extends State<MyInfoEditMobile> {
-  final current_mobile;
   bool _isInAsyncCall = false;
+
   TextEditingController _mobileController = new TextEditingController();
 
   TextEditingController _verifyCodeController = new TextEditingController();
@@ -30,7 +28,6 @@ class _myInfoEditMobileState extends State<MyInfoEditMobile> {
   String _verifyStr = '获取验证码';
   int _seconds = 0;
   Timer _timer;
-  _myInfoEditMobileState(this.current_mobile);
 
   // 显示加载的圈圈
   showLoading() {
@@ -56,10 +53,10 @@ class _myInfoEditMobileState extends State<MyInfoEditMobile> {
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(15)),
         ),
-        clipBehavior: Clip.antiAlias,
         child: new Padding(
           padding: const EdgeInsets.only(left: 10.0, right: 10.0),
           child: TextField(
+            autofocus: false,
             controller: _mobileController,
             decoration: InputDecoration(
               border: OutlineInputBorder(borderSide: BorderSide.none),
@@ -120,35 +117,37 @@ class _myInfoEditMobileState extends State<MyInfoEditMobile> {
             children: <Widget>[
               new Expanded(
                   child: new Container(
-                child: TextField(
-                  controller: _verifyCodeController,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(borderSide: BorderSide.none),
-                    hintText: '请输入验证码',
-                    hintStyle: TextStyle(color: Color(0xFFCCCCCC)),
-                    counterText: '',
-                  ),
-                  maxLines: 1,
-                  maxLength: 6,
-                  keyboardType: TextInputType.phone,
-                  //只能输入数字
-                  inputFormatters: <TextInputFormatter>[
-                    WhitelistingTextInputFormatter.digitsOnly,
-                    BlacklistingTextInputFormatter(RegExp("[a-z]")),
-                    LengthLimitingTextInputFormatter(6)
-                  ],
-                ),
-              )),
+                    child: TextField(
+                      controller: _verifyCodeController,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(borderSide: BorderSide.none),
+                        hintText: '请输入验证码',
+                        hintStyle: TextStyle(color: Color(0xFFCCCCCC)),
+                        counterText: '',
+                      ),
+                      maxLines: 1,
+                      maxLength: 6,
+                      keyboardType: TextInputType.phone,
+                      //只能输入数字
+                      inputFormatters: <TextInputFormatter>[
+                        WhitelistingTextInputFormatter.digitsOnly,
+                        BlacklistingTextInputFormatter(RegExp("[a-z]")),
+                        LengthLimitingTextInputFormatter(6)
+                      ],
+                    ),
+                  )),
               new Container(
                 child: new InkWell(
                   onTap: (_mobileController.text.trim().length == 11 &&
-                          _seconds == 0)
+                      _seconds == 0)
                       ? () {
-                          setState(() {
-                            sendCode();
-                          });
-                        }
-                      : null,
+                    setState(() {
+                      sendCode();
+                    });
+                  }
+                      : (){
+                    GlobalToast.globalToast('请输入正确的手机号');
+                  },
                   child: Text(
                     _verifyStr,
                     textAlign: TextAlign.right,
@@ -167,8 +166,10 @@ class _myInfoEditMobileState extends State<MyInfoEditMobile> {
     print("new mobile :${_mobileController.text.trim()}");
     if (_seconds != 0) {
       return;
-    } else if (_mobileController.text.trim().length != 11) {
-      GlobalToast.globalToast('请输入正确的手机号');
+    } else if (_mobileController.text.trim() ==
+        Provider.of<UserInfoProvider>(context).userInfo.mobile ||
+        _mobileController.text.trim().length != 11) {
+      GlobalToast.globalToast('不能更换相同手机号');
       return;
     } else {
       LoginService.sendVerificationCode(
@@ -180,32 +181,12 @@ class _myInfoEditMobileState extends State<MyInfoEditMobile> {
     }
   }
 
-  // 提交按钮
-  Widget _submitBtn(BuildContext context) {
-    Widget btn = new FlatButton(
-        color: Color(0xFF29CCCC),
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(25.0)),
-        child: new Padding(
-          padding: new EdgeInsets.fromLTRB(100.0, 10.0, 100.0, 10.0),
-          child: new Text(
-            '确 认',
-            style: TextStyle(fontSize: 18.0),
-          ),
-        ),
-        textColor: Colors.white,
-        onPressed: () {
-          _submitFun(context);
-        });
-    return btn;
-  }
-
   _submitFun(BuildContext context) {
     print(_mobileController.text);
     print(_verifyCodeController.text);
     this.showLoading();
     LoginService.updateMobile(
-            _mobileController.text.trim(), _verifyCodeController.text.trim())
+        _mobileController.text.trim(), _verifyCodeController.text.trim())
         .then((bool b) {
       if (b) {
         LoginService.getUserInfo().then((UserInfo user) {
@@ -214,7 +195,6 @@ class _myInfoEditMobileState extends State<MyInfoEditMobile> {
           GlobalToast.globalToast('手机号修改成功');
           LoginService.logout().then((bool b) async {
             if (b) {
-//        await SystemChannels.platform.invokeMethod('SystemNavigator.pop');
               Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
@@ -224,6 +204,8 @@ class _myInfoEditMobileState extends State<MyInfoEditMobile> {
             }
           });
         });
+      } else {
+        this.shutdownLoading();
       }
     });
   }
@@ -231,52 +213,118 @@ class _myInfoEditMobileState extends State<MyInfoEditMobile> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return new Scaffold(
-        backgroundColor: Colors.white,
-        appBar: new AppBar(
-          backgroundColor: Color(0xFF29CCCC),
-          title: new Text(
-            '更换手机号',
-            style: TextStyle(color: Colors.white),
-          ),
-          leading: IconButton(
-              icon: Icon(
-                Icons.keyboard_arrow_left,
-                size: 30,
-              ),
-              onPressed: () {
-                Navigator.pop(context);
-              }),
-          centerTitle: true,
-        ),
-        body: SingleChildScrollView(
-          padding: EdgeInsets.all(15.0),
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                new Padding(
-                  padding: const EdgeInsets.only(top: 20.0),
-                  child: Text.rich(TextSpan(children: [
-                    TextSpan(
-                        text: '当前手机号: ',
-                        style: TextStyle(
-                            color: Color(0xFF000000), fontSize: 20.0)),
-                    TextSpan(
-                        text: current_mobile,
-                        style:
-                            TextStyle(color: Color(0xFF000000), fontSize: 20.0))
-                  ])),
-                ),
-                _mobileInputCard(),
-                _verifyCodeCard(),
-                new Container(
-                  padding: const EdgeInsets.only(top: 40.0, bottom: 10),
-                  child: _submitBtn(context),
-                )
-              ],
+    return new GestureDetector(
+      behavior: HitTestBehavior.translucent,
+      onTap: () {
+        // 触摸收起键盘
+        FocusScope.of(context).requestFocus(FocusNode());
+      },
+      child: new Scaffold(
+          backgroundColor: Colors.white,
+          appBar: new AppBar(
+            backgroundColor: Color(0xFF29CCCC),
+            title: new Text(
+              '更换手机号',
+              style: TextStyle(color: Colors.white),
             ),
+            centerTitle: true,
+            leading: IconButton(
+                icon: Icon(
+                  Icons.keyboard_arrow_left,
+                  size: 30,
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                }),
           ),
-        ));
+          body: ModalProgressHUD(
+            child: SingleChildScrollView(
+              padding: EdgeInsets.all(15.0),
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    new Padding(
+                      padding: const EdgeInsets.only(top: 20.0),
+                      child: Text.rich(TextSpan(children: [
+                        TextSpan(
+                            text: '当前手机号: ',
+                            style:
+                            TextStyle(color: Colors.grey, fontSize: 20.0)),
+                        TextSpan(
+                            text: Provider.of<UserInfoProvider>(context)
+                                .userInfo
+                                .mobile,
+                            style: TextStyle(
+                                color: Color(0xFF29CCCC), fontSize: 18.0))
+                      ])),
+                    ),
+                    _mobileInputCard(),
+                    _verifyCodeCard(),
+                    new Row(
+                      children: <Widget>[
+                        Expanded(
+                            child: new Container(
+                              height: 45.0,
+                              margin: EdgeInsets.only(
+                                  left: 20, right: 20, top: 40, bottom: 10),
+                              child: new RaisedButton(
+                                color: Color(0xFF29CCCC),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(36),
+                                ),
+                                textColor: Colors.white,
+                                child: new Text(
+                                  '确 认',
+                                  style: TextStyle(fontSize: 18.0),
+                                ),
+                                onPressed: () {
+                                  if (!this._mobileController.text.isNotEmpty ||
+                                      this._mobileController.text.trim().length !=
+                                          11) {
+                                    GlobalToast.globalToast("请输入正确的手机号");
+                                  } else if (!this
+                                      ._verifyCodeController
+                                      .text
+                                      .isNotEmpty ||
+                                      this
+                                          ._verifyCodeController
+                                          .text
+                                          .trim()
+                                          .length !=
+                                          6) {
+                                    GlobalToast.globalToast("请输入正确的验证码");
+                                  } else {
+                                    _submitFun(context);
+                                  }
+                                },
+                              ),
+                            ))
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            ),
+            inAsyncCall: _isInAsyncCall,
+            // demo of some additional parameters
+            opacity: 0.5,
+            progressIndicator: CircularProgressIndicator(),
+          )),
+    );
+  }
+
+  @override
+  void initState() {
+    _verifyStr = '获取验证码';
+    _seconds = 0;
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    _timer = null;
+    super.dispose();
   }
 }

@@ -84,7 +84,7 @@ class Router {
         case myInfoNicknmae: //个人昵称
           return MyInfoNickname(params);
         case myInfoMobile: //修改手机号
-          return MyInfoEditMobile(params);
+          return MyInfoEditMobile();
         case myComplaint: //投诉建议
           return MyComplaint();
         case myAbout: //关于我们

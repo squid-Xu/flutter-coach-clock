@@ -70,7 +70,7 @@ class HomePageState extends State<HomePage> {
                                       color: Color(0xFFFFFFFF),
                                     ),
                                     new Text(
-                                      "你目前还没有俱乐部，请前往俱乐部合作！",
+                                      "你目前还没有俱乐部，请前往俱乐部进行邀请！",
                                       style: TextStyle(
 //                          color: Color(0xFFFFFFFF),
                                           fontSize: 16.0),
@@ -87,7 +87,7 @@ class HomePageState extends State<HomePage> {
                                       color: Color(0xFFFFFFFF),
                                     ),
                                     new Text(
-                                      "你目前还没有俱乐部，请前往俱乐部合作！",
+                                      "你目前还没有俱乐部，请前往俱乐部进行邀请！",
                                       style: TextStyle(
 //                          color: Color(0xFFFFFFFF),
                                           fontSize: 16.0),
