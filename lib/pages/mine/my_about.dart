@@ -114,7 +114,7 @@ class MyAbout extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           new Padding(
-                            padding: const EdgeInsets.only(top: 5.0),
+                            padding: const EdgeInsets.only(top: 10.0),
                             child: Text(
                               '微信公众号： ',
                               style: TextStyle(color: _cc, fontSize: 15.0),

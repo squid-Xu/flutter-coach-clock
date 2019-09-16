@@ -300,34 +300,34 @@ class ScanState extends State<Scan> {
                     color: Color(0xFF29CCCC),
                   )),
               content: Container(
-                padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
+                padding: EdgeInsets.only( bottom: 10.0),
                 child: new Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     new Container(
+                        child: new Text("学员编号：${v.stuNumber}号",
+                            style: TextStyle(
+                                color: Color(0xFF666666), fontSize: 18.0))),
+                    new Container(
+                        padding: EdgeInsets.only(top: 5.0),
                         child: new Text(
                       "学员姓名：${v.stuName}",
                       style:
-                          TextStyle(color: Color(0xFF666666), fontSize: 20.0),
+                          TextStyle(color: Color(0xFF666666), fontSize: 18.0),
                     )),
                     new Padding(
                         padding: EdgeInsets.only(top: 5.0),
                         child: new Text("课程名称：${v.className}",
                             style: TextStyle(
-                                color: Color(0xFF666666), fontSize: 20.0))),
+                                color: Color(0xFF666666), fontSize: 18.0))),
                     new Padding(
                         padding: EdgeInsets.only(top: 5.0),
                         child: new Text("剩余课时：${v.leftClassTimes}课时",
                             style: TextStyle(
-                                color: Color(0xFF666666), fontSize: 20.0))),
-                    new Padding(
-                        padding: EdgeInsets.only(top: 5.0),
-                        child: new Text("学员编号：${v.stuNumber}号",
-                            style: TextStyle(
-                                color: Color(0xFF666666), fontSize: 20.0))),
+                                color: Color(0xFF666666), fontSize: 18.0))),
                     new Padding(
                       padding: const EdgeInsets.only(
-                          left: 2.0, right: 2.0, top: 2.0),
+                          left: 2.0, right: 2.0, top: 5.0),
                       child: new Divider(
                         color: Colors.grey,
                       ),
@@ -363,7 +363,7 @@ class ScanState extends State<Scan> {
                     color: Color(0xFF29CCCC),
                   )),
               content: Container(
-                padding: EdgeInsets.only(top: 10.0, bottom: 20.0),
+                padding: EdgeInsets.only( bottom: 10.0),
                 child: new Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
@@ -390,7 +390,7 @@ class ScanState extends State<Scan> {
                                 color: Color(0xFF666666), fontSize: 18.0))),
                     new Padding(
                       padding: const EdgeInsets.only(
-                          left: 2.0, right: 2.0, top: 2.0),
+                          left: 2.0, right: 2.0, top: 5.0),
                       child: new Divider(
                         color: Colors.grey,
                       ),
