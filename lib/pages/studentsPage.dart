@@ -99,7 +99,7 @@ class _StudentsPageState extends State<StudentsPage> {
                                         CrossAxisAlignment.center,
                                     children: <Widget>[
                                       SizedBox(
-                                        width: 10.0,
+                                        width: 5.0,
                                       ),
                                       Expanded(
                                         child: Container(

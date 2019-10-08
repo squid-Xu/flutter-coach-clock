@@ -7,6 +7,7 @@ import 'package:coach/model/UserInfo.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:image_picker/image_picker.dart';
@@ -499,9 +500,9 @@ class MyInfoPageState extends State<MyInfoPage> {
     });
     LoginService.logout().then((bool b) async {
       if (b) {
-//        await SystemChannels.platform.invokeMethod('SystemNavigator.pop');
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (BuildContext context) => Register()));
+        await SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+//        Navigator.pushReplacement(context,
+//            MaterialPageRoute(builder: (BuildContext context) => Register()));
       } else {
         GlobalToast.globalToast("操作失败");
       }

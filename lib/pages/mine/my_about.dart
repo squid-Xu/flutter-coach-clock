@@ -60,7 +60,7 @@ class MyAbout extends StatelessWidget {
                     new Container(
                       padding: const EdgeInsets.only(top: 5.0),
                       child: Text(
-                        "v1.0.3",
+                        "v1.0.4",
                         style: TextStyle(color: _c, fontSize: 17.0),
                       ),
                     ),

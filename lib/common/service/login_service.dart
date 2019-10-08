@@ -3,6 +3,7 @@ import 'package:coach/common/config/base_config.dart';
 import 'package:coach/common/net/api.dart';
 import 'package:coach/common/utils/data_util.dart';
 import 'package:coach/common/utils/global_toast.dart';
+import 'package:coach/model/NewTokenEntity.dart';
 import 'package:coach/model/UserInfo.dart';
 import 'package:dio/dio.dart';
 
@@ -185,5 +186,25 @@ class LoginService{
       return true;
     }
   }
+
+  /**
+   * 获取新的jwt
+   */
+  static Future<NewTokenEntity> retryToken(String retryToken,String jwt) async {
+    Map<String, dynamic> requestMap = {
+      "jwt": jwt,
+      "retryToken": retryToken
+    };
+    print("requestMap:${requestMap}");
+    Map<String, dynamic> res = await httpManager.netFetch(BaseConfig.BASE_URL+'/retryToken',
+        requestMap, new Options(method: 'post'));
+    if(res['code'] != 0){
+      GlobalToast.errorBottomToast(res['msg']);
+      DataUtil.clear();
+      return null;
+    }
+    return NewTokenEntity.fromJson(res['r']);
+  }
+
 
 }

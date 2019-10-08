@@ -472,6 +472,7 @@ class ScanState extends State<Scan> {
         this.shutdownLoading();
         audioCache.play('yuyin.mp3');
         GlobalToast.globalToast('打卡成功');
+        _scan();
         _getTodayRecode(_Date);
       } else {
         this.shutdownLoading();

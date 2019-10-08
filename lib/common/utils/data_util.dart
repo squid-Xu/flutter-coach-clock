@@ -1,7 +1,10 @@
 import 'dart:convert';
 
+import 'package:coach/common/service/login_service.dart';
+import 'package:coach/model/NewTokenEntity.dart';
 import 'package:coach/model/UserInfo.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:common_utils/common_utils.dart';
 import 'dart:async';
 
 /**
@@ -13,6 +16,8 @@ class DataUtil{
 
   // 登陆状态
   static const String SP_IS_LOGIN="isLogin";
+
+  static const String SP_LOGIN_TIME='loginTime';
 
   static const String SP_JWT_TOKEN = "jwtToken";
   static const String SP_RETRY_TOKEN= "retryToken";
@@ -114,6 +119,30 @@ class DataUtil{
       havePwd: havePwd
     );
     return userInfo;
+  }
+
+  /// 检查jwt是否过期
+  static Future checkRetryToken() async {
+    SharedPreferences sp = await SharedPreferences.getInstance();
+    if(sp.getInt(SP_LOGIN_TIME) != null){
+      int loginMs = sp.getInt(SP_LOGIN_TIME);
+      int ms = ((DateUtil.getNowDateMs()-loginMs)/1000).toInt();
+      print("now: ${DateUtil.getNowDateMs()}");
+      print("loginMs: $loginMs");
+      print("ms: $ms");
+      /// 提前6个小时更换token
+      if(ms + 60*60*6 > sp.getInt(SP_TOKEN_EXPIRE)){
+        print("token过期");
+        NewTokenEntity form = await LoginService.
+        retryToken(sp.getString(SP_RETRY_TOKEN), sp.getString(SP_JWT_TOKEN));
+        if(form != null){
+          sp.setString(SP_RETRY_TOKEN, form.retryToken);
+          sp.setString(SP_JWT_TOKEN, form.jwt);
+          sp.setInt(SP_LOGIN_TIME, DateUtil.getNowDateMs());
+          print("new login time: ${DateUtil.getNowDateMs()}");
+        }
+      }
+    }
   }
 
   // 获取token信息

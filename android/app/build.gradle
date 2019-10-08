@@ -40,8 +40,8 @@ android {
         applicationId "langjukeji.coach"
         minSdkVersion 16
         targetSdkVersion 28
-        versionCode 5
-        versionName "1.0.3"
+        versionCode 6
+        versionName "1.0.4"
 //        versionCode flutterVersionCode.toInteger()
 //        versionName flutterVersionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
