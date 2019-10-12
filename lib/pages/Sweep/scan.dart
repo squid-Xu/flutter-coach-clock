@@ -42,6 +42,10 @@ class ScanState extends State<Scan> {
 
   String todayRecode = '';
 
+  ///数字
+  int num = 1;
+  Timer timer;
+
   // 显示加载的圈圈
   showLoading() {
     setState(() {
@@ -207,13 +211,15 @@ class ScanState extends State<Scan> {
                               ))
                             ],
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ),
                 ),
               ));
   }
+
+
 
   Widget _content() {
     List<Widget> listWidget = [];
@@ -362,71 +368,194 @@ class ScanState extends State<Scan> {
                   titleStyle: TextStyle(
                     color: Color(0xFF29CCCC),
                   )),
-              content: Container(
-                padding: EdgeInsets.only( bottom: 10.0),
-                child: new Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    new Container(
-                        child: new Text("学员编号：${v.stuNumber}号",
-                            style: TextStyle(
-                                color: Color(0xFF666666), fontSize: 18.0))),
-                    new Container(
-                        padding: EdgeInsets.only(top: 5.0),
-                        child: new Text(
-                      "学员姓名：${v.stuName}",
-                      style:
-                          TextStyle(color: Color(0xFF666666), fontSize: 18.0),
-                    )),
-                    new Padding(
-                        padding: EdgeInsets.only(top: 5.0),
-                        child: new Text("课程名称：${v.className}",
-                            style: TextStyle(
-                                color: Color(0xFF666666), fontSize: 18.0))),
-                    new Padding(
-                        padding: EdgeInsets.only(top: 5.0),
-                        child: new Text("剩余课时：${v.leftClassTimes}课时",
-                            style: TextStyle(
-                                color: Color(0xFF666666), fontSize: 18.0))),
-                    new Padding(
-                      padding: const EdgeInsets.only(
-                          left: 2.0, right: 2.0, top: 5.0),
-                      child: new Divider(
-                        color: Colors.grey,
+              content:  new StatefulBuilder(builder: (context, StateSetter setState) {
+                return Container(
+                  padding: EdgeInsets.only(bottom: 10.0),
+                  child: new Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      new Container(
+                          child: new Text("学员编号：${v.stuNumber}号",
+                              style: TextStyle(
+                                  color: Color(0xFF666666), fontSize: 18.0))),
+                      new Container(
+                          padding: EdgeInsets.only(top: 5.0),
+                          child: new Text(
+                            "学员姓名：${v.stuName}",
+                            style:
+                            TextStyle(color: Color(0xFF666666), fontSize: 18.0),
+                          )),
+                      new Padding(
+                          padding: EdgeInsets.only(top: 5.0),
+                          child: new Text("课程名称：${v.className}",
+                              style: TextStyle(
+                                  color: Color(0xFF666666), fontSize: 18.0))),
+                      new Padding(
+                          padding: EdgeInsets.only(top: 5.0),
+                          child: new Text("剩余课时：${v.leftClassTimes}课时",
+                              style: TextStyle(
+                                  color: Color(0xFF666666), fontSize: 18.0))),
+                      new Padding(
+                        padding: const EdgeInsets.only(
+                            left: 2.0, right: 2.0, top: 5.0),
+                        child: new Divider(
+                          color: Colors.grey,
+                        ),
                       ),
-                    ),
-                    new Center(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          new Text(
-                            "确定为学员",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 16.0
+                      new Container(
+                        padding: EdgeInsets.only(bottom: 10.0),
+                        child: Row(
+                          children: <Widget>[
+                            new Expanded(child: new Text("打卡扣课时数")),
+                            new Container(
+                              width: 105,
+                              height: 30,
+                              decoration: new BoxDecoration(
+                                shape: BoxShape.rectangle,
+                                borderRadius: BorderRadius.circular(5),
+                                border: Border.all(color: Color(0x33333333)),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Row(
+                                    children: <Widget>[
+                                      new GestureDetector(
+                                        child: Container(
+                                          width: 45,
+                                          height: 30,
+                                          child: Icon(Icons.remove),
+                                        ),
+                                        //不写的话点击起来不流畅
+                                        onTap: () {
+                                          setState(() {
+                                            if (num <= 1) {
+                                              GlobalToast.globalToast("受不了了,课时不能再减少了哦");
+                                              return;
+                                            }
+                                            num--;
+                                          });
+                                        },
+                                        onTapDown: (e) {
+                                          if (timer != null) {
+                                            timer.cancel();
+                                          }
+                                          if (num <= 1) {
+                                            return;
+                                          }
+                                          // 这里面的触发时间可以自己定义
+                                          timer = new Timer.periodic(Duration(milliseconds: 100), (e) {
+                                            setState(() {
+                                              if (num <= 1) {
+                                                return;
+                                              }
+                                              num--;
+                                            });
+                                          });
+                                        },
+                                        onTapUp: (e) {
+                                          if (timer != null) {
+                                            timer.cancel();
+                                          }
+                                        },
+                                        // 这里防止长按没有抬起手指，而move到了别处，会继续 --
+                                        onTapCancel: () {
+                                          if (timer != null) {
+                                            timer.cancel();
+                                          }
+                                        },
+                                      ),
+                                      new Container(
+                                        child: Align(
+                                          child: Text(
+                                            '$num',
+                                            style: TextStyle(color: Color(0xff333333), fontSize: 20),
+                                          ),
+                                        ),
+                                      ),
+                                      new GestureDetector(
+                                        child: Container(
+                                          width: 45,
+                                          height: 30,
+                                          child: Icon(Icons.add),
+                                        ),
+                                        onTap: () {
+                                          setState(() {
+                                            if (num >= 5) {
+                                              GlobalToast.globalToast("受不了了,课时不能再增加了哦");
+                                              return;
+                                            }
+                                            num++;
+                                          });
+                                        },
+                                        onTapDown: (e) {
+                                          if (timer != null) {
+                                            timer.cancel();
+                                          }
+                                          if (num >= 5) {
+                                            return;
+                                          }
+                                          timer = new Timer.periodic(Duration(milliseconds: 100), (e) {
+                                            setState(() {
+                                              if (num >= 5) {
+                                                return;
+                                              }
+                                              num++;
+                                            });
+                                          });
+                                        },
+                                        onTapUp: (e) {
+                                          if (timer != null) {
+                                            timer.cancel();
+                                          }
+                                        },
+                                        onTapCancel: () {
+                                          if (timer != null) {
+                                            timer.cancel();
+                                          }
+                                        },
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
                             ),
-                          ),
-                          new Text(
-                            " ${v.stuName} ",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Color(0xFF29CCCC),
-                              fontSize: 18.0
-                            ),
-                          ),
-                          new Text(
-                            "打卡吗？",
-                            style: TextStyle(
-                                fontSize: 16.0
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ],
+                          ],
+                        ),
+                      ),
+                      new Center(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              new Text(
+                                "确定为学员",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontSize: 16.0
+                                ),
+                              ),
+                              new Text(
+                                " ${v.stuName} ",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    color: Color(0xFF29CCCC),
+                                    fontSize: 18.0
+                                ),
+                              ),
+                              new Text(
+                                "打卡吗？",
+                                style: TextStyle(
+                                    fontSize: 16.0
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          )
                       )
-                    )
-                  ],
-                ),
-              ),
+                    ],
+                  ),
+                );
+              }),
               buttons: [
                 DialogButton(
                   child: Text(
@@ -442,7 +571,8 @@ class ScanState extends State<Scan> {
                     "确定",
                     style: TextStyle(color: Colors.white, fontSize: 18),
                   ),
-                  onPressed: () => {
+                  onPressed: () =>
+                  {
                     _submitSweeoClock(code),
                     Navigator.pop(context),
                   },
@@ -461,11 +591,15 @@ class ScanState extends State<Scan> {
   _submitSweeoClock(code) async {
     print(
         _loationResult == null ? "未知地点" : listlocalal[listlocalal.length - 1]);
+    print("2222222222222222222222222");
+    print(num);
+    print("2222222222222222222222222");
     this.showLoading();
     await StuClockService.sweepClock(
             address: _loationResult == null
                 ? "未知地点"
                 : listlocalal[listlocalal.length - 1],
+        classTimes:num,
             code: code)
         .then((bool b) {
       if (b) {
@@ -474,6 +608,9 @@ class ScanState extends State<Scan> {
         GlobalToast.globalToast('打卡成功');
         _scan();
         _getTodayRecode(_Date);
+        setState(() {
+          this.num=1;
+        });
       } else {
         this.shutdownLoading();
       }

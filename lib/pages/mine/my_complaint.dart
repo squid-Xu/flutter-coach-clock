@@ -86,42 +86,45 @@ class MyComplaintState extends State<MyComplaint> {
             onPressed: () {
               Navigator.pop(context);
             }),
+        actions: <Widget>[
+          new RaisedButton(
+            onPressed: () {
+              showLoading();
+              // 触摸收起键盘
+              FocusScope.of(context).requestFocus(FocusNode());
+              _submitSuggest();
+            },
+            child: new Text(
+              "提交",
+              style: TextStyle(color: Color(0xFFFFFFFF), fontSize: 18.0),
+            ),
+            color: Color(0xFF29CCCC),
+            elevation: 0,
+          )
+        ],
       ),
       body: new ModalProgressHUD(
           inAsyncCall: _isInAsyncCall,
           child: SingleChildScrollView(
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  new Container(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Card(
-                      color: Colors.white,
-                      elevation: 8.0,
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(15)),
-                      ),
-                      child: new Container(
-                        padding: const EdgeInsets.all(10.0),
-                        child: TextField(
-                          controller: _suggestController,
-                          decoration: InputDecoration(
-                            border:
-                                OutlineInputBorder(borderSide: BorderSide.none),
-                            hintText: '请输入您的投诉建议',
-                          ),
-                          maxLength: 300,
-                          maxLines: 10,
-                        ),
-                      ),
-                    ),
+            child: new Card(
+              margin: EdgeInsets.all(15.0),
+              color: Colors.white,
+              elevation: 8.0,
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(15)),
+              ),
+              child: new Container(
+                padding: const EdgeInsets.all(10.0),
+                child: TextField(
+                  controller: _suggestController,
+                  decoration: InputDecoration(
+                    border:
+                    OutlineInputBorder(borderSide: BorderSide.none),
+                    hintText: '请输入您的投诉建议',
                   ),
-                  new Padding(
-                    padding: const EdgeInsets.only(top: 30.0),
-                    child: _submitBtn(context),
-                  )
-                ],
+                  maxLength: 300,
+                  maxLines: 10,
+                ),
               ),
             ),
           )),

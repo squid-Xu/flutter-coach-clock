@@ -10,7 +10,7 @@ class MyAbout extends StatelessWidget {
 
     // TODO: implement build
     return new Scaffold(
-        backgroundColor: Color(0xFFECF2FE),
+//        backgroundColor: Color(0xFFECF2FE),
         appBar: new AppBar(
           backgroundColor: Color(0xFF29CCCC),
           title: new Text(
@@ -33,7 +33,7 @@ class MyAbout extends StatelessWidget {
             child: Card(
               margin: EdgeInsets.all(15.0),
               color: Colors.white,
-              elevation: 10.0,
+              elevation: 5.0,
               shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(15)),
               ),
@@ -60,7 +60,7 @@ class MyAbout extends StatelessWidget {
                     new Container(
                       padding: const EdgeInsets.only(top: 5.0),
                       child: Text(
-                        "v1.0.4",
+                        "v1.0.5",
                         style: TextStyle(color: _c, fontSize: 17.0),
                       ),
                     ),

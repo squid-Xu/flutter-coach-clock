@@ -52,9 +52,10 @@ class StuClockService {
   }
 
   //教练为学院扫码打卡
-  static Future<bool> sweepClock({String address, String code }) async {
+  static Future<bool> sweepClock({String address,int classTimes, String code }) async {
     Map<String, dynamic> requestMap = {
       "address": address,
+      "classTimes":classTimes,
       "code": code
     };
     Map<String, dynamic> res = await httpManager.netFetch(

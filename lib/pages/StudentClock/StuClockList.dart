@@ -414,11 +414,19 @@ class StuClockListState extends State<StuClockList> {
           new Expanded(
             child: new Container(
               padding: EdgeInsets.only(left: 5, right: 5),
-              child: new Text(
-                list[index].isPunch == 0 ? "未打卡" : "已打卡",
-                textAlign: TextAlign.center,
-                style: TextStyle(color: Color(0xFF000000), fontSize: 14.0),
-              ),
+              child: list[index].isPunch == 0
+                  ? new Text(
+                      "未打卡",
+                      textAlign: TextAlign.center,
+                      style:
+                          TextStyle(color: Color(0xFF000000), fontSize: 14.0),
+                    )
+                  : new Text(
+                      "已打卡",
+                      textAlign: TextAlign.center,
+                      style:
+                          TextStyle(color: Color(0xFF29CCCC), fontSize: 14.0),
+                    ),
             ),
           ),
           new Container(

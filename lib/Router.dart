@@ -22,6 +22,7 @@ import 'package:coach/pages/mine/MyInfo/my_info_edit_mobile.dart'; //修改手�
 import 'package:coach/pages/mine/my_complaint.dart'; //投诉建议
 import 'package:coach/pages/mine/my_about.dart'; //关于我们
 import 'package:coach/pages/mine/my_news.dart'; //我的消息
+import 'package:coach/pages/mine/NoticeDetali.dart';
 //学员页面路由
 import 'package:coach/pages/studentsPage.dart'; //学员页面
 import 'package:coach/pages/StudentClock/StuDetail.dart'; //学员进度详情
@@ -48,6 +49,7 @@ class Router {
   static const myComplaint = 'app://page/mine/mycomplaint'; //投诉建议
   static const myAbout = 'app://page/mine/myabout'; //关于我们
   static const myNews = 'app://page/mine/mynews'; //我的消息
+  static const myNotice = 'app//page/mine/mynotice';
   static const stuPage = 'app://page/stupage'; //学员页面
   static const stuDetail = 'app://page/studentclock/studetail'; //学员进度详情
   static const stuProgress = 'app://page/studentclock/stuprogress'; //学员进度更新
@@ -91,6 +93,8 @@ class Router {
           return MyAbout();
         case myNews: //我的消息
           return MyNews();
+        case myNotice:
+          return NoticeDetali(params);
         case stuDetail: //学员进度详情
           return StuDetail(params);
         case stuProgress: //学员进度更新

@@ -8,7 +8,7 @@ import 'package:dio/dio.dart';
 //个人动态
 class InvitationService {
 
-  static final int Invitaionlist = 20;
+  static final int Invitaionlist = 30;
   //邀请列表
   static Future<List<InvitationEntity>> getList() async {
     Map<String, dynamic> requestMap = {"limit": Invitaionlist, "page": 1};
