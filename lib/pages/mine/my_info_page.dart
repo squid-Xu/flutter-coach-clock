@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:coach/common/providers/UserInfoProvider.dart';
 import 'package:coach/common/service/login_service.dart';
 import 'package:coach/common/utils/global_toast.dart';
-import 'package:coach/login/register.dart';
 import 'package:coach/model/UserInfo.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
@@ -23,10 +22,10 @@ class MyInfoPage extends StatefulWidget {
 }
 
 class MyInfoPageState extends State<MyInfoPage> {
+
   // 加载框
   bool _isInAsyncCall = false;
   File _imgPath;
-  bool _havePassword = true;
   Color back_color = const Color(0xFFECF2FE);
 
   String localCity = "410000";
@@ -266,7 +265,11 @@ class MyInfoPageState extends State<MyInfoPage> {
       child: new InkWell(
         child: new Row(
           children: <Widget>[
-            new Expanded(child: new Text('绑定手机号', style: TextStyle(color: Color(0xFF333333), fontSize: 16.0),)),
+            new Expanded(
+                child: new Text(
+              '绑定手机号',
+              style: TextStyle(color: Color(0xFF333333), fontSize: 16.0),
+            )),
             new Container(
               padding: const EdgeInsets.only(right: 7.0),
               child: new Text(
@@ -350,8 +353,7 @@ class MyInfoPageState extends State<MyInfoPage> {
             Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                    builder: (BuildContext context) =>
-                        MyInfoEditMobile())),
+                    builder: (BuildContext context) => MyInfoEditMobile())),
 //            Router.pushWithAnimation(context, Router.myInfoMobile, _mobileStr),
           },
           color: Color(0xFF29CCCC),
@@ -541,8 +543,8 @@ class MyInfoPageState extends State<MyInfoPage> {
         body: ModalProgressHUD(
             inAsyncCall: _isInAsyncCall,
             child: new Consumer<UserInfoProvider>(
-              builder: (context, userInfo, _) => new Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              builder: (context, userInfo, _) => new ListView (
+//                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   new Container(
                     padding: const EdgeInsets.only(

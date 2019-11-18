@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:coach/common/providers/UserInfoProvider.dart';
 import 'dart:async';
-
 import 'package:coach/common/service/login_service.dart';
 import 'package:coach/common/utils/global_toast.dart';
 import 'package:coach/common/utils/verification_code_type.dart';
@@ -13,16 +12,12 @@ import 'package:provider/provider.dart';
 
 class MyInfoEditMobile extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() {
-    return _myInfoEditMobileState();
-  }
+  State<StatefulWidget> createState() => MyInfoEditMobileState();
 }
 
-class _myInfoEditMobileState extends State<MyInfoEditMobile> {
+class MyInfoEditMobileState extends State<MyInfoEditMobile> {
   bool _isInAsyncCall = false;
-
   TextEditingController _mobileController = new TextEditingController();
-
   TextEditingController _verifyCodeController = new TextEditingController();
 
   String _verifyStr = '获取验证码';
@@ -117,37 +112,37 @@ class _myInfoEditMobileState extends State<MyInfoEditMobile> {
             children: <Widget>[
               new Expanded(
                   child: new Container(
-                    child: TextField(
-                      controller: _verifyCodeController,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(borderSide: BorderSide.none),
-                        hintText: '请输入验证码',
-                        hintStyle: TextStyle(color: Color(0xFFCCCCCC)),
-                        counterText: '',
-                      ),
-                      maxLines: 1,
-                      maxLength: 6,
-                      keyboardType: TextInputType.phone,
-                      //只能输入数字
-                      inputFormatters: <TextInputFormatter>[
-                        WhitelistingTextInputFormatter.digitsOnly,
-                        BlacklistingTextInputFormatter(RegExp("[a-z]")),
-                        LengthLimitingTextInputFormatter(6)
-                      ],
-                    ),
-                  )),
+                child: TextField(
+                  controller: _verifyCodeController,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(borderSide: BorderSide.none),
+                    hintText: '请输入验证码',
+                    hintStyle: TextStyle(color: Color(0xFFCCCCCC)),
+                    counterText: '',
+                  ),
+                  maxLines: 1,
+                  maxLength: 6,
+                  keyboardType: TextInputType.phone,
+                  //只能输入数字
+                  inputFormatters: <TextInputFormatter>[
+                    WhitelistingTextInputFormatter.digitsOnly,
+                    BlacklistingTextInputFormatter(RegExp("[a-z]")),
+                    LengthLimitingTextInputFormatter(6)
+                  ],
+                ),
+              )),
               new Container(
                 child: new InkWell(
                   onTap: (_mobileController.text.trim().length == 11 &&
-                      _seconds == 0)
+                          _seconds == 0)
                       ? () {
-                    setState(() {
-                      sendCode();
-                    });
-                  }
-                      : (){
-                    GlobalToast.globalToast('请输入正确的手机号');
-                  },
+                          setState(() {
+                            sendCode();
+                          });
+                        }
+                      : () {
+                          GlobalToast.globalToast('请输入正确的手机号');
+                        },
                   child: Text(
                     _verifyStr,
                     textAlign: TextAlign.right,
@@ -167,7 +162,7 @@ class _myInfoEditMobileState extends State<MyInfoEditMobile> {
     if (_seconds != 0) {
       return;
     } else if (_mobileController.text.trim() ==
-        Provider.of<UserInfoProvider>(context).userInfo.mobile ||
+            Provider.of<UserInfoProvider>(context).userInfo.mobile ||
         _mobileController.text.trim().length != 11) {
       GlobalToast.globalToast('不能更换相同手机号');
       return;
@@ -186,7 +181,7 @@ class _myInfoEditMobileState extends State<MyInfoEditMobile> {
     print(_verifyCodeController.text);
     this.showLoading();
     LoginService.updateMobile(
-        _mobileController.text.trim(), _verifyCodeController.text.trim())
+            _mobileController.text.trim(), _verifyCodeController.text.trim())
         .then((bool b) {
       if (b) {
         LoginService.getUserInfo().then((UserInfo user) {
@@ -250,7 +245,7 @@ class _myInfoEditMobileState extends State<MyInfoEditMobile> {
                         TextSpan(
                             text: '当前手机号: ',
                             style:
-                            TextStyle(color: Colors.grey, fontSize: 20.0)),
+                                TextStyle(color: Colors.grey, fontSize: 20.0)),
                         TextSpan(
                             text: Provider.of<UserInfoProvider>(context)
                                 .userInfo
@@ -265,41 +260,41 @@ class _myInfoEditMobileState extends State<MyInfoEditMobile> {
                       children: <Widget>[
                         Expanded(
                             child: new Container(
-                              height: 45.0,
-                              margin: EdgeInsets.only(
-                                  left: 20, right: 20, top: 40, bottom: 10),
-                              child: new RaisedButton(
-                                color: Color(0xFF29CCCC),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(36),
-                                ),
-                                textColor: Colors.white,
-                                child: new Text(
-                                  '确 认',
-                                  style: TextStyle(fontSize: 18.0),
-                                ),
-                                onPressed: () {
-                                  if (!this._mobileController.text.isNotEmpty ||
-                                      this._mobileController.text.trim().length !=
-                                          11) {
-                                    GlobalToast.globalToast("请输入正确的手机号");
-                                  } else if (!this
+                          height: 45.0,
+                          margin: EdgeInsets.only(
+                              left: 20, right: 20, top: 40, bottom: 10),
+                          child: new RaisedButton(
+                            color: Color(0xFF29CCCC),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(36),
+                            ),
+                            textColor: Colors.white,
+                            child: new Text(
+                              '确 认',
+                              style: TextStyle(fontSize: 18.0),
+                            ),
+                            onPressed: () {
+                              if (!this._mobileController.text.isNotEmpty ||
+                                  this._mobileController.text.trim().length !=
+                                      11) {
+                                GlobalToast.globalToast("请输入正确的手机号");
+                              } else if (!this
                                       ._verifyCodeController
                                       .text
                                       .isNotEmpty ||
-                                      this
+                                  this
                                           ._verifyCodeController
                                           .text
                                           .trim()
                                           .length !=
-                                          6) {
-                                    GlobalToast.globalToast("请输入正确的验证码");
-                                  } else {
-                                    _submitFun(context);
-                                  }
-                                },
-                              ),
-                            ))
+                                      6) {
+                                GlobalToast.globalToast("请输入正确的验证码");
+                              } else {
+                                _submitFun(context);
+                              }
+                            },
+                          ),
+                        ))
                       ],
                     )
                   ],

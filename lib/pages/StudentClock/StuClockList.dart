@@ -205,31 +205,31 @@ class StuClockListState extends State<StuClockList> {
                                                 style: TextStyle(
                                                   color: Color(0xffe5e5e5),
                                                 ))
-//                                  child: TextField(
-//                                    controller: controller,
-//                                    autofocus: false, //是否自动对焦
-//                                    enabled: true,//是否禁用
-//                                    //键盘类型
-//                                    keyboardType: TextInputType.text,
+//                                      child: TextField(
+//                                        controller: controller,
+//                                        autofocus: false, //是否自动对焦
+//                                        enabled: true,//是否禁用
+//                                        //键盘类型
+//                                        keyboardType: TextInputType.text,
 //
-//                                    //控制键盘的功能键 指enter键，比如此处设置为next时，enter键
-//                                    //显示的文字内容为 下一步
-//                                    textInputAction: TextInputAction.search,
-//                                    decoration: new InputDecoration(
-//                                        contentPadding:
-//                                        EdgeInsets.only(top: 0.0),
-//                                        hintText: '搜索',
-//                                        hintStyle: TextStyle(fontSize: 15.0),
-//                                        border: InputBorder.none),
-////                                    onChanged: (text) {
-////                                      //内容改变的回调
-////                                      print('change $text');
-////                                    },
-////                                    onSubmitted: (text) {
-////                                      //内容提交(按回车)的回调
-////                                      print('submit $text');
-////                                    },
-//                                  ),
+//                                        //控制键盘的功能键 指enter键，比如此处设置为next时，enter键
+//                                        //显示的文字内容为 下一步
+//                                        textInputAction: TextInputAction.search,
+//                                        decoration: new InputDecoration(
+//                                            contentPadding:
+//                                            EdgeInsets.only(top: 0.0),
+//                                            hintText: '搜索',
+//                                            hintStyle: TextStyle(fontSize: 15.0),
+//                                            border: InputBorder.none),
+//                                        onChanged: (text) {
+//                                          //内容改变的回调
+//                                          print('change $text');
+//                                        },
+//                                        onSubmitted: (text) {
+//                                          //内容提交(按回车)的回调
+//                                          print('submit $text');
+//                                        },
+//                                      ),
                                             ),
                                       ),
                                     ]),

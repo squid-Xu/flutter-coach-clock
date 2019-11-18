@@ -11,9 +11,7 @@ class MyComplaint extends StatefulWidget {
 
 class MyComplaintState extends State<MyComplaint> {
   TextEditingController _suggestController = new TextEditingController();
-
   bool _isInAsyncCall = false;
-
   // 显示加载的圈圈
   showLoading() {
     setState(() {
@@ -28,24 +26,7 @@ class MyComplaintState extends State<MyComplaint> {
     });
   }
 
-  // 提交按钮
-  Widget _submitBtn(BuildContext context) {
-    Widget btn = new FlatButton(
-      textColor: Colors.white,
-      color: Color(0xFF29CCCC),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25.0)),
-      child: new Padding(
-        padding: new EdgeInsets.fromLTRB(100.0, 10.0, 100.0, 10.0),
-        child: new Text(
-          '提 交',
-          style: TextStyle(fontSize: 18.0),
-        ),
-      ),
-      onPressed: () => {_submitSuggest()},
-    );
-    return btn;
-  }
-
+  //提交逻辑
   _submitSuggest() {
     print(_suggestController.text.trim());
     String suggestUpdate = _suggestController.text.trim();
@@ -118,8 +99,7 @@ class MyComplaintState extends State<MyComplaint> {
                 child: TextField(
                   controller: _suggestController,
                   decoration: InputDecoration(
-                    border:
-                    OutlineInputBorder(borderSide: BorderSide.none),
+                    border: OutlineInputBorder(borderSide: BorderSide.none),
                     hintText: '请输入您的投诉建议',
                   ),
                   maxLength: 300,

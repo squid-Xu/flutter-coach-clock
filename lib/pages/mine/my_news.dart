@@ -1,10 +1,8 @@
 import 'package:coach/common/service/invitation.dart';
-import 'package:coach/common/utils/global_toast.dart';
 import 'package:coach/model/InvitationEntity.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-
 import '../../Router.dart';
 
 class MyNews extends StatefulWidget {
@@ -54,17 +52,17 @@ class _MyNewsState extends State<MyNews> {
         onTap: () {
           Map<String, dynamic> requestMap = {
             "clubName": v.clubName,
-            "applyTime":v.applyTime,
-            "applyMsg":v.applyMsg,
-            "applyId":v.applyId,
-            "applyState":v.applyState,
+            "applyTime": v.applyTime,
+            "applyMsg": v.applyMsg,
+            "applyId": v.applyId,
+            "applyState": v.applyState,
           };
-          Router.push(context, Router.myNotice,requestMap);
+          Router.push(context, Router.myNotice, requestMap);
         },
         child: Card(
           elevation: 5,
           shape:
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
           margin: const EdgeInsets.fromLTRB(15, 15, 15, 0),
           child: Container(
             padding: const EdgeInsets.fromLTRB(13, 20, 13, 20),
@@ -78,186 +76,55 @@ class _MyNewsState extends State<MyNews> {
                     shape: BoxShape.circle,
                     color: Colors.transparent,
                     image: new DecorationImage(
-                        image: new NetworkImage(
-                            v.clubLogo),
-                        fit: BoxFit.cover),
-                    border: new Border.all(
-                        color: Color(0xFF7EB1FE), width: 0.5),
+                        image: new NetworkImage(v.clubLogo), fit: BoxFit.cover),
                   ),
                 ),
-//                new Container(
-//                  padding: EdgeInsets.only(right: 15.0),
-//                  child: CircleAvatar(
-//                      backgroundColor: Color(0xFF14DC98),
-//                      radius: 25.0,
-//                      child: Image.network("http://pic39.nipic.com/20140307/13928177_195158772185_2.jpg")),
-//                ),
                 new Expanded(
                     child: new Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: <Widget>[
-                        new Container(
-                            padding: EdgeInsets.only(bottom: 10.0),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                new Expanded(
-                                    child: new Text(
-                                      v.clubName,
-                                      maxLines: 1,
-                                      textAlign: TextAlign.justify,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                          color: Color.fromRGBO(0, 0, 0, 0.7),
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 16.0),
-                                    )),
-                                new Expanded(
-                                    child: new Text(
-                                      v.applyTime,
-                                      textAlign: TextAlign.right,
-                                      style: TextStyle(
-                                          color: Color(0xFF999999), fontSize: 13.0),
-                                    )),
-                              ],
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: <Widget>[
+                    new Container(
+                        padding: EdgeInsets.only(bottom: 10.0),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            new Expanded(
+                                child: new Text(
+                              v.clubName,
+                              maxLines: 1,
+                              textAlign: TextAlign.justify,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                  color: Color.fromRGBO(0, 0, 0, 0.7),
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 16.0),
                             )),
-                        new Container(
-                          child: new Text(
-                            "邀请通知",
-                            style: TextStyle(
-                                color: Color(0xFF999999), fontSize: 15.0),
-                          ),
-                        )
-                      ],
-                    ))
+                            new Expanded(
+                                child: new Text(
+                              v.applyTime,
+                              textAlign: TextAlign.right,
+                              style: TextStyle(
+                                  color: Color(0xFF999999), fontSize: 13.0),
+                            )),
+                          ],
+                        )),
+                    new Container(
+                      child: new Text(
+                        "邀请通知",
+                        style:
+                            TextStyle(color: Color(0xFF999999), fontSize: 15.0),
+                      ),
+                    )
+                  ],
+                ))
               ],
             ),
           ),
         ),
       ));
-//      listWidget.add(new Container(
-//        padding: EdgeInsets.fromLTRB(15, 5, 15, 5),
-//        child: new Row(
-//          children: <Widget>[
-//            new Container(
-//              width: 40.0,
-//              height: 40.0,
-//              margin: EdgeInsets.only(right: 15.0),
-//              decoration: new BoxDecoration(
-//                borderRadius: new BorderRadius.circular((5.0)), // 圆
-//                color: Colors.transparent,
-//                image: new DecorationImage(
-//                    image: (v.clubLogo != null)
-//                        ? new NetworkImage(v.clubLogo)
-//                        : new AssetImage("images/coachnan.png"),
-//                    fit: BoxFit.cover),
-//                border: new Border.all(color: Colors.white, width: 1.0),
-//              ),
-//            ),
-//            new Expanded(
-//                child: new Column(
-//              crossAxisAlignment: CrossAxisAlignment.start,
-//              children: <Widget>[
-//                new Text(
-//                  v.clubName,
-//                  maxLines: 1,
-//                  overflow: TextOverflow.ellipsis,
-//                  style: TextStyle(color: Color(0xFF000000), fontSize: 17.0),
-//                ),
-//                new Text(
-//                  v.applyMsg == '' ? v.applyTime : v.applyMsg,
-//                  maxLines: 1,
-//                  overflow: TextOverflow.ellipsis,
-//                  style: TextStyle(color: Color(0xFF666666), fontSize: 14.0),
-//                )
-//              ],
-//            )),
-//            new Container(
-//              margin: EdgeInsets.only(left: 20),
-//              padding: EdgeInsets.fromLTRB(5, 2, 5, 2),
-//              color: Color.fromRGBO(0, 0, 0, 0.1),
-//              child: InkWell(
-//                child: new Text(
-//                  v.applyState == 0 ? "查看" : v.applyState == 1 ? "已同意" : "已拒绝",
-//                  style: TextStyle(color: Color(0xFF29CCCC), fontSize: 14.0),
-//                ),
-//                onTap: v.applyState == 0
-//                    ? () => {
-//                          showCupertinoModalPopup(
-//                            context: context,
-//                            builder: (context) {
-//                              return CupertinoActionSheet(
-//                                title: Text(
-//                                  '提示',
-//                                  style: TextStyle(fontSize: 22),
-//                                ), //标题
-//                                message: Text('拒绝后将不能加入该俱乐部，请您谨慎操作！'), //提示内容
-//                                actions: <Widget>[
-//                                  //操作按钮集合
-//                                  CupertinoActionSheetAction(
-//                                    onPressed: () {
-//                                      _agreeHandle(v.applyId, 1, "你已同意");
-//                                      Navigator.pop(context);
-//                                    },
-//                                    child: Text(
-//                                      '同意',
-//                                      style:
-//                                          TextStyle(color: Color(0xFF29CCCC)),
-//                                    ),
-//                                  ),
-//                                  CupertinoActionSheetAction(
-//                                    onPressed: () {
-//                                      _agreeHandle(v.applyId, 2, "你已拒绝");
-//                                      Navigator.pop(context);
-//                                    },
-//                                    child: Text(
-//                                      '拒绝',
-//                                      style:
-//                                          TextStyle(color: Color(0xFFDC143C)),
-//                                    ),
-//                                  ),
-//                                ],
-//                                cancelButton: CupertinoActionSheetAction(
-//                                  //取消按钮
-//                                  onPressed: () {
-//                                    Navigator.pop(context);
-//                                  },
-//                                  child: Text(
-//                                    '取消',
-//                                    style: TextStyle(color: Color(0xFF999999)),
-//                                  ),
-//                                ),
-//                              );
-//                            },
-//                          )
-//                        }
-//                    : null,
-//              ),
-//            )
-//          ],
-//        ),
-//        decoration: BoxDecoration(
-//            border: Border(
-//                bottom:
-//                    BorderSide(width: 1, color: Color.fromRGBO(0, 0, 0, 0.1)))),
-//      ));
     }
     return new Column(children: listWidget);
   }
-
-//  _agreeHandle(_applyId, _state, mag) {
-//    this.showLoading();
-//    InvitationService.AagreeHandle(applyId: _applyId, state: _state)
-//        .then((bool b) {
-//      if (b) {
-//        _getListDate();
-//        this.shutdownLoading();
-//        GlobalToast.globalToast(mag);
-//      }else{
-//        this.shutdownLoading();
-//      }
-//    });
-//  }
 
   @override
   Widget build(BuildContext context) {
@@ -289,10 +156,6 @@ class _MyNewsState extends State<MyNews> {
               child: RefreshIndicator(
                 child: ListView(
                   children: <Widget>[
-//                    new Container(
-//                      padding: EdgeInsets.only(left: 15, top: 5, bottom: 5),
-//                      child: list.length == 0 ? null : new Text("最近三天"),
-//                    ),
                     _content(),
                     new Container(
                       child: new Text(

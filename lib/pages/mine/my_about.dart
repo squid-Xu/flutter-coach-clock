@@ -4,139 +4,133 @@ import 'package:flutter/material.dart';
 class MyAbout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    const _c = Color(0xFF29CCCC);
-
-    const _cc = Color(0xff666666);
-
     // TODO: implement build
     return new Scaffold(
-//        backgroundColor: Color(0xFFECF2FE),
-        appBar: new AppBar(
-          backgroundColor: Color(0xFF29CCCC),
-          title: new Text(
-            '关于我们',
-            style: TextStyle(color: Colors.white),
-          ),
-          centerTitle: true,
-          leading: IconButton(
-              icon: Icon(
-                Icons.keyboard_arrow_left,
-                size: 30,
-              ),
-              onPressed: () {
-                Navigator.pop(context);
-              }),
+      backgroundColor: Color(0xFFFFFFFF),
+      appBar: new AppBar(
+        backgroundColor: Color(0xFF29CCCC),
+        title: new Text(
+          '关于我们',
+          style: TextStyle(color: Colors.white),
         ),
-        body: new SingleChildScrollView(
-          child: new ConstrainedBox(
-            constraints: new BoxConstraints(minHeight: 120),
-            child: Card(
-              margin: EdgeInsets.all(15.0),
-              color: Colors.white,
-              elevation: 5.0,
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(15)),
-              ),
-              child: Container(
-                margin: EdgeInsets.all(15.0),
-                child: Column(
-                  children: <Widget>[
-                    new Container(
-                      padding: const EdgeInsets.only(top: 20.0),
-                      child: new Image(
-                        image: new AssetImage("images/logo.png"),
-                        fit: BoxFit.cover,
-                        width: 80,
-                        height: 80,
-                      ),
+        centerTitle: true,
+        leading: IconButton(
+            icon: Icon(
+              Icons.keyboard_arrow_left,
+              size: 30,
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            }),
+        elevation: 20.0,
+      ),
+      body: new Column(
+        children: <Widget>[
+          new Expanded(
+              child: new Column(
+            children: <Widget>[
+              new Container(
+                padding: EdgeInsets.only(top: 40.0),
+                child: new Center(
+                  child: new Card(
+                    elevation: 10.0,
+//              shape: const RoundedRectangleBorder(
+//                borderRadius: BorderRadius.all(Radius.circular(15)),
+//              ),
+                    color: Colors.white,
+                    margin: EdgeInsets.all(15.0),
+                    child: new Image(
+                      image: new AssetImage("images/weixin.png"),
+                      fit: BoxFit.cover,
+                      width: 120,
+                      height: 120,
                     ),
-                    new Container(
-                      padding: const EdgeInsets.only(top: 5.0),
-                      child: Text(
-                        '乐轮滑',
-                        style: TextStyle(color: _c, fontSize: 25.0),
-                      ),
-                    ),
-                    new Container(
-                      padding: const EdgeInsets.only(top: 5.0),
-                      child: Text(
-                        "v1.0.5",
-                        style: TextStyle(color: _c, fontSize: 17.0),
-                      ),
-                    ),
-                    new Container(
-                      padding: EdgeInsets.only(top: 10),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          new Container(
-                            child: new Text(
-                              "地址：",
-                              style: TextStyle(color: _cc, fontSize: 15.0),
-                            ),
-                          ),
-                          new Expanded(
-                            child: Container(
-                              // padding: EdgeInsets.only(left: 5,),
-                              child: new Text(
-                                "郑州市荥阳市中原西路中原智谷327室",
-                                maxLines: 4,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  color: _cc,
-                                  fontSize: 15.0,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    new Container(
-                      child: new Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[
-                          new Padding(
-                            padding: const EdgeInsets.only(
-                              top: 10.0,
-                            ),
-                            child: Text(
-                              '邮箱：lelunhua@163.com',
-                              style: TextStyle(color: _cc, fontSize: 15.0),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                    new Container(
-                      padding: EdgeInsets.only(bottom: 20.0),
-                      child: new Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          new Padding(
-                            padding: const EdgeInsets.only(top: 10.0),
-                            child: Text(
-                              '微信公众号： ',
-                              style: TextStyle(color: _cc, fontSize: 15.0),
-                            ),
-                          ),
-                          new Container(
-                            padding: EdgeInsets.only(top: 10),
-                            child: new Image(
-                              image: new AssetImage("images/weixin.png"),
-                              fit: BoxFit.cover,
-                              width: 140,
-                              height: 140,
-                            ),
-                          )
-                        ],
-                      ),
-                    )
-                  ],
+                  ),
                 ),
               ),
+              new Container(
+                padding: EdgeInsets.only(top: 20),
+                child: new Center(
+                  child: new Text(
+                    "微信扫码关注",
+                    style: TextStyle(
+                      color: Color(0xFF666666),
+                      fontSize: 13.0,
+                    ),
+                  ),
+                ),
+              ),
+              new Container(
+                padding: EdgeInsets.only(top: 20),
+                child: new Center(
+                  child: new Text(
+                    "乐轮滑教练",
+                    style: TextStyle(
+                      color: Color(0xFF29CCCC),
+                      fontSize: 20.0,
+                    ),
+                  ),
+                ),
+              ),
+              new Container(
+                padding: EdgeInsets.only(top: 12),
+                child: new Center(
+                  child: new Text(
+                    "版本V1.1.0",
+                    style: TextStyle(
+                      color: Color(0xFF29CCCC),
+                      fontSize: 12.0,
+                    ),
+                  ),
+                ),
+              )
+            ],
+          )),
+          new Container(
+            padding: EdgeInsets.only(bottom: 27.0),
+            child: new Column(
+              children: <Widget>[
+                new Container(
+                  padding: EdgeInsets.only(top: 10.0),
+                  child: new Center(
+                    child: new Text(
+                      "商务合作：13838009313",
+                      style: TextStyle(
+                        color: Color(0xFF999999),
+                        fontSize: 12.0,
+                      ),
+                    ),
+                  ),
+                ),
+                new Container(
+                  padding: EdgeInsets.only(top: 10.0),
+                  child: new Center(
+                    child: new Text(
+                      "邮箱：lelunhua@163.com",
+                      style: TextStyle(
+                        color: Color(0xFF999999),
+                        fontSize: 12.0,
+                      ),
+                    ),
+                  ),
+                ),
+                new Container(
+                  padding: EdgeInsets.only(top: 10.0),
+                  child: new Center(
+                    child: new Text(
+                      "Copyright @ 2019 lelunhua.com",
+                      style: TextStyle(
+                        color: Color(0xFF999999),
+                        fontSize: 12.0,
+                      ),
+                    ),
+                  ),
+                )
+              ],
             ),
-          ),
-        ));
+          )
+        ],
+      ),
+    );
   }
 }

@@ -14,9 +14,10 @@ class MinePage extends StatefulWidget {
 }
 
 class _MinePageState extends State<MinePage> {
+
   bool isLoading = true; // 是否正在请求数据中
-  bool _ClubState = true;
-  String coachNmae = '暂无姓名';
+  bool clubState = true;
+  String coachName = '暂无姓名';
   String clubName = '';
   int student = 0;
 
@@ -117,7 +118,7 @@ class _MinePageState extends State<MinePage> {
                         ),
                         borderRadius: new BorderRadius.circular((8.0)), // 圆角度
                       ),
-                      child: _ClubState
+                      child: clubState
                           ? new Container(
                               padding: EdgeInsets.only(top: 25, bottom: 35),
                               child: new Column(
@@ -139,7 +140,7 @@ class _MinePageState extends State<MinePage> {
                                     children: <Widget>[
                                       new Expanded(
                                           child: new Text(
-                                        coachNmae,
+                                            coachName,
                                         style: TextStyle(
                                             color: Color(0xFF333333),
                                             fontSize: 16.0),
@@ -309,25 +310,25 @@ class _MinePageState extends State<MinePage> {
   @override
   void initState() {
     super.initState();
-    _getcoachClub();
+    getCoachClub();
   }
 
   //获取教练在俱乐部的信息
-  _getcoachClub() async {
+  getCoachClub() async {
     setState(() {
       isLoading = true;
     });
     await CoachClubService.getCoachClub().then((CoachClubEntity v) {
       if (v == null) {
         setState(() {
-          _ClubState = true;
+          clubState = true;
           isLoading = false;
         });
       } else {
-            _getstuList();
+        getStuList();
         setState(() {
-          _ClubState = false;
-          coachNmae = v.coachName ?? "暂无姓名";
+          clubState = false;
+          coachName = v.coachName ?? "暂无姓名";
           clubName = v.clubInfoEntity.clubName ?? "";
           isLoading = false;
         });
@@ -336,7 +337,7 @@ class _MinePageState extends State<MinePage> {
   }
 
   //获取学员数量
-  _getstuList() async {
+  getStuList() async {
     await StudentsService.getStudentList('').then((StudentEntity v) {
       setState(() {
         student = v.data.length ?? 0;

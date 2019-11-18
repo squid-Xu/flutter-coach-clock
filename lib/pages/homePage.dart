@@ -33,74 +33,79 @@ class HomePageState extends State<HomePage> {
                         valueColor: AlwaysStoppedAnimation(Color(0xFF29CCCC))),
                   )
                 : new Scaffold(
-                    backgroundColor: Colors.transparent,
-                    appBar: AppBar(
-                      backgroundColor: Colors.transparent, //把
-                      elevation: 0, //appbar的阴影/**/
-                      automaticallyImplyLeading: false,
-                      title: TabBar(
-                        tabs: [Tab(text: "我的考勤"), Tab(text: "学员考勤")],
-                        indicatorColor: Colors.white,
-                        indicatorPadding: EdgeInsets.fromLTRB(15, 0, 15, 0),
-                        labelStyle: TextStyle(fontSize: 18.0),
+                resizeToAvoidBottomPadding: false, //输入框抵住键盘
+                backgroundColor: Colors.transparent,
+                appBar: AppBar(
+                  backgroundColor: Colors.transparent, //把
+                  elevation: 0, //appbar的阴影/**/
+                  automaticallyImplyLeading: false,
+                  title: TabBar(
+                    tabs: [Tab(text: "我的考勤"), Tab(text: "学员考勤")],
+                    indicatorColor: Colors.white,
+                    indicatorPadding: EdgeInsets.fromLTRB(15, 0, 15, 0),
+                    labelStyle: TextStyle(fontSize: 18.0),
+                  ),
+                  actions: <Widget>[
+                    new IconButton(
+                      icon: new Icon(
+                        Icons.center_focus_strong,
+                        color: Colors.white,
                       ),
-                      actions: <Widget>[
-                        new IconButton(
-                          icon: new Icon(
-                            Icons.center_focus_strong,
-                            color: Colors.white,
+                      onPressed: _ClubState
+                          ? () {
+                        GlobalToast.globalToast('未加入俱乐部');
+                      }
+                          : () {
+                        Router.pushNoParams(context, Router.scan);
+                      },
+                    )
+                  ],
+                ),
+                body: _ClubState
+                    ? TabBarView(
+                  children: [
+                    new Container(
+                      child: new Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          new Icon(
+                            Icons.lock,
+                            color: Color(0xFFFFFFFF),
                           ),
-                          onPressed: _ClubState ? (){
-                            GlobalToast.globalToast('未加入俱乐部');
-                          }:() {
-                            Router.pushNoParams(context, Router.scan);
-                          },
-                        )
-                      ],
+                          new Text(
+                            "你目前还没有俱乐部，请前往俱乐部进行邀请！",
+                            style: TextStyle(
+//                          color: Color(0xFFFFFFFF),
+                                fontSize: 16.0),
+                          ),
+                        ],
+                      ),
                     ),
-                    body: _ClubState
-                        ? TabBarView(
-                            children: [
-                              new Container(
-                                child: new Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    new Icon(
-                                      Icons.lock,
-                                      color: Color(0xFFFFFFFF),
-                                    ),
-                                    new Text(
-                                      "你目前还没有俱乐部，请前往俱乐部进行邀请！",
-                                      style: TextStyle(
-//                          color: Color(0xFFFFFFFF),
-                                          fontSize: 16.0),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              new Container(
-                                child: new Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    new Icon(
-                                      Icons.lock,
-                                      color: Color(0xFFFFFFFF),
-                                    ),
-                                    new Text(
-                                      "你目前还没有俱乐部，请前往俱乐部进行邀请！",
-                                      style: TextStyle(
-//                          color: Color(0xFFFFFFFF),
-                                          fontSize: 16.0),
-                                    ),
-                                  ],
-                                ),
-                              )
-                            ],
-                          )
-                        : TabBarView(
-                            children: [new MyClock(), new StuClockList()],
+                    new Container(
+                      child: new Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          new Icon(
+                            Icons.lock,
+                            color: Color(0xFFFFFFFF),
                           ),
-                  )));
+                          new Text(
+                            "你目前还没有俱乐部，请前往俱乐部进行邀请！",
+                            style: TextStyle(
+//                          color: Color(0xFFFFFFFF),
+                                fontSize: 16.0),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                )
+                    : TabBarView(
+                  children: [new MyClock(), new StuClockList()],
+                ),
+              ),
+
+        ));
   }
 
 //获取教练在俱乐部的信息

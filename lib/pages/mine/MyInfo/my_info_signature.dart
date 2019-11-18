@@ -7,18 +7,19 @@ import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:provider/provider.dart';
 
 class MyInfoSignature extends StatefulWidget {
-  final current_signature;
-  MyInfoSignature(this.current_signature, {Key key}) : super(key: key);
+  final currentSignature;
+  MyInfoSignature(this.currentSignature, {Key key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    return _myInfoSignatureState(current_signature);
+    return MyInfoSignatureState(currentSignature);
   }
 }
 
-class _myInfoSignatureState extends State<MyInfoSignature> {
-  final current_signature;
-  _myInfoSignatureState(this.current_signature);
+class MyInfoSignatureState extends State<MyInfoSignature> {
+  final currentSignature;
+  MyInfoSignatureState(this.currentSignature);
+
   bool _isInAsyncCall = false;
   TextEditingController _signatureController = new TextEditingController();
 
@@ -133,6 +134,6 @@ class _myInfoSignatureState extends State<MyInfoSignature> {
   @override
   void initState() {
     super.initState();
-    _signatureController.text = current_signature;
+    _signatureController.text = currentSignature;
   }
 }
