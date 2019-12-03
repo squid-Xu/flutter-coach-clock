@@ -32,7 +32,7 @@ dependencies:
   city_pickers: ^0.1.22 #城市选择器
   dio: ^2.1.13 #网络请求
   provider: ^3.0.0+1 #状态管理
-  fluttertoast: ^3.1.0 #弹窗加载
+  oktoast: ^2.2.0 #弹窗加载
   event_bus: ^1.1.0 #组件通信(父子、兄弟）
   connectivity: ^0.4.3+4 #网络监测
   shared_preferences: ^0.4.2 #数据存储

@@ -179,7 +179,7 @@ class LoginService{
         method: "post"
     ));
     if(res['code'] != 0){
-      GlobalToast.errorBottomToast(res['msg']);
+      GlobalToast.globalToast(res['msg']);
       return false;
     }else {
       DataUtil.clear();
@@ -199,7 +199,7 @@ class LoginService{
     Map<String, dynamic> res = await httpManager.netFetch(BaseConfig.BASE_URL+'/retryToken',
         requestMap, new Options(method: 'post'));
     if(res['code'] != 0){
-      GlobalToast.errorBottomToast(res['msg']);
+      GlobalToast.globalToast(res['msg']);
       DataUtil.clear();
       return null;
     }

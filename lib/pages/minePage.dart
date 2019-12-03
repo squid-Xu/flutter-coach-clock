@@ -79,7 +79,7 @@ class _MinePageState extends State<MinePage> {
                                       ),
                                       new Container(
                                         child: new Text(
-                                          userInfo.userInfo.mobile,
+                                          "${userInfo.userInfo.mobile.substring(0,3)}"+"****"+'${userInfo.userInfo.mobile.substring(7,11)}',
                                           style: TextStyle(
                                               color: Color(0xFFFFFFFF),
                                               fontSize: 17.0),

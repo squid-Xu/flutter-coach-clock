@@ -273,7 +273,7 @@ class MyInfoPageState extends State<MyInfoPage> {
             new Container(
               padding: const EdgeInsets.only(right: 7.0),
               child: new Text(
-                mobile,
+                "${mobile.substring(0,3)}"+"****"+'${mobile.substring(7,11)}',
                 style: TextStyle(color: Colors.grey),
               ),
             ),

@@ -3,7 +3,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+//import 'package:fluttertoast/fluttertoast.dart';
+import 'common/utils/global_toast.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:provider/provider.dart';
 import 'common/event/http_error_event.dart';
 import 'common/event/index.dart';
@@ -67,27 +69,30 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new RestartWidget(
-        child: MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-          backgroundColor: Color(0xFF29CCCC),
-          highlightColor: Color.fromRGBO(255, 255, 255, 0.5),
-          splashColor: Colors.white70),
-      localizationsDelegates: [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-      ],
-      supportedLocales: [
-        const Locale('en', 'US'),
-        const Locale('zh', 'CH'),
-      ],
+    return OKToast(
+      dismissOtherOnShow: true,
+      child: new RestartWidget(
+          child: MaterialApp(
+            debugShowCheckedModeBanner: false,
+            theme: ThemeData(
+                backgroundColor: Color(0xFF29CCCC),
+                highlightColor: Color.fromRGBO(255, 255, 255, 0.5),
+                splashColor: Colors.white70),
+            localizationsDelegates: [
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+            ],
+            supportedLocales: [
+              const Locale('en', 'US'),
+              const Locale('zh', 'CH'),
+            ],
 //      home: new Login(),
-      home: Scaffold(
-        resizeToAvoidBottomPadding: false,
-        body: bodyWidget,
-      ),
-    ));
+            home: Scaffold(
+              resizeToAvoidBottomPadding: false,
+              body: bodyWidget,
+            ),
+          )),
+    );
   }
 }
 
@@ -153,23 +158,23 @@ class _RestartWidgetState extends State<RestartWidget> {
     print("code:${code},message:${message}");
     switch (code) {
       case Code.NETWORK_ERROR:
-        Fluttertoast.showToast(msg: '网络异常！');
+        GlobalToast.globalToast('网络异常！');
         break;
       case 401:
-        Fluttertoast.showToast(msg: "401${message}");
+        GlobalToast.globalToast("401${message}");
         break;
       case 403:
-        Fluttertoast.showToast(msg: "403${message}");
+        GlobalToast.globalToast("403${message}");
         break;
       case 404:
-        Fluttertoast.showToast(msg: "404${message}");
+        GlobalToast.globalToast("404${message}");
         break;
       case Code.NETWORK_TIMEOUT:
         //超时
-        Fluttertoast.showToast(msg: '请求超时，请重新操作');
+        GlobalToast.globalToast('请求超时，请重新操作');
         break;
       default:
-        Fluttertoast.showToast(msg: "error:${message}");
+        GlobalToast.globalToast("error:${message}");
         break;
     }
   }

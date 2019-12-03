@@ -65,65 +65,72 @@ class MyInfoNicknameState extends State<MyInfoNickname> {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return new Scaffold(
-      backgroundColor: Color(0xFFF8F8F8),
-      appBar: new AppBar(
-        backgroundColor: Color(0xFF29CCCC),
-        title: new Text(
-          '设置昵称',
-          style: TextStyle(color: Colors.white),
-        ),
-        centerTitle: true,
-        leading: IconButton(
-            icon: Icon(
-              Icons.keyboard_arrow_left,
-              size: 30,
-            ),
-            onPressed: () {
-              Navigator.pop(context);
-            }),
-        actions: <Widget>[
-          new RaisedButton(
-            onPressed: () {
-              showLoading();
-              // 触摸收起键盘
-              FocusScope.of(context).requestFocus(FocusNode());
-              _submitNickName();
-            },
-            child: new Text(
-              "保存",
-              style: TextStyle(color: Color(0xFFFFFFFF), fontSize: 18.0),
-            ),
-            color: Color(0xFF29CCCC),
-            elevation: 0,
-          )
-        ],
-      ),
-      body: new ModalProgressHUD(
-          inAsyncCall: _isInAsyncCall,
-          child: SingleChildScrollView(
-            child: new Card(
-              margin: EdgeInsets.all(15.0),
-              color: Colors.white,
-              elevation: 8.0,
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(15)),
+    return new GestureDetector(
+      behavior: HitTestBehavior.translucent,
+      onTap: () {
+        // 触摸收起键盘
+        FocusScope.of(context).requestFocus(FocusNode());
+      },
+      child: new Scaffold(
+        backgroundColor: Color(0xFFF8F8F8),
+        appBar: new AppBar(
+          backgroundColor: Color(0xFF29CCCC),
+          title: new Text(
+            '设置昵称',
+            style: TextStyle(color: Colors.white),
+          ),
+          centerTitle: true,
+          leading: IconButton(
+              icon: Icon(
+                Icons.keyboard_arrow_left,
+                size: 30,
               ),
-              child: new Container(
-                padding: const EdgeInsets.all(10.0),
-                child: TextField(
-                  controller: _nickNameController,
-                  autofocus: true,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(borderSide: BorderSide.none),
-                    hintText: '请输入您的昵称',
+              onPressed: () {
+                Navigator.pop(context);
+              }),
+          actions: <Widget>[
+            new RaisedButton(
+              onPressed: () {
+                showLoading();
+                // 触摸收起键盘
+                FocusScope.of(context).requestFocus(FocusNode());
+                _submitNickName();
+              },
+              child: new Text(
+                "保存",
+                style: TextStyle(color: Color(0xFFFFFFFF), fontSize: 18.0),
+              ),
+              color: Color(0xFF29CCCC),
+              elevation: 0,
+            )
+          ],
+        ),
+        body: new ModalProgressHUD(
+            inAsyncCall: _isInAsyncCall,
+            child: SingleChildScrollView(
+              child: new Card(
+                margin: EdgeInsets.all(15.0),
+                color: Colors.white,
+                elevation: 8.0,
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(15)),
+                ),
+                child: new Container(
+                  padding: const EdgeInsets.all(10.0),
+                  child: TextField(
+                    controller: _nickNameController,
+                    autofocus: true,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(borderSide: BorderSide.none),
+                      hintText: '请输入您的昵称',
+                    ),
+                    maxLength: 15,
+                    maxLines: 3,
                   ),
-                  maxLength: 15,
-                  maxLines: 3,
                 ),
               ),
-            ),
-          )),
+            )),
+      ),
     );
   }
 }

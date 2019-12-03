@@ -13,7 +13,12 @@ class StudentsPage extends StatefulWidget {
 
 class _StudentsPageState extends State<StudentsPage> {
   //搜索值
-  final controller = TextEditingController();
+//  final controller = TextEditingController();
+  ///输入框焦点值
+  FocusNode _commentFocus = FocusNode();
+
+  ///搜索值
+  TextEditingController controller = new TextEditingController();
   bool floating = false;
   bool snap = false;
   bool pinned = true;
@@ -105,6 +110,7 @@ class _StudentsPageState extends State<StudentsPage> {
                                         child: Container(
                                           child: TextField(
                                             controller: controller,
+                                            focusNode: _commentFocus,
                                             //控制键盘的功能键 指enter键，比如此处设置为next时，enter键
                                             //显示的文字内容为 下一步
                                             textInputAction:
@@ -134,15 +140,27 @@ class _StudentsPageState extends State<StudentsPage> {
                                 ),
                                 flex: 5,
                               ),
-                              new Icon(
-                                IconFont.icon_sousuo_copy,
-                                color: Color(0xFF29CCCC),
+                              controller.text == ''
+                                  ? new Icon(
+                                Icons.search,
+                                color: Color(0xFF7EB1FE),
                                 size: 25.0,
-                              ),
+                              )
+                                  : new GestureDetector(
+                                onTap: () {
+                                  controller.clear();
+                                  _commentFocus.unfocus(); // 失去焦点
+                                  _getstuList('');
+                                },
+                                child: new Icon(
+                                  Icons.cancel,
+                                  color: Color(0xFF29CCCC),
+                                  size: 25.0,
+                                ),
+                              )
                             ],
                           ),
                           onPressed: () {
-//                  Router.pushNoParams(context, Router.clubSearch);
                           },
                         ),
                       ),
