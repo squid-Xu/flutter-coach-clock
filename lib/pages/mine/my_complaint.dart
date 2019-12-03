@@ -71,6 +71,7 @@ class MyComplaintState extends State<MyComplaint> {
                 size: 30,
               ),
               onPressed: () {
+                FocusScope.of(context).requestFocus(FocusNode());
                 Navigator.pop(context);
               }),
           actions: <Widget>[

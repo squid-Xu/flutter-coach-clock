@@ -59,12 +59,14 @@ class StuProgressState extends State<StuProgress> {
                 size: 30,
               ),
               onPressed: () {
+                FocusScope.of(context).requestFocus(FocusNode());
                 Navigator.pop(context);
               }),
           actions: <Widget>[
             new RaisedButton(
               onPressed: () {
                 this.showLoading();
+                FocusScope.of(context).requestFocus(FocusNode());
                 _stuUpdate();
               },
               child: new Text(

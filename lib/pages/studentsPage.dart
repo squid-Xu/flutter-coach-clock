@@ -143,7 +143,7 @@ class _StudentsPageState extends State<StudentsPage> {
                               controller.text == ''
                                   ? new Icon(
                                 Icons.search,
-                                color: Color(0xFF7EB1FE),
+                                color: Color(0xFF29CCCC),
                                 size: 25.0,
                               )
                                   : new GestureDetector(

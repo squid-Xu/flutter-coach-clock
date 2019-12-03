@@ -86,6 +86,7 @@ class MyInfoNicknameState extends State<MyInfoNickname> {
                 size: 30,
               ),
               onPressed: () {
+                FocusScope.of(context).requestFocus(FocusNode());
                 Navigator.pop(context);
               }),
           actions: <Widget>[
