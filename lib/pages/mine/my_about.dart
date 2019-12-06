@@ -76,7 +76,7 @@ class MyAbout extends StatelessWidget {
                 padding: EdgeInsets.only(top: 12),
                 child: new Center(
                   child: new Text(
-                    "版本V1.1.0",
+                    "版本V1.1.1",
                     style: TextStyle(
                       color: Color(0xFF29CCCC),
                       fontSize: 12.0,
